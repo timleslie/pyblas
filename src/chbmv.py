@@ -298,7 +298,7 @@ def CHBMV(UPLO, N, K, ALPHA, A, LDA, X, INCX, BETA, Y, INCY):
                 L = KPLUS1 - J
                 for I in range(max(1, J - K) - 1, J - 1):
                     Y[I] = Y[I] + TEMP1 * A[L + I, J]
-                    TEMP2 += (A[L + I, J]).conjugate() * X[I]
+                    TEMP2 += A[L + I, J].conjugate() * X[I]
                 Y[J] = Y[J] + TEMP1 * A[KPLUS1, J].real + ALPHA * TEMP2
         else:
             JX = KX
@@ -311,7 +311,7 @@ def CHBMV(UPLO, N, K, ALPHA, A, LDA, X, INCX, BETA, Y, INCY):
                 L = KPLUS1 - J
                 for I in range(max(1, J - K) - 1, J - 1):
                     Y[IY] = Y[IY] + TEMP1 * A[L + I, J]
-                    TEMP2 += (A[L + I, J]).conjugate() * X[IX]
+                    TEMP2 += A[L + I, J].conjugate() * X[IX]
                     IX += INCX
                     IY += INCY
                 Y[JY] += TEMP1 * A[KPLUS1, J].real + ALPHA * TEMP2
@@ -330,7 +330,7 @@ def CHBMV(UPLO, N, K, ALPHA, A, LDA, X, INCX, BETA, Y, INCY):
                 L = 1 - J
                 for I in range(J, min(N, J + K)):
                     Y[I] = Y[I] + TEMP1 * A[L + I, J]
-                    TEMP2 += (A[L + I, J]).conjugate() * X[I]
+                    TEMP2 += A[L + I, J].conjugate() * X[I]
                 Y[J] = Y[J] + ALPHA * TEMP2
         else:
             JX = KX
@@ -346,7 +346,7 @@ def CHBMV(UPLO, N, K, ALPHA, A, LDA, X, INCX, BETA, Y, INCY):
                     IX += INCX
                     IY += INCY
                     Y[IY] = Y[IY] + TEMP1 * A[L + I, J]
-                    TEMP2 += (A[L + I, J]).conjugate() * X[IX]
+                    TEMP2 += A[L + I, J].conjugate() * X[IX]
                 Y[JY] += ALPHA * TEMP2
                 JX += INCX
                 JY += INCY

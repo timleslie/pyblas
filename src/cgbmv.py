@@ -311,7 +311,7 @@ def CGBMV(TRANS, M, N, KL, KU, ALPHA, A, LDA, X, INCX, BETA, Y, INCY):
                         TEMP += A[K + I, J] * X[I]
                 else:
                     for I in range(max(1, J - KU) - 1, min(M, J + KL)):
-                        TEMP += (A[K + I, J]).conjugate() * X[I]
+                        TEMP += A[K + I, J].conjugate() * X[I]
                 Y[JY] += ALPHA * TEMP
                 JY += INCY
         else:
@@ -325,7 +325,7 @@ def CGBMV(TRANS, M, N, KL, KU, ALPHA, A, LDA, X, INCX, BETA, Y, INCY):
                         IX += INCX
                 else:
                     for I in range(max(1, J - KU) - 1, min(M, J + KL)):
-                        TEMP += (A[K + I, J]).conjugate() * X[IX]
+                        TEMP += A[K + I, J].conjugate() * X[IX]
                         IX += INCX
                 Y[JY] += ALPHA * TEMP
                 JY += INCY

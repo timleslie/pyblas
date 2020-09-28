@@ -259,7 +259,7 @@ def cher2k(UPLO, TRANS, N, K, ALPHA, A, LDA, B, LDB, BETA, C, LDC):
                 for J in range(N):
                     for I in range(J - 1):
                         C[I, J] = BETA * C[I, J]
-                    C[J, J] = BETA * (C[J, J]).real
+                    C[J, J] = BETA * C[J, J].real
         else:
             if BETA == 0:
                 for J in range(N):
@@ -267,7 +267,7 @@ def cher2k(UPLO, TRANS, N, K, ALPHA, A, LDA, B, LDB, BETA, C, LDC):
                         C[I, J] = 0
             else:
                 for J in range(N):
-                    C[J, J] = BETA * (C[J, J]).real
+                    C[J, J] = BETA * C[J, J].real
                     for I in range(J, N):
                         C[I, J] = BETA * C[I, J]
         return
@@ -286,18 +286,18 @@ def cher2k(UPLO, TRANS, N, K, ALPHA, A, LDA, B, LDB, BETA, C, LDC):
                 elif BETA != 1:
                     for I in range(J - 1):
                         C[I, J] = BETA * C[I, J]
-                    C[J, J] = BETA * (C[J, J]).real
+                    C[J, J] = BETA * C[J, J].real
                 else:
-                    C[J, J] = (C[J, J]).real
+                    C[J, J] = C[J, J].real
                 for L in range(K):
                     if (A[J, L] != 0) or (B[J, L] != 0):
-                        TEMP1 = ALPHA * (B[J, L]).conjugate()
+                        TEMP1 = ALPHA * B[J, L].conjugate()
                         TEMP2 = (ALPHA * A[J, L]).conjugate()
                         for I in range(J - 1):
                             C[I, J] = C[I, J] + A[I, L] * TEMP1 + B[I, L] * TEMP2
-                        C[J, J] = (C[J, J]).real + (
-                            A[J, L] * TEMP1 + B[J, L] * TEMP2
-                        ).real
+                        C[J, J] = (
+                            C[J, J].real + (A[J, L] * TEMP1 + B[J, L] * TEMP2).real
+                        )
         else:
             for J in range(N):
                 if BETA == 0:
@@ -306,18 +306,18 @@ def cher2k(UPLO, TRANS, N, K, ALPHA, A, LDA, B, LDB, BETA, C, LDC):
                 elif BETA != 1:
                     for I in range(J, N):
                         C[I, J] = BETA * C[I, J]
-                    C[J, J] = BETA * (C[J, J]).real
+                    C[J, J] = BETA * C[J, J].real
                 else:
-                    C[J, J] = (C[J, J]).real
+                    C[J, J] = C[J, J].real
                 for L in range(K):
                     if (A[J, L] != 0) or (B[J, L] != 0):
-                        TEMP1 = ALPHA * (B[J, L]).conjugate()
+                        TEMP1 = ALPHA * B[J, L].conjugate()
                         TEMP2 = (ALPHA * A[J, L]).conjugate()
                         for I in range(J, N):
                             C[I, J] = C[I, J] + A[I, L] * TEMP1 + B[I, L] * TEMP2
-                        C[J, J] = (C[J, J]).real + (
-                            A[J, L] * TEMP1 + B[J, L] * TEMP2
-                        ).real
+                        C[J, J] = (
+                            C[J, J].real + (A[J, L] * TEMP1 + B[J, L] * TEMP2).real
+                        )
     else:
         #
         #        Form  C := alpha*A**H*B + conjg( alpha )*B**H*A +
@@ -329,14 +329,14 @@ def cher2k(UPLO, TRANS, N, K, ALPHA, A, LDA, B, LDB, BETA, C, LDC):
                     TEMP1 = 0
                     TEMP2 = 0
                     for L in range(K):
-                        TEMP1 += (A[L, I]).conjugate() * B[L, J]
+                        TEMP1 += A[L, I].conjugate() * B[L, J]
                         TEMP2 += (B(L, I)).conjugate() * A[L, J]
                     if I == J:
                         if BETA == 0:
                             C[J, J] = (ALPHA * TEMP1 + (ALPHA).conjugate() * TEMP2).real
                         else:
                             C[J, J] = (
-                                BETA * (C[J, J]).real
+                                BETA * C[J, J].real
                                 + (ALPHA * TEMP1 + (ALPHA).conjugate() * TEMP2).real
                             )
                     else:
@@ -354,14 +354,14 @@ def cher2k(UPLO, TRANS, N, K, ALPHA, A, LDA, B, LDB, BETA, C, LDC):
                     TEMP1 = 0
                     TEMP2 = 0
                     for L in range(K):
-                        TEMP1 += (A[L, I]).conjugate() * B[L, J]
+                        TEMP1 += A[L, I].conjugate() * B[L, J]
                         TEMP2 += (B(L, I)).conjugate() * A[L, J]
                     if I == J:
                         if BETA == 0:
                             C[J, J] = (ALPHA * TEMP1 + (ALPHA).conjugate() * TEMP2).real
                         else:
                             C[J, J] = (
-                                BETA * (C[J, J]).real
+                                BETA * C[J, J].real
                                 + (ALPHA * TEMP1 + (ALPHA).conjugate() * TEMP2).real
                             )
                     else:

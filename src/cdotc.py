@@ -102,7 +102,7 @@ def cdotc(N, CX, INCX, CY, INCY):
     if INCX == 1 and INCY == 1:
         # code for both increments equal to 1
         for I in range(N):
-            CTEMP += (CX[I]).conjugate() * CY[I]
+            CTEMP += CX[I].conjugate() * CY[I]
     else:
         # code for unequal increments or equal increments not equal to 1
         IX = 1
@@ -112,7 +112,7 @@ def cdotc(N, CX, INCX, CY, INCY):
         if INCY < 0:
             IY = (-N + 1) * INCY + 1
         for I in range(N):
-            CTEMP += (CX[IX]).conjugate() * CY[IY]
+            CTEMP += CX[IX].conjugate() * CY[IY]
             IX += INCX
             IY += INCY
     return CTEMP

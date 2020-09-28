@@ -282,9 +282,9 @@ def CTRMM(SIDE, UPLO, TRANSA, DIAG, M, N, ALPHA, A, LDA, B, LDB):
                                 TEMP += A[K, I] * B[K, J]
                         else:
                             if NOUNIT:
-                                TEMP = TEMP * (A[I, I]).conjugate()
+                                TEMP = TEMP * A[I, I].conjugate()
                             for K in range(I - 1):
-                                TEMP += (A[K, I]).conjugate() * B[K, J]
+                                TEMP += A[K, I].conjugate() * B[K, J]
                         B[I, J] = ALPHA * TEMP
             else:
                 for J in range(N):
@@ -297,9 +297,9 @@ def CTRMM(SIDE, UPLO, TRANSA, DIAG, M, N, ALPHA, A, LDA, B, LDB):
                                 TEMP += A[K, I] * B[K, J]
                         else:
                             if NOUNIT:
-                                TEMP = TEMP * (A[I, I]).conjugate()
+                                TEMP = TEMP * A[I, I].conjugate()
                             for K in range(I, M):
-                                TEMP += (A[K, I]).conjugate() * B[K, J]
+                                TEMP += A[K, I].conjugate() * B[K, J]
                         B[I, J] = ALPHA * TEMP
     else:
         if lsame(TRANSA, "N"):
@@ -337,7 +337,7 @@ def CTRMM(SIDE, UPLO, TRANSA, DIAG, M, N, ALPHA, A, LDA, B, LDB):
                             if NOCONJ:
                                 TEMP = ALPHA * A[J, K]
                             else:
-                                TEMP = ALPHA * (A[J, K]).conjugate()
+                                TEMP = ALPHA * A[J, K].conjugate()
                             for I in range(M):
                                 B[I, J] = B[I, J] + TEMP * B[I, K]
                     TEMP = ALPHA
@@ -345,7 +345,7 @@ def CTRMM(SIDE, UPLO, TRANSA, DIAG, M, N, ALPHA, A, LDA, B, LDB):
                         if NOCONJ:
                             TEMP = TEMP * A[K, K]
                         else:
-                            TEMP = TEMP * (A[K, K]).conjugate()
+                            TEMP = TEMP * A[K, K].conjugate()
                     if TEMP != 1:
                         for I in range(M):
                             B[I, K] = TEMP * B[I, K]
@@ -356,7 +356,7 @@ def CTRMM(SIDE, UPLO, TRANSA, DIAG, M, N, ALPHA, A, LDA, B, LDB):
                             if NOCONJ:
                                 TEMP = ALPHA * A[J, K]
                             else:
-                                TEMP = ALPHA * (A[J, K]).conjugate()
+                                TEMP = ALPHA * A[J, K].conjugate()
                             for I in range(M):
                                 B[I, J] = B[I, J] + TEMP * B[I, K]
                     TEMP = ALPHA
@@ -364,7 +364,7 @@ def CTRMM(SIDE, UPLO, TRANSA, DIAG, M, N, ALPHA, A, LDA, B, LDB):
                         if NOCONJ:
                             TEMP = TEMP * A[K, K]
                         else:
-                            TEMP = TEMP * (A[K, K]).conjugate()
+                            TEMP = TEMP * A[K, K].conjugate()
                     if TEMP != 1:
                         for I in range(M):
                             B[I, K] = TEMP * B[I, K]

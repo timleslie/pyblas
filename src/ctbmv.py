@@ -311,9 +311,9 @@ def CTBMV(UPLO, TRANS, DIAG, N, K, A, LDA, X, INCX):
                             TEMP += A[L + I, J] * X[I]
                     else:
                         if NOUNIT:
-                            TEMP = TEMP * (A[KPLUS1, J]).conjugate()
+                            TEMP = TEMP * A[KPLUS1, J].conjugate()
                         for I in range(J - 2, max(1, J - K) - 2, -1):
-                            TEMP += (A[L + I, J]).conjugate() * X[I]
+                            TEMP += A[L + I, J].conjugate() * X[I]
                     X[J] = TEMP
             else:
                 KX += (N - 1) * INCX
@@ -331,9 +331,9 @@ def CTBMV(UPLO, TRANS, DIAG, N, K, A, LDA, X, INCX):
                             IX -= INCX
                     else:
                         if NOUNIT:
-                            TEMP = TEMP * (A[KPLUS1, J]).conjugate()
+                            TEMP = TEMP * A[KPLUS1, J].conjugate()
                         for I in range(J - 2, max(1, J - K) - 2, -1):
-                            TEMP += (A[L + I, J]).conjugate() * X[IX]
+                            TEMP += A[L + I, J].conjugate() * X[IX]
                             IX -= INCX
                     X[JX] = TEMP
                     JX -= INCX
@@ -349,9 +349,9 @@ def CTBMV(UPLO, TRANS, DIAG, N, K, A, LDA, X, INCX):
                             TEMP += A[L + I, J] * X[I]
                     else:
                         if NOUNIT:
-                            TEMP = TEMP * (A[1, J]).conjugate()
+                            TEMP = TEMP * A[1, J].conjugate()
                         for I in range(J, min(N, J + K)):
-                            TEMP += (A[L + I, J]).conjugate() * X[I]
+                            TEMP += A[L + I, J].conjugate() * X[I]
                     X[J] = TEMP
             else:
                 JX = KX
@@ -368,9 +368,9 @@ def CTBMV(UPLO, TRANS, DIAG, N, K, A, LDA, X, INCX):
                             IX += INCX
                     else:
                         if NOUNIT:
-                            TEMP = TEMP * (A[1, J]).conjugate()
+                            TEMP = TEMP * A[1, J].conjugate()
                         for I in range(J, min(N, J + K)):
-                            TEMP += (A[L + I, J]).conjugate() * X[IX]
+                            TEMP += A[L + I, J].conjugate() * X[IX]
                             IX += INCX
                     X[JX] = TEMP
                     JX += INCX

@@ -267,13 +267,11 @@ def CHEMM(SIDE, UPLO, M, N, ALPHA, A, LDA, B, LDB, BETA, C, LDC):
                     TEMP2 = 0
                     for K in range(I - 1):
                         C[K, J] = C[K, J] + TEMP1 * A[K, I]
-                        TEMP2 += B[K, J] * (A[K, I]).conjugate()
+                        TEMP2 += B[K, J] * A[K, I].conjugate()
                     if BETA == 0:
-                        C[I, J] = TEMP1 * (A[I, I]).real + ALPHA * TEMP2
+                        C[I, J] = TEMP1 * A[I, I].real + ALPHA * TEMP2
                     else:
-                        C[I, J] = (
-                            BETA * C[I, J] + TEMP1 * (A[I, I]).real + ALPHA * TEMP2
-                        )
+                        C[I, J] = BETA * C[I, J] + TEMP1 * A[I, I].real + ALPHA * TEMP2
         else:
             for J in range(N):
                 for I in range(M - 1, -1, -1):
@@ -281,19 +279,17 @@ def CHEMM(SIDE, UPLO, M, N, ALPHA, A, LDA, B, LDB, BETA, C, LDC):
                     TEMP2 = 0
                     for K in range(I, M):
                         C[K, J] = C[K, J] + TEMP1 * A[K, I]
-                        TEMP2 += B[K, J] * (A[K, I]).conjugate()
+                        TEMP2 += B[K, J] * A[K, I].conjugate()
                     if BETA == 0:
-                        C[I, J] = TEMP1 * (A[I, I]).real + ALPHA * TEMP2
+                        C[I, J] = TEMP1 * A[I, I].real + ALPHA * TEMP2
                     else:
-                        C[I, J] = (
-                            BETA * C[I, J] + TEMP1 * (A[I, I]).real + ALPHA * TEMP2
-                        )
+                        C[I, J] = BETA * C[I, J] + TEMP1 * A[I, I].real + ALPHA * TEMP2
     else:
         #
         #        Form  C := alpha*B*A + beta*C.
         #
         for J in range(N):
-            TEMP1 = ALPHA * (A[J, J]).real
+            TEMP1 = ALPHA * A[J, J].real
             if BETA == 0:
                 for I in range(M):
                     C[I, J] = TEMP1 * B[I, J]
@@ -304,12 +300,12 @@ def CHEMM(SIDE, UPLO, M, N, ALPHA, A, LDA, B, LDB, BETA, C, LDC):
                 if UPPER:
                     TEMP1 = ALPHA * A[K, J]
                 else:
-                    TEMP1 = ALPHA * (A[J, K]).conjugate()
+                    TEMP1 = ALPHA * A[J, K].conjugate()
                 for I in range(M):
                     C[I, J] = C[I, J] + TEMP1 * B[I, K]
             for K in range(J, N):
                 if UPPER:
-                    TEMP1 = ALPHA * (A[J, K]).conjugate()
+                    TEMP1 = ALPHA * A[J, K].conjugate()
                 else:
                     TEMP1 = ALPHA * A[K, J]
                 for I in range(M):

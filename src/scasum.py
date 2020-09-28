@@ -101,11 +101,11 @@ def scasum(N, CX, INCX):
         #        code for increment equal to 1
         #
         for I in range(N):
-            STEMP += abs((CX[I]).real) + abs((CX[I]).imag)
+            STEMP += abs(CX[I].real) + abs(CX[I].imag)
     else:
         #
         #        code for increment not equal to 1
         #
         for I in range(0, N * INCX, INCX):
-            STEMP += abs((CX[I]).real) + abs((CX[I]).imag)
+            STEMP += abs(CX[I].real) + abs(CX[I].imag)
     return STEMP

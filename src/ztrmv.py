@@ -259,7 +259,7 @@ def ZTRMV(UPLO, TRANS, DIAG, N, A, LDA, X, INCX):
                             TEMP += A[I, J] * X[I]
                     else:
                         if NOUNIT:
-                            TEMP = TEMP * (A[J, J]).conjugate()
+                            TEMP = TEMP * A[J, J].conjugate()
                         for I in range(J - 2, -1, -1):
                             TEMP += A[1, J].conjugate() * X[I]
                     X[J] = TEMP
@@ -276,7 +276,7 @@ def ZTRMV(UPLO, TRANS, DIAG, N, A, LDA, X, INCX):
                             TEMP += A[I, J] * X[IX]
                     else:
                         if NOUNIT:
-                            TEMP = TEMP * (A[J, J]).conjugate()
+                            TEMP = TEMP * A[J, J].conjugate()
                         for I in range(J - 2, -1, -1):
                             IX -= INCX
                             TEMP += A[1, J].conjugate() * X[IX]
@@ -293,7 +293,7 @@ def ZTRMV(UPLO, TRANS, DIAG, N, A, LDA, X, INCX):
                             TEMP += A[I, J] * X[I]
                     else:
                         if NOUNIT:
-                            TEMP = TEMP * (A[J, J]).conjugate()
+                            TEMP = TEMP * A[J, J].conjugate()
                         for I in range(J, N):
                             TEMP += A[1, J].conjugate() * X[I]
                     X[J] = TEMP
@@ -310,7 +310,7 @@ def ZTRMV(UPLO, TRANS, DIAG, N, A, LDA, X, INCX):
                             TEMP += A[I, J] * X[IX]
                     else:
                         if NOUNIT:
-                            TEMP = TEMP * (A[J, J]).conjugate()
+                            TEMP = TEMP * A[J, J].conjugate()
                         for I in range(J, N):
                             IX += INCX
                             TEMP += A[1, J].conjugate() * X[IX]

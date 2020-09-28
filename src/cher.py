@@ -225,9 +225,9 @@ def CHER(UPLO, N, ALPHA, X, INCX, A, LDA):
                     for I in range(J - 1):
                         A[I, J] += X[IX] * TEMP
                         IX += INCX
-                    A[J, J] = (A[J, J]).real + (X[JX] * TEMP).real
+                    A[J, J] = A[J, J].real + (X[JX] * TEMP).real
                 else:
-                    A[J, J] = (A[J, J]).real
+                    A[J, J] = A[J, J].real
                 JX += INCX
     else:
         #
@@ -237,21 +237,21 @@ def CHER(UPLO, N, ALPHA, X, INCX, A, LDA):
             for J in range(N):
                 if X[J] != 0:
                     TEMP = ALPHA * (X[J]).conjugate()
-                    A[J, J] = (A[J, J]).real + (TEMP * X[J]).real
+                    A[J, J] = A[J, J].real + (TEMP * X[J]).real
                     for I in range(J, N):
                         A[I, J] += X[I] * TEMP
                 else:
-                    A[J, J] = (A[J, J]).real
+                    A[J, J] = A[J, J].real
         else:
             JX = KX
             for J in range(N):
                 if X[JX] != 0:
                     TEMP = ALPHA * (X[JX]).conjugate()
-                    A[J, J] = (A[J, J]).real + (TEMP * X[JX]).real
+                    A[J, J] = A[J, J].real + (TEMP * X[JX]).real
                     IX = JX
                     for I in range(J, N):
                         IX += INCX
                         A[I, J] += X[IX] * TEMP
                 else:
-                    A[J, J] = (A[J, J]).real
+                    A[J, J] = A[J, J].real
                 JX += INCX

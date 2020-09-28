@@ -232,7 +232,7 @@ def ZHERK(UPLO, TRANS, N, K, ALPHA, A, LDA, BETA, C, LDC):
                 for J in range(N):
                     for I in range(J - 1):
                         C[I, J] = BETA * C[I, J]
-                    C[J, J] = BETA * (C[J, J]).real
+                    C[J, J] = BETA * C[J, J].real
         else:
             if BETA == 0:
                 for J in range(N):
@@ -240,7 +240,7 @@ def ZHERK(UPLO, TRANS, N, K, ALPHA, A, LDA, BETA, C, LDC):
                         C[I, J] = 0
             else:
                 for J in range(N):
-                    C[J, J] = BETA * (C[J, J]).real
+                    C[J, J] = BETA * C[J, J].real
                     for I in range(J, N):
                         C[I, J] = BETA * C[I, J]
         return
@@ -258,30 +258,30 @@ def ZHERK(UPLO, TRANS, N, K, ALPHA, A, LDA, BETA, C, LDC):
                 elif BETA != 1:
                     for I in range(J - 1):
                         C[I, J] = BETA * C[I, J]
-                    C[J, J] = BETA * (C[J, J]).real
+                    C[J, J] = BETA * C[J, J].real
                 else:
-                    C[J, J] = (C[J, J]).real
+                    C[J, J] = C[J, J].real
                 for L in range(K):
                     if A[J, L] != 0:
-                        TEMP = ALPHA * (A[J, L]).conjugate()
+                        TEMP = ALPHA * A[J, L].conjugate()
                         for I in range(J - 1):
                             C[I, J] = C[I, J] + TEMP * A[I, L]
-                        C[J, J] = (C[J, J]).real + (TEMP * A[I, L]).real
+                        C[J, J] = C[J, J].real + (TEMP * A[I, L]).real
         else:
             for J in range(N):
                 if BETA == 0:
                     for I in range(J - 1, N):
                         C[I, J] = 0
                 elif BETA != 1:
-                    C[J, J] = BETA * (C[J, J]).real
+                    C[J, J] = BETA * C[J, J].real
                     for I in range(J, N):
                         C[I, J] = BETA * C[I, J]
                 else:
-                    C[J, J] = (C[J, J]).real
+                    C[J, J] = C[J, J].real
                 for L in range(K):
                     if A[J, L] != 0:
-                        TEMP = ALPHA * (A[J, L]).conjugate()
-                        C[J, J] = (C[J, J]).real + (TEMP * A[J, L]).real
+                        TEMP = ALPHA * A[J, L].conjugate()
+                        C[J, J] = C[J, J].real + (TEMP * A[J, L]).real
                         for I in range(J, N):
                             C[I, J] = C[I, J] + TEMP * A[I, L]
     else:
@@ -293,31 +293,31 @@ def ZHERK(UPLO, TRANS, N, K, ALPHA, A, LDA, BETA, C, LDC):
                 for I in range(J - 1):
                     TEMP = 0
                     for L in range(K):
-                        TEMP += (A[L, I]).conjugate() * A[L, J]
+                        TEMP += A[L, I].conjugate() * A[L, J]
                     if BETA == 0:
                         C[I, J] = ALPHA * TEMP
                     else:
                         C[I, J] = ALPHA * TEMP + BETA * C[I, J]
                 RTEMP = 0
                 for L in range(K):
-                    RTEMP = RTEMP + (A[L, J]).conjugate() * A[L, J]
+                    RTEMP = RTEMP + A[L, J].conjugate() * A[L, J]
                 if BETA == 0:
                     C[J, J] = ALPHA * RTEMP
                 else:
-                    C[J, J] = ALPHA * RTEMP + BETA * (C[J, J]).real
+                    C[J, J] = ALPHA * RTEMP + BETA * C[J, J].real
         else:
             for J in range(N):
                 RTEMP = 0
                 for L in range(K):
-                    RTEMP = RTEMP + (A[L, J]).conjugate() * A[L, J]
+                    RTEMP = RTEMP + A[L, J].conjugate() * A[L, J]
                 if BETA == 0:
                     C[J, J] = ALPHA * RTEMP
                 else:
-                    C[J, J] = ALPHA * RTEMP + BETA * (C[J, J]).real
+                    C[J, J] = ALPHA * RTEMP + BETA * C[J, J].real
                 for I in range(J, N):
                     TEMP = 0
                     for L in range(K):
-                        TEMP += (A[L, I]).conjugate() * A[L, J]
+                        TEMP += A[L, I].conjugate() * A[L, J]
                     if BETA == 0:
                         C[I, J] = ALPHA * TEMP
                     else:

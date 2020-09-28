@@ -311,7 +311,7 @@ def CGEMM(TRANSA, TRANSB, M, N, K, ALPHA, A, LDA, B, LDB, BETA, C, LDC):
                 for I in range(M):
                     TEMP = 0
                     for L in range(K):
-                        TEMP += (A[L, I]).conjugate() * B[L, J]
+                        TEMP += A[L, I].conjugate() * B[L, J]
                     if BETA == 0:
                         C[I, J] = ALPHA * TEMP
                     else:
@@ -340,7 +340,7 @@ def CGEMM(TRANSA, TRANSB, M, N, K, ALPHA, A, LDA, B, LDB, BETA, C, LDC):
                     for I in range(M):
                         C[I, J] = BETA * C[I, J]
                 for L in range(K):
-                    TEMP = ALPHA * (B[J, L]).conjugate()
+                    TEMP = ALPHA * B[J, L].conjugate()
                     for I in range(M):
                         C[I, J] = C[I, J] + TEMP * A[I, L]
         else:
@@ -363,7 +363,7 @@ def CGEMM(TRANSA, TRANSB, M, N, K, ALPHA, A, LDA, B, LDB, BETA, C, LDC):
                 for I in range(M):
                     TEMP = 0
                     for L in range(K):
-                        TEMP += (A[L, I]).conjugate() * (B[J, L]).conjugate()
+                        TEMP += A[L, I].conjugate() * B[J, L].conjugate()
                     if BETA == 0:
                         C[I, J] = ALPHA * TEMP
                     else:
@@ -374,7 +374,7 @@ def CGEMM(TRANSA, TRANSB, M, N, K, ALPHA, A, LDA, B, LDB, BETA, C, LDC):
                 for I in range(M):
                     TEMP = 0
                     for L in range(K):
-                        TEMP += (A[L, I]).conjugate() * B[J, L]
+                        TEMP += A[L, I].conjugate() * B[J, L]
                     if BETA == 0:
                         C[I, J] = ALPHA * TEMP
                     else:
@@ -386,7 +386,7 @@ def CGEMM(TRANSA, TRANSB, M, N, K, ALPHA, A, LDA, B, LDB, BETA, C, LDC):
                 for I in range(M):
                     TEMP = 0
                     for L in range(K):
-                        TEMP += A[L, I] * (B[J, L]).conjugate()
+                        TEMP += A[L, I] * B[J, L].conjugate()
                     if BETA == 0:
                         C[I, J] = ALPHA * TEMP
                     else:

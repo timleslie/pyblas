@@ -288,9 +288,9 @@ def ZTRSM(SIDE, UPLO, TRANSA, DIAG, M, N, ALPHA, A, LDA, B, LDB):
                                 TEMP = TEMP / A[I, I]
                         else:
                             for K in range(I - 1):
-                                TEMP -= (A[K, I]).conjugate() * B[K, J]
+                                TEMP -= A[K, I].conjugate() * B[K, J]
                             if NOUNIT:
-                                TEMP = TEMP / (A[I, I]).conjugate()
+                                TEMP = TEMP / A[I, I].conjugate()
                         B[I, J] = TEMP
             else:
                 for J in range(N):
@@ -303,9 +303,9 @@ def ZTRSM(SIDE, UPLO, TRANSA, DIAG, M, N, ALPHA, A, LDA, B, LDB):
                                 TEMP = TEMP / A[I, I]
                         else:
                             for K in range(I, M):
-                                TEMP -= (A[K, I]).conjugate() * B[K, J]
+                                TEMP -= A[K, I].conjugate() * B[K, J]
                             if NOUNIT:
-                                TEMP = TEMP / (A[I, I]).conjugate()
+                                TEMP = TEMP / A[I, I].conjugate()
                         B[I, J] = TEMP
     else:
         if lsame(TRANSA, "N"):
@@ -345,7 +345,7 @@ def ZTRSM(SIDE, UPLO, TRANSA, DIAG, M, N, ALPHA, A, LDA, B, LDB):
                         if NOCONJ:
                             TEMP = 1 / A[K, K]
                         else:
-                            TEMP = 1 / (A[K, K]).conjugate()
+                            TEMP = 1 / A[K, K].conjugate()
                         for I in range(M):
                             B[I, K] = TEMP * B[I, K]
                     for K in range(K - 1):
@@ -353,7 +353,7 @@ def ZTRSM(SIDE, UPLO, TRANSA, DIAG, M, N, ALPHA, A, LDA, B, LDB):
                             if NOCONJ:
                                 TEMP = A[J, K]
                             else:
-                                TEMP = (A[J, K]).conjugate()
+                                TEMP = A[J, K].conjugate()
                             for I in range(M):
                                 B[I, J] = B[I, J] - TEMP * B[I, K]
                     if ALPHA != 1:
@@ -365,7 +365,7 @@ def ZTRSM(SIDE, UPLO, TRANSA, DIAG, M, N, ALPHA, A, LDA, B, LDB):
                         if NOCONJ:
                             TEMP = 1 / A[K, K]
                         else:
-                            TEMP = 1 / (A[K, K]).conjugate()
+                            TEMP = 1 / A[K, K].conjugate()
                         for I in range(M):
                             B[I, K] = TEMP * B[I, K]
                     for J in range(K, N):
@@ -373,7 +373,7 @@ def ZTRSM(SIDE, UPLO, TRANSA, DIAG, M, N, ALPHA, A, LDA, B, LDB):
                             if NOCONJ:
                                 TEMP = A[J, K]
                             else:
-                                TEMP = (A[J, K]).conjugate()
+                                TEMP = A[J, K].conjugate()
                             for I in range(M):
                                 B[I, J] = B[I, J] - TEMP * B[I, K]
                     if ALPHA != 1:

@@ -239,9 +239,9 @@ def CHER2(UPLO, N, ALPHA, X, INCX, Y, INCY, A, LDA):
                     TEMP2 = (ALPHA * X[J]).conjugate()
                     for I in range(J - 1):
                         A[I, J] += X[I] * TEMP1 + Y[I] * TEMP2
-                    A[J, J] = (A[J, J]).real + (X[J] * TEMP1 + Y[J] * TEMP2).real
+                    A[J, J] = A[J, J].real + (X[J] * TEMP1 + Y[J] * TEMP2).real
                 else:
-                    A[J, J] = (A[J, J]).real
+                    A[J, J] = A[J, J].real
         else:
             for J in range(N):
                 if (X[JX] != 0) or (Y[JY] != 0):
@@ -253,9 +253,9 @@ def CHER2(UPLO, N, ALPHA, X, INCX, Y, INCY, A, LDA):
                         A[I, J] += X[IX] * TEMP1 + Y[IY] * TEMP2
                         IX += INCX
                         IY += INCY
-                    A[J, J] = (A[J, J]).real + (X[JX] * TEMP1 + Y[JY] * TEMP2).real
+                    A[J, J] = A[J, J].real + (X[JX] * TEMP1 + Y[JY] * TEMP2).real
                 else:
-                    A[J, J] = (A[J, J]).real
+                    A[J, J] = A[J, J].real
                 JX += INCX
                 JY += INCY
     else:
@@ -267,17 +267,17 @@ def CHER2(UPLO, N, ALPHA, X, INCX, Y, INCY, A, LDA):
                 if (X[J] != 0) or (Y[J] != 0):
                     TEMP1 = ALPHA * (Y[J]).conjugate()
                     TEMP2 = (ALPHA * X[J]).conjugate()
-                    A[J, J] = (A[J, J]).real + (X[J] * TEMP1 + Y[J] * TEMP2).real
+                    A[J, J] = A[J, J].real + (X[J] * TEMP1 + Y[J] * TEMP2).real
                     for I in range(N):
                         A[I, J] += X[I] * TEMP1 + Y[I] * TEMP2
                 else:
-                    A[J, J] = (A[J, J]).real
+                    A[J, J] = A[J, J].real
         else:
             for J in range(N):
                 if (X[JX] != 0) or (Y[JY] != 0):
                     TEMP1 = ALPHA * (Y[JY]).conjugate()
                     TEMP2 = (ALPHA * X[JX]).conjugate()
-                    A[J, J] = (A[J, J]).real + (X[JX] * TEMP1 + Y[JY] * TEMP2).real
+                    A[J, J] = A[J, J].real + (X[JX] * TEMP1 + Y[JY] * TEMP2).real
                     IX = JX
                     IY = JY
                     for I in range(J, N):
@@ -285,6 +285,6 @@ def CHER2(UPLO, N, ALPHA, X, INCX, Y, INCY, A, LDA):
                         IY += INCY
                         A[I, J] += X[IX] * TEMP1 + Y[IY] * TEMP2
                 else:
-                    A[J, J] = (A[J, J]).real
+                    A[J, J] = A[J, J].real
                 JX += INCX
                 JY += INCY

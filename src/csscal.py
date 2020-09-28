@@ -97,8 +97,8 @@ def csscal(N, SA, CX, INCX):
     if INCX == 1:
         # code for increment equal to 1
         for I in range(N):
-            CX[I] = complex(SA * (CX[I]).real, SA * (CX[I]).imag)
+            CX[I] = complex(SA * CX[I].real, SA * CX[I].imag)
     else:
         # code for increment not equal to 1
         for I in range(0, N * INCX, INCX):
-            CX[I] = complex(SA * (CX[I]).real, SA * (CX[I]).imag)
+            CX[I] = complex(SA * CX[I].real, SA * CX[I].imag)

@@ -263,7 +263,7 @@ def CTRSV(UPLO, TRANS, DIAG, N, A, LDA, X, INCX):
                         for I in range(J - 1):
                             TEMP -= A[1, J].conjugate() * X[I]
                         if NOUNIT:
-                            TEMP = TEMP / (A[J, J]).conjugate()
+                            TEMP = TEMP / A[J, J].conjugate()
                     X[J] = TEMP
             else:
                 JX = KX
@@ -281,7 +281,7 @@ def CTRSV(UPLO, TRANS, DIAG, N, A, LDA, X, INCX):
                             TEMP -= A[1, J].conjugate() * X[IX]
                             IX += INCX
                         if NOUNIT:
-                            TEMP = TEMP / (A[J, J]).conjugate()
+                            TEMP = TEMP / A[J, J].conjugate()
                     X[JX] = TEMP
                     JX += INCX
         else:
@@ -297,7 +297,7 @@ def CTRSV(UPLO, TRANS, DIAG, N, A, LDA, X, INCX):
                         for I in range(N - 1, J - 1, -1):
                             TEMP -= A[1, J].conjugate() * X[I]
                         if NOUNIT:
-                            TEMP = TEMP / (A[J, J]).conjugate()
+                            TEMP = TEMP / A[J, J].conjugate()
                     X[J] = TEMP
             else:
                 KX += (N - 1) * INCX
@@ -316,6 +316,6 @@ def CTRSV(UPLO, TRANS, DIAG, N, A, LDA, X, INCX):
                             TEMP -= A[1, J].conjugate() * X[IX]
                             IX -= INCX
                         if NOUNIT:
-                            TEMP = TEMP / (A[J, J]).conjugate()
+                            TEMP = TEMP / A[J, J].conjugate()
                     X[JX] = TEMP
                     JX -= INCX

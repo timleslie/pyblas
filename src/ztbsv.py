@@ -317,9 +317,9 @@ def ZTBSV(UPLO, TRANS, DIAG, N, K, A, LDA, X, INCX):
                             TEMP = TEMP / A[KPLUS1, J]
                     else:
                         for I in range(max(1, J - K) - 1, J - 1):
-                            TEMP -= (A[L + I, J]).conjugate() * X[I]
+                            TEMP -= A[L + I, J].conjugate() * X[I]
                         if NOUNIT:
-                            TEMP = TEMP / (A[KPLUS1, J]).conjugate()
+                            TEMP = TEMP / A[KPLUS1, J].conjugate()
                     X[J] = TEMP
             else:
                 JX = KX
@@ -335,10 +335,10 @@ def ZTBSV(UPLO, TRANS, DIAG, N, K, A, LDA, X, INCX):
                             TEMP = TEMP / A[KPLUS1, J]
                     else:
                         for I in range(max(1, J - K) - 1, J - 1):
-                            TEMP -= (A[L + I, J]).conjugate() * X[IX]
+                            TEMP -= A[L + I, J].conjugate() * X[IX]
                             IX += INCX
                         if NOUNIT:
-                            TEMP = TEMP / (A[KPLUS1, J]).conjugate()
+                            TEMP = TEMP / A[KPLUS1, J].conjugate()
                     X[JX] = TEMP
                     JX += INCX
                     if J > K:
@@ -355,9 +355,9 @@ def ZTBSV(UPLO, TRANS, DIAG, N, K, A, LDA, X, INCX):
                             TEMP = TEMP / A[1, J]
                     else:
                         for I in range(min(N, J + K) - 1, J - 1, -1):
-                            TEMP -= (A[L + I, J]).conjugate() * X[I]
+                            TEMP -= A[L + I, J].conjugate() * X[I]
                         if NOUNIT:
-                            TEMP = TEMP / (A[1, J]).conjugate()
+                            TEMP = TEMP / A[1, J].conjugate()
                     X[J] = TEMP
             else:
                 KX += (N - 1) * INCX
@@ -374,10 +374,10 @@ def ZTBSV(UPLO, TRANS, DIAG, N, K, A, LDA, X, INCX):
                             TEMP = TEMP / A[1, J]
                     else:
                         for I in range(min(N, J + K) - 1, J - 1, -1):
-                            TEMP -= (A[L + I, J]).conjugate() * X[IX]
+                            TEMP -= A[L + I, J].conjugate() * X[IX]
                             IX -= INCX
                         if NOUNIT:
-                            TEMP = TEMP / (A[1, J]).conjugate()
+                            TEMP = TEMP / A[1, J].conjugate()
                     X[JX] = TEMP
                     JX -= INCX
                     if (N - J) >= K:
