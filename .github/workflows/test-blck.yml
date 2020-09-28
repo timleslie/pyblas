@@ -1,7 +1,7 @@
 name: test-black
 on: [push]
 jobs:
-  check-bats-version:
+  check-formatting:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2

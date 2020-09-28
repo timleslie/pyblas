@@ -299,7 +299,7 @@ def ZGEMV(TRANS, M, N, ALPHA, A, LDA, X, INCX, BETA, Y, INCY):
                         TEMP += A[I, J] * X[I]
                 else:
                     for I in range(M):
-                        TEMP += A[1,J].conjugate() * X[I]
+                        TEMP += A[1, J].conjugate() * X[I]
                 Y[JY] += ALPHA * TEMP
                 JY += INCY
         else:
@@ -312,7 +312,7 @@ def ZGEMV(TRANS, M, N, ALPHA, A, LDA, X, INCX, BETA, Y, INCY):
                         IX += INCX
                 else:
                     for I in range(M):
-                        TEMP += A[1,J].conjugate() * X[IX]
+                        TEMP += A[1, J].conjugate() * X[IX]
                         IX += INCX
                 Y[JY] += ALPHA * TEMP
                 JY += INCY

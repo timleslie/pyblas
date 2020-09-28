@@ -262,7 +262,7 @@ def CHEMV(UPLO, N, ALPHA, A, LDA, X, INCX, BETA, Y, INCY):
                 TEMP2 = 0
                 for I in range(J - 1):
                     Y[I] = Y[I] + TEMP1 * A[I, J]
-                    TEMP2 += A[1,J].conjugate() * X[I]
+                    TEMP2 += A[1, J].conjugate() * X[I]
                 Y[J] = Y[J] + TEMP1 * (A[J, J]).real + ALPHA * TEMP2
         else:
             JX = KX
@@ -274,7 +274,7 @@ def CHEMV(UPLO, N, ALPHA, A, LDA, X, INCX, BETA, Y, INCY):
                 IY = KY
                 for I in range(J - 1):
                     Y[IY] = Y[IY] + TEMP1 * A[I, J]
-                    TEMP2 += A[1,J].conjugate() * X[IX]
+                    TEMP2 += A[1, J].conjugate() * X[IX]
                     IX += INCX
                     IY += INCY
                 Y[JY] += TEMP1 * (A[J, J]).real + ALPHA * TEMP2
@@ -291,7 +291,7 @@ def CHEMV(UPLO, N, ALPHA, A, LDA, X, INCX, BETA, Y, INCY):
                 Y[J] = Y[J] + TEMP1 * (A[J, J]).real
                 for I in range(J, N):
                     Y[I] = Y[I] + TEMP1 * A[I, J]
-                    TEMP2 += A[1,J].conjugate() * X[I]
+                    TEMP2 += A[1, J].conjugate() * X[I]
                 Y[J] += ALPHA * TEMP2
         else:
             JX = KX
@@ -306,7 +306,7 @@ def CHEMV(UPLO, N, ALPHA, A, LDA, X, INCX, BETA, Y, INCY):
                     IX += INCX
                     IY += INCY
                     Y[IY] += TEMP1 * A[I, J]
-                    TEMP2 += A[1,J].conjugate() * X[IX]
+                    TEMP2 += A[1, J].conjugate() * X[IX]
                 Y[JY] += ALPHA * TEMP2
                 JX += INCX
                 JY += INCY
