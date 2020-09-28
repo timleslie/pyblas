@@ -269,14 +269,14 @@ def DGEMV(TRANS, M, N, ALPHA, A, LDA, X, INCX, BETA, Y, INCY):
             for J in range(N):
                 TEMP = ALPHA * X[JX]
                 for I in range(M):
-                    Y[I] = Y[I] + TEMP * A[I, J]
+                    Y[I] += TEMP * A[I, J]
                 JX += INCX
         else:
             for J in range(N):
                 TEMP = ALPHA * X[JX]
                 IY = KY
                 for I in range(M):
-                    Y[IY] = Y[IY] + TEMP * A[I, J]
+                    Y[IY] += TEMP * A[I, J]
                     IY += INCY
                 JX += INCX
     else:

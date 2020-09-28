@@ -240,7 +240,7 @@ def ZHPR(UPLO, N, ALPHA, X, INCX, AP):
                         K += 1
                 else:
                     AP[KK] = (AP[KK]).real
-                KK = KK + N - J + 1
+                KK += N - J + 1
         else:
             JX = KX
             for J in range(N):
@@ -254,4 +254,4 @@ def ZHPR(UPLO, N, ALPHA, X, INCX, AP):
                 else:
                     AP[KK] = (AP[KK]).real
                 JX += INCX
-                KK = KK + N - J + 1
+                KK += N - J + 1

@@ -274,7 +274,7 @@ def ZHPR2(UPLO, N, ALPHA, X, INCX, Y, INCY, AP):
                         K += 1
                 else:
                     AP[KK] = (AP[KK]).real
-                KK = KK + N - J + 1
+                KK += N - J + 1
         else:
             for J in range(N):
                 if (X[JX] != 0) or (Y[JY] != 0):
@@ -291,4 +291,4 @@ def ZHPR2(UPLO, N, ALPHA, X, INCX, Y, INCY, AP):
                     AP[KK] = (AP[KK]).real
                 JX += INCX
                 JY += INCY
-                KK = KK + N - J + 1
+                KK += N - J + 1

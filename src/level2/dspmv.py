@@ -248,10 +248,10 @@ def DSPMV(UPLO, N, ALPHA, AP, X, INCX, BETA, Y, INCY):
                 TEMP2 = 0
                 K = KK
                 for I in range(J - 1):
-                    Y[I] = Y[I] + TEMP1 * AP[K]
+                    Y[I] += TEMP1 * AP[K]
                     TEMP2 += AP[K] * X[I]
                     K += 1
-                Y[J] = Y[J] + TEMP1 * AP[KK + J - 1] + ALPHA * TEMP2
+                Y[J] += TEMP1 * AP[KK + J - 1] + ALPHA * TEMP2
                 KK += J
         else:
             JX = KX
@@ -262,7 +262,7 @@ def DSPMV(UPLO, N, ALPHA, AP, X, INCX, BETA, Y, INCY):
                 IX = KX
                 IY = KY
                 for K in range(KK - 1, KK + J - 2):
-                    Y[IY] = Y[IY] + TEMP1 * AP[K]
+                    Y[IY] += TEMP1 * AP[K]
                     TEMP2 += AP[K] * X[IX]
                     IX += INCX
                     IY += INCY
@@ -278,14 +278,14 @@ def DSPMV(UPLO, N, ALPHA, AP, X, INCX, BETA, Y, INCY):
             for J in range(N):
                 TEMP1 = ALPHA * X[J]
                 TEMP2 = 0
-                Y[J] = Y[J] + TEMP1 * AP[KK]
+                Y[J] += TEMP1 * AP[KK]
                 K = KK + 1
                 for I in range(J, N):
-                    Y[I] = Y[I] + TEMP1 * AP[K]
+                    Y[I] += TEMP1 * AP[K]
                     TEMP2 += AP[K] * X[I]
                     K += 1
-                Y[J] = Y[J] + ALPHA * TEMP2
-                KK = KK + (N - J + 1)
+                Y[J] += ALPHA * TEMP2
+                KK += (N - J + 1)
         else:
             JX = KX
             JY = KY
@@ -298,9 +298,9 @@ def DSPMV(UPLO, N, ALPHA, AP, X, INCX, BETA, Y, INCY):
                 for K in range(KK, KK + N - J):
                     IX += INCX
                     IY += INCY
-                    Y[IY] = Y[IY] + TEMP1 * AP[K]
+                    Y[IY] += TEMP1 * AP[K]
                     TEMP2 += AP[K] * X[IX]
                 Y[JY] += ALPHA * TEMP2
                 JX += INCX
                 JY += INCY
-                KK = KK + (N - J + 1)
+                KK += (N - J + 1)

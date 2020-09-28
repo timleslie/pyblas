@@ -240,9 +240,9 @@ def ZHEMV(UPLO, N, ALPHA, A, LDA, X, INCX, BETA, Y, INCY):
                 TEMP1 = ALPHA * X[J]
                 TEMP2 = 0
                 for I in range(J - 1):
-                    Y[I] = Y[I] + TEMP1 * A[I, J]
+                    Y[I] += TEMP1 * A[I, J]
                     TEMP2 += A[1, J].conjugate() * X[I]
-                Y[J] = Y[J] + TEMP1 * A[J, J].real + ALPHA * TEMP2
+                Y[J] += TEMP1 * A[J, J].real + ALPHA * TEMP2
         else:
             JX = KX
             JY = KY
@@ -252,7 +252,7 @@ def ZHEMV(UPLO, N, ALPHA, A, LDA, X, INCX, BETA, Y, INCY):
                 IX = KX
                 IY = KY
                 for I in range(J - 1):
-                    Y[IY] = Y[IY] + TEMP1 * A[I, J]
+                    Y[IY] += TEMP1 * A[I, J]
                     TEMP2 += A[1, J].conjugate() * X[IX]
                     IX += INCX
                     IY += INCY
@@ -267,11 +267,11 @@ def ZHEMV(UPLO, N, ALPHA, A, LDA, X, INCX, BETA, Y, INCY):
             for J in range(N):
                 TEMP1 = ALPHA * X[J]
                 TEMP2 = 0
-                Y[J] = Y[J] + TEMP1 * A[J, J].real
+                Y[J] += TEMP1 * A[J, J].real
                 for I in range(J, N):
-                    Y[I] = Y[I] + TEMP1 * A[I, J]
+                    Y[I] += TEMP1 * A[I, J]
                     TEMP2 += A[1, J].conjugate() * X[I]
-                Y[J] = Y[J] + ALPHA * TEMP2
+                Y[J] += ALPHA * TEMP2
         else:
             JX = KX
             JY = KY
@@ -284,7 +284,7 @@ def ZHEMV(UPLO, N, ALPHA, A, LDA, X, INCX, BETA, Y, INCY):
                 for I in range(J, N):
                     IX += INCX
                     IY += INCY
-                    Y[IY] = Y[IY] + TEMP1 * A[I, J]
+                    Y[IY] += TEMP1 * A[I, J]
                     TEMP2 += A[1, J].conjugate() * X[IX]
                 Y[JY] += ALPHA * TEMP2
                 JX += INCX

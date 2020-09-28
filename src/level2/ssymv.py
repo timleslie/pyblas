@@ -256,9 +256,9 @@ def SSYMV(UPLO, N, ALPHA, A, LDA, X, INCX, BETA, Y, INCY):
                 TEMP1 = ALPHA * X[J]
                 TEMP2 = 0
                 for I in range(J - 1):
-                    Y[I] = Y[I] + TEMP1 * A[I, J]
+                    Y[I] += TEMP1 * A[I, J]
                     TEMP2 += A[I, J] * X[I]
-                Y[J] = Y[J] + TEMP1 * A[J, J] + ALPHA * TEMP2
+                Y[J] += TEMP1 * A[J, J] + ALPHA * TEMP2
         else:
             JX = KX
             JY = KY
@@ -268,7 +268,7 @@ def SSYMV(UPLO, N, ALPHA, A, LDA, X, INCX, BETA, Y, INCY):
                 IX = KX
                 IY = KY
                 for I in range(J - 1):
-                    Y[IY] = Y[IY] + TEMP1 * A[I, J]
+                    Y[IY] += TEMP1 * A[I, J]
                     TEMP2 += A[I, J] * X[IX]
                     IX += INCX
                     IY += INCY
@@ -283,11 +283,11 @@ def SSYMV(UPLO, N, ALPHA, A, LDA, X, INCX, BETA, Y, INCY):
             for J in range(N):
                 TEMP1 = ALPHA * X[J]
                 TEMP2 = 0
-                Y[J] = Y[J] + TEMP1 * A[J, J]
+                Y[J] += TEMP1 * A[J, J]
                 for I in range(J, N):
-                    Y[I] = Y[I] + TEMP1 * A[I, J]
+                    Y[I] += TEMP1 * A[I, J]
                     TEMP2 += A[I, J] * X[I]
-                Y[J] = Y[J] + ALPHA * TEMP2
+                Y[J] += ALPHA * TEMP2
         else:
             JX = KX
             JY = KY
@@ -300,7 +300,7 @@ def SSYMV(UPLO, N, ALPHA, A, LDA, X, INCX, BETA, Y, INCY):
                 for I in range(J, N):
                     IX += INCX
                     IY += INCY
-                    Y[IY] = Y[IY] + TEMP1 * A[I, J]
+                    Y[IY] += TEMP1 * A[I, J]
                     TEMP2 += A[I, J] * X[IX]
                 Y[JY] += ALPHA * TEMP2
                 JX += INCX

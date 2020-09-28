@@ -319,7 +319,7 @@ def STRMM(SIDE, UPLO, TRANSA, DIAG, M, N, ALPHA, A, LDA, B, LDB):
                 for J in range(N - 1, -1, -1):
                     TEMP = ALPHA
                     if NOUNIT:
-                        TEMP = TEMP * A[J, J]
+                        TEMP *= A[J, J]
                     for I in range(M):
                         B[I, J] = TEMP * B[I, J]
                     for K in range(J - 1):
@@ -331,7 +331,7 @@ def STRMM(SIDE, UPLO, TRANSA, DIAG, M, N, ALPHA, A, LDA, B, LDB):
                 for J in range(N):
                     TEMP = ALPHA
                     if NOUNIT:
-                        TEMP = TEMP * A[J, J]
+                        TEMP *= A[J, J]
                     for I in range(M):
                         B[I, J] = TEMP * B[I, J]
                     for K in range(J, N):

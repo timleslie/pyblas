@@ -256,7 +256,7 @@ def DSPR2(UPLO, N, ALPHA, X, INCX, Y, INCY, AP):
                     for I in range(J - 1, N):
                         AP[K] = AP[K] + X[I] * TEMP1 + Y[I] * TEMP2
                         K += 1
-                KK = KK + N - J + 1
+                KK += N - J + 1
         else:
             for J in range(N):
                 if (X[JX] != 0) or (Y[JY] != 0):
@@ -270,4 +270,4 @@ def DSPR2(UPLO, N, ALPHA, X, INCX, Y, INCY, AP):
                         IY += INCY
                 JX += INCX
                 JY += INCY
-                KK = KK + N - J + 1
+                KK += N - J + 1

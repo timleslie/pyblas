@@ -276,7 +276,7 @@ def STRMV(UPLO, TRANS, DIAG, N, A, LDA, X, INCX):
                 for J in range(N - 1, -1, -1):
                     TEMP = X[J]
                     if NOUNIT:
-                        TEMP = TEMP * A[J, J]
+                        TEMP *= A[J, J]
                     for I in range(J - 2, -1, -1):
                         TEMP += A[I, J] * X[I]
                     X[J] = TEMP
@@ -286,7 +286,7 @@ def STRMV(UPLO, TRANS, DIAG, N, A, LDA, X, INCX):
                     TEMP = X[JX]
                     IX = JX
                     if NOUNIT:
-                        TEMP = TEMP * A[J, J]
+                        TEMP *= A[J, J]
                     for I in range(J - 2, -1, -1):
                         IX -= INCX
                         TEMP += A[I, J] * X[IX]
@@ -297,7 +297,7 @@ def STRMV(UPLO, TRANS, DIAG, N, A, LDA, X, INCX):
                 for J in range(N):
                     TEMP = X[J]
                     if NOUNIT:
-                        TEMP = TEMP * A[J, J]
+                        TEMP *= A[J, J]
                     for I in range(J, N):
                         TEMP += A[I, J] * X[I]
                     X[J] = TEMP
@@ -307,7 +307,7 @@ def STRMV(UPLO, TRANS, DIAG, N, A, LDA, X, INCX):
                     TEMP = X[JX]
                     IX = JX
                     if NOUNIT:
-                        TEMP = TEMP * A[J, J]
+                        TEMP *= A[J, J]
                     for I in range(J, N):
                         IX += INCX
                         TEMP += A[I, J] * X[IX]

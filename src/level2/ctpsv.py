@@ -239,7 +239,7 @@ def CTPSV(UPLO, TRANS, DIAG, N, AP, X, INCX):
                         for I in range(J, N):
                             X[I] -= TEMP * AP[K]
                             K += 1
-                    KK = KK + (N - J + 1)
+                    KK += (N - J + 1)
             else:
                 JX = KX
                 for J in range(N):
@@ -252,7 +252,7 @@ def CTPSV(UPLO, TRANS, DIAG, N, AP, X, INCX):
                             IX += INCX
                             X[IX] -= TEMP * AP[K]
                     JX += INCX
-                    KK = KK + (N - J + 1)
+                    KK += (N - J + 1)
     else:
         # Form  x := inv( A**T )*x  or  x := inv( A**H )*x.
         if lsame(UPLO, "U"):

@@ -310,7 +310,7 @@ def STPMV(UPLO, TRANS, DIAG, N, AP, X, INCX):
                         TEMP += AP[K] * X[I]
                         K += 1
                     X[J] = TEMP
-                    KK = KK + (N - J + 1)
+                    KK += (N - J + 1)
             else:
                 JX = KX
                 for J in range(N):
@@ -323,4 +323,4 @@ def STPMV(UPLO, TRANS, DIAG, N, AP, X, INCX):
                         TEMP += AP[K] * X[IX]
                     X[JX] = TEMP
                     JX += INCX
-                    KK = KK + (N - J + 1)
+                    KK += (N - J + 1)

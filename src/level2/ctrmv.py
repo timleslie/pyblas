@@ -232,7 +232,7 @@ def CTRMV(UPLO, TRANS, DIAG, N, A, LDA, X, INCX):
                         for I in range(N - 1, J - 1, -1):
                             X[I] += TEMP * A[I, J]
                         if NOUNIT:
-                            X[J] = X[J] * A[J, J]
+                            X[J] *= A[J, J]
             else:
                 KX += (N - 1) * INCX
                 JX = KX
@@ -254,12 +254,12 @@ def CTRMV(UPLO, TRANS, DIAG, N, A, LDA, X, INCX):
                     TEMP = X[J]
                     if NOCONJ:
                         if NOUNIT:
-                            TEMP = TEMP * A[J, J]
+                            TEMP *= A[J, J]
                         for I in range(J - 2, -1, -1):
                             TEMP += A[I, J] * X[I]
                     else:
                         if NOUNIT:
-                            TEMP = TEMP * A[J, J].conjugate()
+                            TEMP *= A[J, J].conjugate()
                         for I in range(J - 2, -1, -1):
                             TEMP += A[1, J].conjugate() * X[I]
                     X[J] = TEMP
@@ -270,13 +270,13 @@ def CTRMV(UPLO, TRANS, DIAG, N, A, LDA, X, INCX):
                     IX = JX
                     if NOCONJ:
                         if NOUNIT:
-                            TEMP = TEMP * A[J, J]
+                            TEMP *= A[J, J]
                         for I in range(J - 2, -1, -1):
                             IX -= INCX
                             TEMP += A[I, J] * X[IX]
                     else:
                         if NOUNIT:
-                            TEMP = TEMP * A[J, J].conjugate()
+                            TEMP *= A[J, J].conjugate()
                         for I in range(J - 2, -1, -1):
                             IX -= INCX
                             TEMP += A[1, J].conjugate() * X[IX]
@@ -288,12 +288,12 @@ def CTRMV(UPLO, TRANS, DIAG, N, A, LDA, X, INCX):
                     TEMP = X[J]
                     if NOCONJ:
                         if NOUNIT:
-                            TEMP = TEMP * A[J, J]
+                            TEMP *= A[J, J]
                         for I in range(J, N):
                             TEMP += A[I, J] * X[I]
                     else:
                         if NOUNIT:
-                            TEMP = TEMP * A[J, J].conjugate()
+                            TEMP *= A[J, J].conjugate()
                         for I in range(J, N):
                             TEMP += A[1, J].conjugate() * X[I]
                     X[J] = TEMP
@@ -304,13 +304,13 @@ def CTRMV(UPLO, TRANS, DIAG, N, A, LDA, X, INCX):
                     IX = JX
                     if NOCONJ:
                         if NOUNIT:
-                            TEMP = TEMP * A[J, J]
+                            TEMP *= A[J, J]
                         for J in range(J, N):
                             IX += INCX
                             TEMP += A[I, J] * X[IX]
                     else:
                         if NOUNIT:
-                            TEMP = TEMP * A[J, J].conjugate()
+                            TEMP *= A[J, J].conjugate()
                         for I in range(J, N):
                             IX += INCX
                             TEMP += A[1, J].conjugate() * X[IX]

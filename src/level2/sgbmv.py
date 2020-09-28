@@ -285,7 +285,7 @@ def SGBMV(TRANS, M, N, KL, KU, ALPHA, A, LDA, X, INCX, BETA, Y, INCY):
                 TEMP = ALPHA * X[JX]
                 K = KUP1 - J
                 for I in range(max(1, J - KU) - 1, min(M, J + KL)):
-                    Y[I] = Y[I] + TEMP * A[K + I, J]
+                    Y[I] += TEMP * A[K + I, J]
                 JX += INCX
         else:
             for J in range(N):
@@ -293,7 +293,7 @@ def SGBMV(TRANS, M, N, KL, KU, ALPHA, A, LDA, X, INCX, BETA, Y, INCY):
                 IY = KY
                 K = KUP1 - J
                 for I in range(max(1, J - KU) - 1, min(M, J + KL)):
-                    Y[IY] = Y[IY] + TEMP * A[K + I, J]
+                    Y[IY] += TEMP * A[K + I, J]
                     IY += INCY
                 JX += INCX
                 if J > KU:
