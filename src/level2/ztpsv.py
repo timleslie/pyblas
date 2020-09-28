@@ -268,10 +268,10 @@ def ZTPSV(UPLO, TRANS, DIAG, N, AP, X, INCX):
                             TEMP = TEMP / AP[KK + J - 1]
                     else:
                         for I in range(J - 1):
-                            TEMP -= (AP[K]).conjugate() * X[I]
+                            TEMP -= AP[K].conjugate() * X[I]
                             K += 1
                         if NOUNIT:
-                            TEMP = TEMP / (AP[KK + J - 1]).conjugate()
+                            TEMP = TEMP / AP[KK + J - 1].conjugate()
                     X[J] = TEMP
                     KK += J
             else:
@@ -287,10 +287,10 @@ def ZTPSV(UPLO, TRANS, DIAG, N, AP, X, INCX):
                             TEMP = TEMP / AP[KK + J - 1]
                     else:
                         for K in range(KK - 1, KK + J - 2):
-                            TEMP -= (AP[K]).conjugate() * X[IX]
+                            TEMP -= AP[K].conjugate() * X[IX]
                             IX += INCX
                         if NOUNIT:
-                            TEMP = TEMP / (AP[KK + J - 1]).conjugate()
+                            TEMP = TEMP / AP[KK + J - 1].conjugate()
                     X[JX] = TEMP
                     JX += INCX
                     KK += J
@@ -305,13 +305,13 @@ def ZTPSV(UPLO, TRANS, DIAG, N, AP, X, INCX):
                             TEMP -= AP[K] * X[I]
                             K -= 1
                         if NOUNIT:
-                            TEMP = TEMP / AP(KK - N + J)
+                            TEMP = TEMP / AP[KK - N + J]
                     else:
                         for I in range(N - 1, J - 1, -1):
-                            TEMP -= (AP[K]).conjugate() * X[I]
+                            TEMP -= AP[K].conjugate() * X[I]
                             K -= 1
                         if NOUNIT:
-                            TEMP = TEMP / (AP(KK - N + J)).conjugate()
+                            TEMP = TEMP / (AP[KK - N + J]).conjugate()
                     X[J] = TEMP
                     KK -= N - J + 1
             else:
@@ -325,13 +325,13 @@ def ZTPSV(UPLO, TRANS, DIAG, N, AP, X, INCX):
                             TEMP -= AP[K] * X[IX]
                             IX -= INCX
                         if NOUNIT:
-                            TEMP = TEMP / AP(KK - N + J)
+                            TEMP = TEMP / AP[KK - N + J]
                     else:
                         for K in range(KK - 1, KK - (N - (J + 1)) - 2, -1):
-                            TEMP -= (AP[K]).conjugate() * X[IX]
+                            TEMP -= AP[K].conjugate() * X[IX]
                             IX -= INCX
                         if NOUNIT:
-                            TEMP = TEMP / (AP(KK - N + J)).conjugate()
+                            TEMP = TEMP / (AP[KK - N + J]).conjugate()
                     X[JX] = TEMP
                     JX -= INCX
                     KK -= N - J + 1

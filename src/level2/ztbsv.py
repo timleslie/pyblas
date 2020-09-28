@@ -282,7 +282,7 @@ def ZTBSV(UPLO, TRANS, DIAG, N, K, A, LDA, X, INCX):
                     if X[J] != 0:
                         L = 1 - J
                         if NOUNIT:
-                            X[J] = X[J] / A[1, J]
+                            X[J] /= A[1, J]
                         TEMP = X[J]
                         for I in range(J, min(N, J + K)):
                             X[I] -= TEMP * A[L + I, J]
@@ -352,12 +352,12 @@ def ZTBSV(UPLO, TRANS, DIAG, N, K, A, LDA, X, INCX):
                         for I in range(min(N, J + K) - 1, J - 1, -1):
                             TEMP -= A[L + I, J] * X[I]
                         if NOUNIT:
-                            TEMP = TEMP / A[1, J]
+                            TEMP /= A[1, J]
                     else:
                         for I in range(min(N, J + K) - 1, J - 1, -1):
                             TEMP -= A[L + I, J].conjugate() * X[I]
                         if NOUNIT:
-                            TEMP = TEMP / A[1, J].conjugate()
+                            TEMP /= A[1, J].conjugate()
                     X[J] = TEMP
             else:
                 KX += (N - 1) * INCX
@@ -371,13 +371,13 @@ def ZTBSV(UPLO, TRANS, DIAG, N, K, A, LDA, X, INCX):
                             TEMP -= A[L + I, J] * X[IX]
                             IX -= INCX
                         if NOUNIT:
-                            TEMP = TEMP / A[1, J]
+                            TEMP /= A[1, J]
                     else:
                         for I in range(min(N, J + K) - 1, J - 1, -1):
                             TEMP -= A[L + I, J].conjugate() * X[IX]
                             IX -= INCX
                         if NOUNIT:
-                            TEMP = TEMP / A[1, J].conjugate()
+                            TEMP /= A[1, J].conjugate()
                     X[JX] = TEMP
                     JX -= INCX
                     if (N - J) >= K:

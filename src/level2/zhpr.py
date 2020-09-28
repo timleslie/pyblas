@@ -207,9 +207,9 @@ def ZHPR(UPLO, N, ALPHA, X, INCX, AP):
                     for I in range(J - 1):
                         AP[K] = AP[K] + X[I] * TEMP
                         K += 1
-                    AP[KK + J - 1] = (AP[KK + J - 1]).real + (X[J] * TEMP).real
+                    AP[KK + J - 1] = AP[KK + J - 1].real + (X[J] * TEMP).real
                 else:
-                    AP[KK + J - 1] = (AP[KK + J - 1]).real
+                    AP[KK + J - 1] = AP[KK + J - 1].real
                 KK += J
         else:
             JX = KX
@@ -220,9 +220,9 @@ def ZHPR(UPLO, N, ALPHA, X, INCX, AP):
                     for K in range(KK - 1, KK + J - 2):
                         AP[K] = AP[K] + X[IX] * TEMP
                         IX += INCX
-                    AP[KK + J - 1] = (AP[KK + J - 1]).real + (X[JX] * TEMP).real
+                    AP[KK + J - 1] = AP[KK + J - 1].real + (X[JX] * TEMP).real
                 else:
-                    AP[KK + J - 1] = (AP[KK + J - 1]).real
+                    AP[KK + J - 1] = AP[KK + J - 1].real
                 JX += INCX
                 KK += J
     else:

@@ -236,7 +236,7 @@ def CTPMV(UPLO, TRANS, DIAG, N, AP, X, INCX):
                             X[I] += TEMP * AP[K]
                             K -= 1
                         if NOUNIT:
-                            X[J] = X[J] * AP(KK - N + J)
+                            X[J] = X[J] * AP[KK - N + J]
                     KK -= N - J + 1
             else:
                 KX += (N - 1) * INCX
@@ -249,7 +249,7 @@ def CTPMV(UPLO, TRANS, DIAG, N, AP, X, INCX):
                             X[IX] = X[IX] + TEMP * AP[K]
                             IX -= INCX
                         if NOUNIT:
-                            X[JX] = X[JX] * AP(KK - N + J)
+                            X[JX] = X[JX] * AP[KK - N + J]
                     JX -= INCX
                     KK -= N - J + 1
     else:
@@ -270,7 +270,7 @@ def CTPMV(UPLO, TRANS, DIAG, N, AP, X, INCX):
                         if NOUNIT:
                             TEMP = TEMP * (AP[KK]).conjugate()
                         for I in range(J - 2, -1, -1):
-                            TEMP += (AP[K]).conjugate() * X[I]
+                            TEMP += AP[K].conjugate() * X[I]
                             K -= 1
                     X[J] = TEMP
                     KK -= J
@@ -290,7 +290,7 @@ def CTPMV(UPLO, TRANS, DIAG, N, AP, X, INCX):
                             TEMP = TEMP * (AP[KK]).conjugate()
                         for K in range(KK - 2, KK - J - 2, -1):
                             IX -= INCX
-                            TEMP += (AP[K]).conjugate() * X[IX]
+                            TEMP += AP[K].conjugate() * X[IX]
                     X[JX] = TEMP
                     JX -= INCX
                     KK -= J
@@ -310,7 +310,7 @@ def CTPMV(UPLO, TRANS, DIAG, N, AP, X, INCX):
                         if NOUNIT:
                             TEMP = TEMP * (AP[KK]).conjugate()
                         for I in range(J, N):
-                            TEMP += (AP[K]).conjugate() * X[I]
+                            TEMP += AP[K].conjugate() * X[I]
                             K += 1
                     X[J] = TEMP
                     KK += N - J + 1
@@ -330,7 +330,7 @@ def CTPMV(UPLO, TRANS, DIAG, N, AP, X, INCX):
                             TEMP = TEMP * (AP[KK]).conjugate()
                         for K in range(KK, KK + N - J):
                             IX += INCX
-                            TEMP += (AP[K]).conjugate() * X[IX]
+                            TEMP += AP[K].conjugate() * X[IX]
                     X[JX] = TEMP
                     JX += INCX
                     KK += N - J + 1

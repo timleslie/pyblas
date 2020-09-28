@@ -273,7 +273,7 @@ def SSYR2K(UPLO, TRANS, N, K, ALPHA, A, LDA, B, LDB, BETA, C, LDC):
             else:
                 for J in range(N):
                     for I in range(J):
-                        C[I, J] = BETA * C[I, J]
+                        C[I, J] *= BETA
         else:
             if BETA == 0:
                 for J in range(N):
@@ -282,7 +282,7 @@ def SSYR2K(UPLO, TRANS, N, K, ALPHA, A, LDA, B, LDB, BETA, C, LDC):
             else:
                 for J in range(N):
                     for I in range(J - 1, N):
-                        C[I, J] = BETA * C[I, J]
+                        C[I, J] *= BETA
         return
 
     # Start the operations.
@@ -297,13 +297,13 @@ def SSYR2K(UPLO, TRANS, N, K, ALPHA, A, LDA, B, LDB, BETA, C, LDC):
                         C[I, J] = 0
                 elif BETA != 1:
                     for I in range(J):
-                        C[I, J] = BETA * C[I, J]
+                        C[I, J] *= BETA
                 for L in range(K):
                     if (A[J, L] != 0) or (B[J, L] != 0):
                         TEMP1 = ALPHA * B[J, L]
                         TEMP2 = ALPHA * A[J, L]
                         for I in range(J):
-                            C[I, J] = C[I, J] + A[I, L] * TEMP1 + B[I, L] * TEMP2
+                            C[I, J] += A[I, L] * TEMP1 + B[I, L] * TEMP2
         else:
             for J in range(N):
                 if BETA == 0:
@@ -311,13 +311,13 @@ def SSYR2K(UPLO, TRANS, N, K, ALPHA, A, LDA, B, LDB, BETA, C, LDC):
                         C[I, J] = 0
                 elif BETA != 1:
                     for I in range(N):
-                        C[I, J] = BETA * C[I, J]
+                        C[I, J] *= BETA
                 for L in range(K):
                     if (A[J, L] != 0) or (B[J, L] != 0):
                         TEMP1 = ALPHA * B[J, L]
                         TEMP2 = ALPHA * A[J, L]
                         for I in range(J - 1, N):
-                            C[I, J] = C[I, J] + A[I, L] * TEMP1 + B[I, L] * TEMP2
+                            C[I, J] += A[I, L] * TEMP1 + B[I, L] * TEMP2
     else:
         #
         #        Form  C := alpha*A**T*B + alpha*B**T*A + C.
@@ -329,11 +329,11 @@ def SSYR2K(UPLO, TRANS, N, K, ALPHA, A, LDA, B, LDB, BETA, C, LDC):
                     TEMP2 = 0
                     for L in range(K):
                         TEMP1 += A[L, I] * B[L, J]
-                        TEMP2 += B(L, I) * A[L, J]
+                        TEMP2 += B[L, I] * A[L, J]
                     if BETA == 0:
                         C[I, J] = ALPHA * TEMP1 + ALPHA * TEMP2
                     else:
-                        C[I, J] = BETA * C[I, J] + ALPHA * TEMP1 + ALPHA * TEMP2
+                        C[I, J] *= BETA + ALPHA * TEMP1 + ALPHA * TEMP2
         else:
             for J in range(N):
                 for I in range(J - 1, N):
@@ -341,8 +341,8 @@ def SSYR2K(UPLO, TRANS, N, K, ALPHA, A, LDA, B, LDB, BETA, C, LDC):
                     TEMP2 = 0
                     for L in range(K):
                         TEMP1 += A[L, I] * B[L, J]
-                        TEMP2 += B(L, I) * A[L, J]
+                        TEMP2 += B[L, I] * A[L, J]
                     if BETA == 0:
                         C[I, J] = ALPHA * TEMP1 + ALPHA * TEMP2
                     else:
-                        C[I, J] = BETA * C[I, J] + ALPHA * TEMP1 + ALPHA * TEMP2
+                        C[I, J] *= BETA + ALPHA * TEMP1 + ALPHA * TEMP2

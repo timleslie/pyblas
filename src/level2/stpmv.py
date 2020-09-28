@@ -252,7 +252,7 @@ def STPMV(UPLO, TRANS, DIAG, N, AP, X, INCX):
                             X[I] += TEMP * AP[K]
                             K -= 1
                         if NOUNIT:
-                            X[J] = X[J] * AP(KK - N + J)
+                            X[J] = X[J] * AP[KK - N + J]
                     KK -= N - J + 1
             else:
                 KX += (N - 1) * INCX
@@ -265,7 +265,7 @@ def STPMV(UPLO, TRANS, DIAG, N, AP, X, INCX):
                             X[IX] = X[IX] + TEMP * AP[K]
                             IX -= INCX
                         if NOUNIT:
-                            X[JX] = X[JX] * AP(KK - N + J)
+                            X[JX] = X[JX] * AP[KK - N + J]
                     JX -= INCX
                     KK -= N - J + 1
     else:

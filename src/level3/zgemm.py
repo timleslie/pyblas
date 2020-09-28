@@ -282,7 +282,7 @@ def ZGEMM(TRANSA, TRANSB, M, N, K, ALPHA, A, LDA, B, LDB, BETA, C, LDC):
         else:
             for J in range(N):
                 for I in range(M):
-                    C[I, J] = BETA * C[I, J]
+                    C[I, J] *= BETA
         return
 
     # Start the operations.
@@ -297,11 +297,11 @@ def ZGEMM(TRANSA, TRANSB, M, N, K, ALPHA, A, LDA, B, LDB, BETA, C, LDC):
                         C[I, J] = 0
                 elif BETA != 1:
                     for I in range(M):
-                        C[I, J] = BETA * C[I, J]
+                        C[I, J] *= BETA
                 for L in range(K):
                     TEMP = ALPHA * B[L, J]
                     for I in range(M):
-                        C[I, J] = C[I, J] + TEMP * A[I, L]
+                        C[I, J] += TEMP * A[I, L]
         elif CONJA:
             #
             #           Form  C := alpha*A**H*B + beta*C.
@@ -339,11 +339,11 @@ def ZGEMM(TRANSA, TRANSB, M, N, K, ALPHA, A, LDA, B, LDB, BETA, C, LDC):
                         C[I, J] = 0
                 elif BETA != 1:
                     for I in range(M):
-                        C[I, J] = BETA * C[I, J]
+                        C[I, J] *= BETA
                 for L in range(K):
                     TEMP = ALPHA * B[J, L].conjugate()
                     for I in range(M):
-                        C[I, J] = C[I, J] + TEMP * A[I, L]
+                        C[I, J] += TEMP * A[I, L]
         else:
             #
             #           Form  C := alpha*A*B**T + beta*C
@@ -354,11 +354,11 @@ def ZGEMM(TRANSA, TRANSB, M, N, K, ALPHA, A, LDA, B, LDB, BETA, C, LDC):
                         C[I, J] = 0
                 elif BETA != 1:
                     for I in range(M):
-                        C[I, J] = BETA * C[I, J]
+                        C[I, J] *= BETA
                 for L in range(K):
                     TEMP = ALPHA * B[J, L]
                     for I in range(M):
-                        C[I, J] = C[I, J] + TEMP * A[I, L]
+                        C[I, J] += TEMP * A[I, L]
     elif CONJA:
         if CONJB:
             #

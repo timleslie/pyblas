@@ -268,9 +268,7 @@ def STRMV(UPLO, TRANS, DIAG, N, A, LDA, X, INCX):
                             X[JX] = X[JX] * A[J, J]
                     JX -= INCX
     else:
-        #
-        #        Form  x := A**T*x.
-        #
+        # Form  x := A**T*x.
         if lsame(UPLO, "U"):
             if INCX == 1:
                 for J in range(N - 1, -1, -1):

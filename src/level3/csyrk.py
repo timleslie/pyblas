@@ -247,7 +247,7 @@ def CSYRK(UPLO, TRANS, N, K, ALPHA, A, LDA, BETA, C, LDC):
             else:
                 for J in range(N):
                     for I in range(J):
-                        C[I, J] = BETA * C[I, J]
+                        C[I, J] *= BETA
         else:
             if BETA == 0:
                 for J in range(N):
@@ -256,7 +256,7 @@ def CSYRK(UPLO, TRANS, N, K, ALPHA, A, LDA, BETA, C, LDC):
             else:
                 for J in range(N):
                     for I in range(J - 1, N):
-                        C[I, J] = BETA * C[I, J]
+                        C[I, J] *= BETA
         return
 
     # Start the operations.
@@ -271,12 +271,12 @@ def CSYRK(UPLO, TRANS, N, K, ALPHA, A, LDA, BETA, C, LDC):
                         C[I, J] = 0
                 elif BETA != 1:
                     for I in range(J):
-                        C[I, J] = BETA * C[I, J]
+                        C[I, J] *= BETA
                 for L in range(K):
                     if A[J, L] != 0:
                         TEMP = ALPHA * A[J, L]
                         for I in range(J):
-                            C[I, J] = C[I, J] + TEMP * A[I, L]
+                            C[I, J] += TEMP * A[I, L]
         else:
             for J in range(N):
                 if BETA == 0:
@@ -284,16 +284,14 @@ def CSYRK(UPLO, TRANS, N, K, ALPHA, A, LDA, BETA, C, LDC):
                         C[I, J] = 0
                 elif BETA != 1:
                     for I in range(J - 1, N):
-                        C[I, J] = BETA * C[I, J]
+                        C[I, J] *= BETA
                 for L in range(K):
                     if A[J, L] != 0:
                         TEMP = ALPHA * A[J, L]
                         for I in range(J - 1, N):
-                            C[I, J] = C[I, J] + TEMP * A[I, L]
+                            C[I, J] += TEMP * A[I, L]
     else:
-        #
-        #        Form  C := alpha*A**T*A + beta*C.
-        #
+        # Form  C := alpha*A**T*A + beta*C.
         if UPPER:
             for J in range(N):
                 for I in range(J):

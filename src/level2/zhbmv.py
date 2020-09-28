@@ -251,7 +251,7 @@ def ZHBMV(UPLO, N, K, ALPHA, A, LDA, X, INCX, BETA, Y, INCY):
                     Y[I] = 0
             else:
                 for I in range(N):
-                    Y[I] = BETA * Y[I]
+                    Y[I] *= BETA
         else:
             IY = KY
             if BETA == 0:
@@ -260,7 +260,7 @@ def ZHBMV(UPLO, N, K, ALPHA, A, LDA, X, INCX, BETA, Y, INCY):
                     IY += INCY
             else:
                 for I in range(N):
-                    Y[IY] = BETA * Y[IY]
+                    Y[IY] *= BETA
                     IY += INCY
     if ALPHA == 0:
         return
@@ -299,9 +299,7 @@ def ZHBMV(UPLO, N, K, ALPHA, A, LDA, X, INCX, BETA, Y, INCY):
                     KX += INCX
                     KY += INCY
     else:
-        #
-        #        Form  y  when lower triangle of A is stored.
-        #
+        # Form  y  when lower triangle of A is stored.
         if (INCX == 1) and (INCY == 1):
             for J in range(N):
                 TEMP1 = ALPHA * X[J]

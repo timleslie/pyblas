@@ -273,7 +273,7 @@ def ZHEMM(SIDE, UPLO, M, N, ALPHA, A, LDA, B, LDB, BETA, C, LDC):
         else:
             for J in range(N):
                 for I in range(M):
-                    C[I, J] = BETA * C[I, J]
+                    C[I, J] *= BETA
         return
 
     # Start the operations.
@@ -292,7 +292,7 @@ def ZHEMM(SIDE, UPLO, M, N, ALPHA, A, LDA, B, LDB, BETA, C, LDC):
                     if BETA == 0:
                         C[I, J] = TEMP1 * A[I, I].real + ALPHA * TEMP2
                     else:
-                        C[I, J] = BETA * C[I, J] + TEMP1 * A[I, I].real + ALPHA * TEMP2
+                        C[I, J] *= BETA + TEMP1 * A[I, I].real + ALPHA * TEMP2
         else:
             for J in range(N):
                 for I in range(M - 1, -1, -1):
@@ -304,7 +304,7 @@ def ZHEMM(SIDE, UPLO, M, N, ALPHA, A, LDA, B, LDB, BETA, C, LDC):
                     if BETA == 0:
                         C[I, J] = TEMP1 * A[I, I].real + ALPHA * TEMP2
                     else:
-                        C[I, J] = BETA * C[I, J] + TEMP1 * A[I, I].real + ALPHA * TEMP2
+                        C[I, J] *= BETA + TEMP1 * A[I, I].real + ALPHA * TEMP2
     else:
         #
         #        Form  C := alpha*B*A + beta*C.
@@ -316,18 +316,18 @@ def ZHEMM(SIDE, UPLO, M, N, ALPHA, A, LDA, B, LDB, BETA, C, LDC):
                     C[I, J] = TEMP1 * B[I, J]
             else:
                 for I in range(M):
-                    C[I, J] = BETA * C[I, J] + TEMP1 * B[I, J]
+                    C[I, J] *= BETA + TEMP1 * B[I, J]
             for K in range(J - 1):
                 if UPPER:
                     TEMP1 = ALPHA * A[K, J]
                 else:
                     TEMP1 = ALPHA * A[J, K].conjugate()
                 for I in range(M):
-                    C[I, J] = C[I, J] + TEMP1 * B[I, K]
+                    C[I, J] += TEMP1 * B[I, K]
             for K in range(J, N):
                 if UPPER:
                     TEMP1 = ALPHA * A[J, K].conjugate()
                 else:
                     TEMP1 = ALPHA * A[K, J]
                 for I in range(M):
-                    C[I, J] = C[I, J] + TEMP1 * B[I, K]
+                    C[I, J] += TEMP1 * B[I, K]

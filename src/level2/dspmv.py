@@ -224,7 +224,7 @@ def DSPMV(UPLO, N, ALPHA, AP, X, INCX, BETA, Y, INCY):
                     Y[I] = 0
             else:
                 for I in range(N):
-                    Y[I] = BETA * Y[I]
+                    Y[I] *= BETA
         else:
             IY = KY
             if BETA == 0:
@@ -233,7 +233,7 @@ def DSPMV(UPLO, N, ALPHA, AP, X, INCX, BETA, Y, INCY):
                     IY += INCY
             else:
                 for I in range(N):
-                    Y[IY] = BETA * Y[IY]
+                    Y[IY] *= BETA
                     IY += INCY
     if ALPHA == 0:
         return

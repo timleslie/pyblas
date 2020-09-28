@@ -308,7 +308,7 @@ def DTPSV(UPLO, TRANS, DIAG, N, AP, X, INCX):
                         TEMP -= AP[K] * X[I]
                         K -= 1
                     if NOUNIT:
-                        TEMP = TEMP / AP(KK - N + J)
+                        TEMP = TEMP / AP[KK - N + J]
                     X[J] = TEMP
                     KK -= N - J + 1
             else:
@@ -321,7 +321,7 @@ def DTPSV(UPLO, TRANS, DIAG, N, AP, X, INCX):
                         TEMP -= AP[K] * X[IX]
                         IX -= INCX
                     if NOUNIT:
-                        TEMP = TEMP / AP(KK - N + J)
+                        TEMP /= AP[KK - N + J]
                     X[JX] = TEMP
                     JX -= INCX
                     KK -= N - J + 1

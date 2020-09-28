@@ -230,9 +230,7 @@ def CHER(UPLO, N, ALPHA, X, INCX, A, LDA):
                     A[J, J] = A[J, J].real
                 JX += INCX
     else:
-        #
-        #        Form  A  when A is stored in lower triangle.
-        #
+        # Form  A  when A is stored in lower triangle.
         if INCX == 1:
             for J in range(N):
                 if X[J] != 0:

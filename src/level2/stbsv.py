@@ -320,9 +320,7 @@ def STBSV(UPLO, TRANS, DIAG, N, K, A, LDA, X, INCX):
                             IX += INCX
                     JX += INCX
     else:
-        #
-        #        Form  x := inv( A**T)*x.
-        #
+        # Form  x := inv( A**T)*x.
         if lsame(UPLO, "U"):
             KPLUS1 = K + 1
             if INCX == 1:
@@ -357,7 +355,7 @@ def STBSV(UPLO, TRANS, DIAG, N, K, A, LDA, X, INCX):
                     for I in range(min(N, J + K) - 1, J - 1, -1):
                         TEMP -= A[L + I, J] * X[I]
                     if NOUNIT:
-                        TEMP = TEMP / A[1, J]
+                        TEMP /= A[1, J]
                     X[J] = TEMP
             else:
                 KX += (N - 1) * INCX
@@ -370,7 +368,7 @@ def STBSV(UPLO, TRANS, DIAG, N, K, A, LDA, X, INCX):
                         TEMP -= A[L + I, J] * X[IX]
                         IX -= INCX
                     if NOUNIT:
-                        TEMP = TEMP / A[1, J]
+                        TEMP /= A[1, J]
                     X[JX] = TEMP
                     JX -= INCX
                     if (N - J) >= K:

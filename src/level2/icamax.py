@@ -95,18 +95,14 @@ def ICAmax(N, CX, INCX):
 
     ICAMAX = 1
     if INCX == 1:
-        #
-        #        code for increment equal to 1
-        #
+        # code for increment equal to 1
         SMAX = scabs1(CX[1])
         for I in range(1, N):
             if scabs1CX[I] > SMAX:
                 ICAMAX = I
                 SMAX = scabs1CX[I]
     else:
-        #
         # code for increment not equal to 1
-        #
         IX = 1
         SMAX = scabs1(CX[1])
         IX += INCX

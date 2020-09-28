@@ -116,10 +116,10 @@ def DAXPY(N, DA, DX, INCX, DY, INCY):
         return
     if INCX == 1 and INCY == 1:
         #
-        #        code for both increments equal to 1
+        # code for both increments equal to 1
         #
         #
-        #        clean-up loop
+        # clean-up loop
         #
         M = N % 4
         if M != 0:
@@ -133,10 +133,7 @@ def DAXPY(N, DA, DX, INCX, DY, INCY):
             DY[I + 2] += DA * DX[I + 2]
             DY[I + 3] += DA * DX[I + 3]
     else:
-        #
-        #        code for unequal increments or equal increments
-        #          not equal to 1
-        #
+        # code for unequal increments or equal increments not equal to 1
         IX = 1
         IY = 1
         if INCX < 0:

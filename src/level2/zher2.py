@@ -226,7 +226,7 @@ def ZHER2(UPLO, N, ALPHA, X, INCX, Y, INCY, A, LDA):
         else:
             for J in range(N):
                 if (X[JX] != 0) or (Y[JY] != 0):
-                    TEMP1 = ALPHA * (Y[JY]).conjugate()
+                    TEMP1 = ALPHA * Y[JY].conjugate()
                     TEMP2 = (ALPHA * X[JX]).conjugate()
                     IX = KX
                     IY = KY
@@ -240,9 +240,7 @@ def ZHER2(UPLO, N, ALPHA, X, INCX, Y, INCY, A, LDA):
                 JX += INCX
                 JY += INCY
     else:
-        #
-        #        Form  A  when A is stored in the lower triangle.
-        #
+        # Form  A  when A is stored in the lower triangle.
         if (INCX == 1) and (INCY == 1):
             for J in range(N):
                 if (X[J] != 0) or (Y[J] != 0):
@@ -256,7 +254,7 @@ def ZHER2(UPLO, N, ALPHA, X, INCX, Y, INCY, A, LDA):
         else:
             for J in range(N):
                 if (X[JX] != 0) or (Y[JY] != 0):
-                    TEMP1 = ALPHA * (Y[JY]).conjugate()
+                    TEMP1 = ALPHA * Y[JY].conjugate()
                     TEMP2 = (ALPHA * X[JX]).conjugate()
                     A[J, J] = A[J, J].real + (X[JX] * TEMP1 + Y[JY] * TEMP2).real
                     IX = JX

@@ -243,9 +243,7 @@ def ZTBMV(UPLO, TRANS, DIAG, N, K, A, LDA, X, INCX):
     #     accessed sequentially with one pass through A.
     #
     if lsame(TRANS, "N"):
-        #
-        #         Form  x := A*x.
-        #
+        # Form  x := A*x.
         if lsame(UPLO, "U"):
             KPLUS1 = K + 1
             if INCX == 1:

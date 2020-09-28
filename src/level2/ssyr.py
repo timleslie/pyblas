@@ -221,9 +221,7 @@ def SSYR(UPLO, N, ALPHA, X, INCX, A, LDA):
                         IX += INCX
                 JX += INCX
     else:
-        #
-        #        Form  A  when A is stored in lower triangle.
-        #
+        # Form  A  when A is stored in lower triangle.
         if INCX == 1:
             for J in range(N):
                 if X[J] != 0:

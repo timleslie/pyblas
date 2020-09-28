@@ -255,24 +255,24 @@ def CTRSM(SIDE, UPLO, TRANSA, DIAG, M, N, ALPHA, A, LDA, B, LDB):
                 for J in range(N):
                     if ALPHA != 1:
                         for I in range(M):
-                            B[I, J] = ALPHA * B[I, J]
+                            B[I, J] *= ALPHA
                     for K in range(M - 1, -1, -1):
                         if B[K, J] != 0:
                             if NOUNIT:
                                 B[K, J] = B[K, J] / A[K, K]
                             for I in range(K - 1):
-                                B[I, J] = B[I, J] - B[K, J] * A[I, K]
+                                B[I, J] -= B[K, J] * A[I, K]
             else:
                 for J in range(N):
                     if ALPHA != 1:
                         for I in range(M):
-                            B[I, J] = ALPHA * B[I, J]
+                            B[I, J] *= ALPHA
                     for K in range(M):
                         if B[K, J] != 0:
                             if NOUNIT:
                                 B[K, J] = B[K, J] / A[K, K]
                             for I in range(K, M):
-                                B[I, J] = B[I, J] - B[K, J] * A[I, K]
+                                B[I, J] -= B[K, J] * A[I, K]
         else:
             #
             #           Form  B := alpha*inv( A**T )*B
@@ -315,11 +315,11 @@ def CTRSM(SIDE, UPLO, TRANSA, DIAG, M, N, ALPHA, A, LDA, B, LDB):
                 for J in range(N):
                     if ALPHA != 1:
                         for I in range(M):
-                            B[I, J] = ALPHA * B[I, J]
+                            B[I, J] *= ALPHA
                     for K in range(J - 1):
                         if A[K, J] != 0:
                             for I in range(M):
-                                B[I, J] = B[I, J] - A[K, J] * B[I, K]
+                                B[I, J] -= A[K, J] * B[I, K]
                     if NOUNIT:
                         TEMP = 1 / A[J, J]
                         for I in range(M):
@@ -328,11 +328,11 @@ def CTRSM(SIDE, UPLO, TRANSA, DIAG, M, N, ALPHA, A, LDA, B, LDB):
                 for J in range(N - 1, -1, -1):
                     if ALPHA != 1:
                         for I in range(M):
-                            B[I, J] = ALPHA * B[I, J]
+                            B[I, J] *= ALPHA
                     for K in range(J, N):
                         if A[K, J] != 0:
                             for I in range(M):
-                                B[I, J] = B[I, J] - A[K, J] * B[I, K]
+                                B[I, J] -= A[K, J] * B[I, K]
                     if NOUNIT:
                         TEMP = 1 / A[J, J]
                         for I in range(M):
@@ -358,7 +358,7 @@ def CTRSM(SIDE, UPLO, TRANSA, DIAG, M, N, ALPHA, A, LDA, B, LDB):
                             else:
                                 TEMP = A[J, K].conjugate()
                             for I in range(M):
-                                B[I, J] = B[I, J] - TEMP * B[I, K]
+                                B[I, J] -= TEMP * B[I, K]
                     if ALPHA != 1:
                         for I in range(M):
                             B[I, K] = ALPHA * B[I, K]
@@ -378,7 +378,7 @@ def CTRSM(SIDE, UPLO, TRANSA, DIAG, M, N, ALPHA, A, LDA, B, LDB):
                             else:
                                 TEMP = A[J, K].conjugate()
                             for I in range(M):
-                                B[I, J] = B[I, J] - TEMP * B[I, K]
+                                B[I, J] -= TEMP * B[I, K]
                     if ALPHA != 1:
                         for I in range(M):
                             B[I, K] = ALPHA * B[I, K]

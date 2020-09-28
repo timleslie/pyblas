@@ -207,7 +207,7 @@ def chpmv(UPLO, N, ALPHA, AP, X, INCX, BETA, Y, INCY):
                     Y[I] = 0
             else:
                 for I in range(N):
-                    Y[I] = BETA * Y[I]
+                    Y[I] *= BETA
         else:
             IY = KY
             if BETA == 0:
@@ -216,7 +216,7 @@ def chpmv(UPLO, N, ALPHA, AP, X, INCX, BETA, Y, INCY):
                     IY += INCY
             else:
                 for I in range(N):
-                    Y[IY] = BETA * Y[IY]
+                    Y[IY] *= BETA
                     IY += INCY
     if ALPHA == 0:
         return
@@ -230,9 +230,9 @@ def chpmv(UPLO, N, ALPHA, AP, X, INCX, BETA, Y, INCY):
                 K = KK
                 for I in range(J - 1):
                     Y[I] += TEMP1 * AP[K]
-                    TEMP2 += (AP[K]).conjugate() * X[I]
+                    TEMP2 += AP[K].conjugate() * X[I]
                     K += 1
-                Y[J] += TEMP1 * (AP[KK + J - 1]).real + ALPHA * TEMP2
+                Y[J] += TEMP1 * AP[KK + J - 1].real + ALPHA * TEMP2
                 KK += J
         else:
             JX = KX
@@ -244,10 +244,10 @@ def chpmv(UPLO, N, ALPHA, AP, X, INCX, BETA, Y, INCY):
                 IY = KY
                 for K in range(KK - 1, KK + J - 2):
                     Y[IY] += TEMP1 * AP[K]
-                    TEMP2 += (AP[K]).conjugate() * X[IX]
+                    TEMP2 += AP[K].conjugate() * X[IX]
                     IX += INCX
                     IY += INCY
-                Y[JY] += TEMP1 * (AP[KK + J - 1]).real + ALPHA * TEMP2
+                Y[JY] += TEMP1 * AP[KK + J - 1].real + ALPHA * TEMP2
                 JX += INCX
                 JY += INCY
                 KK += J
@@ -261,7 +261,7 @@ def chpmv(UPLO, N, ALPHA, AP, X, INCX, BETA, Y, INCY):
                 K = KK + 1
                 for I in range(J, N):
                     Y[I] += TEMP1 * AP[K]
-                    TEMP2 += (AP[K]).conjugate() * X[I]
+                    TEMP2 += AP[K].conjugate() * X[I]
                     K += 1
                 Y[J] += ALPHA * TEMP2
                 KK += N - J + 1
@@ -278,7 +278,7 @@ def chpmv(UPLO, N, ALPHA, AP, X, INCX, BETA, Y, INCY):
                     IX += INCX
                     IY += INCY
                     Y[IY] += TEMP1 * AP[K]
-                    TEMP2 += (AP[K]).conjugate() * X[IX]
+                    TEMP2 += AP[K].conjugate() * X[IX]
                 Y[JY] += ALPHA * TEMP2
                 JX += INCX
                 JY += INCY

@@ -233,16 +233,16 @@ def ZHPR2(UPLO, N, ALPHA, X, INCX, Y, INCY, AP):
                     for I in range(J - 1):
                         AP[K] = AP[K] + X[I] * TEMP1 + Y[I] * TEMP2
                         K += 1
-                    AP[KK + J - 1] = (AP[KK + J - 1]).real + (
-                        X[J] * TEMP1 + Y[J] * TEMP2
-                    ).real
+                    AP[KK + J - 1] = (
+                        AP[KK + J - 1].real + (X[J] * TEMP1 + Y[J] * TEMP2).real
+                    )
                 else:
-                    AP[KK + J - 1] = (AP[KK + J - 1]).real
+                    AP[KK + J - 1] = AP[KK + J - 1].real
                 KK += J
         else:
             for J in range(N):
                 if (X[JX] != 0) or (Y[JY] != 0):
-                    TEMP1 = ALPHA * (Y[JY]).conjugate()
+                    TEMP1 = ALPHA * Y[JY].conjugate()
                     TEMP2 = (ALPHA * X[JX]).conjugate()
                     IX = KX
                     IY = KY
@@ -250,11 +250,11 @@ def ZHPR2(UPLO, N, ALPHA, X, INCX, Y, INCY, AP):
                         AP[K] = AP[K] + X[IX] * TEMP1 + Y[IY] * TEMP2
                         IX += INCX
                         IY += INCY
-                    AP[KK + J - 1] = (AP[KK + J - 1]).real + (
-                        X[JX] * TEMP1 + Y[JY] * TEMP2
-                    ).real
+                    AP[KK + J - 1] = (
+                        AP[KK + J - 1].real + (X[JX] * TEMP1 + Y[JY] * TEMP2).real
+                    )
                 else:
-                    AP[KK + J - 1] = (AP[KK + J - 1]).real
+                    AP[KK + J - 1] = AP[KK + J - 1].real
                 JX += INCX
                 JY += INCY
                 KK += J
@@ -278,7 +278,7 @@ def ZHPR2(UPLO, N, ALPHA, X, INCX, Y, INCY, AP):
         else:
             for J in range(N):
                 if (X[JX] != 0) or (Y[JY] != 0):
-                    TEMP1 = ALPHA * (Y[JY]).conjugate()
+                    TEMP1 = ALPHA * Y[JY].conjugate()
                     TEMP2 = (ALPHA * X[JX]).conjugate()
                     AP[KK] = (AP[KK]).real + (X[JX] * TEMP1 + Y[JY] * TEMP2).real
                     IX = JX

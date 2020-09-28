@@ -177,7 +177,7 @@ def cgerc(M, N, ALPHA, X, INCX, Y, INCY, A, LDA):
     if INCX == 1:
         for J in range(N):
             if Y[JY] != 0:
-                TEMP = ALPHA * (Y[JY]).conjugate()
+                TEMP = ALPHA * Y[JY].conjugate()
                 for I in range(M):
                     A[I, J] += X[I] * TEMP
             JY += INCY
@@ -188,7 +188,7 @@ def cgerc(M, N, ALPHA, X, INCX, Y, INCY, A, LDA):
             KX = 1 - (M - 1) * INCX
         for J in range(N):
             if Y[JY] != 0:
-                TEMP = ALPHA * (Y[JY]).conjugate()
+                TEMP = ALPHA * Y[JY].conjugate()
                 IX = KX
                 for I in range(M):
                     A[I, J] += X[IX] * TEMP

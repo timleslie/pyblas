@@ -279,7 +279,7 @@ def DGBMV(TRANS, M, N, KL, KU, ALPHA, A, LDA, X, INCX, BETA, Y, INCY):
                     Y[I] = 0
             else:
                 for I in range(LENY):
-                    Y[I] = BETA * Y[I]
+                    Y[I] *= BETA
         else:
             IY = KY
             if BETA == 0:
@@ -288,7 +288,7 @@ def DGBMV(TRANS, M, N, KL, KU, ALPHA, A, LDA, X, INCX, BETA, Y, INCY):
                     IY += INCY
             else:
                 for I in range(LENY):
-                    Y[IY] = BETA * Y[IY]
+                    Y[IY] *= BETA
                     IY += INCY
     if ALPHA == 0:
         return
