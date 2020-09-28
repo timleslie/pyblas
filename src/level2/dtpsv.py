@@ -254,7 +254,7 @@ def DTPSV(UPLO, TRANS, DIAG, N, AP, X, INCX):
                         for I in range(J, N):
                             X[I] -= TEMP * AP[K]
                             K += 1
-                    KK += (N - J + 1)
+                    KK += N - J + 1
             else:
                 JX = KX
                 for J in range(N):
@@ -267,7 +267,7 @@ def DTPSV(UPLO, TRANS, DIAG, N, AP, X, INCX):
                             IX += INCX
                             X[IX] -= TEMP * AP[K]
                     JX += INCX
-                    KK += (N - J + 1)
+                    KK += N - J + 1
     else:
         #
         #        Form  x := inv( A**T )*x.

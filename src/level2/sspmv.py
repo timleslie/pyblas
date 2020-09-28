@@ -284,7 +284,7 @@ def SSPMV(UPLO, N, ALPHA, AP, X, INCX, BETA, Y, INCY):
                     TEMP2 += AP[K] * X[I]
                     K += 1
                 Y[J] += ALPHA * TEMP2
-                KK += (N - J + 1)
+                KK += N - J + 1
         else:
             JX = KX
             JY = KY
@@ -302,4 +302,4 @@ def SSPMV(UPLO, N, ALPHA, AP, X, INCX, BETA, Y, INCY):
                 Y[JY] += ALPHA * TEMP2
                 JX += INCX
                 JY += INCY
-                KK += (N - J + 1)
+                KK += N - J + 1
