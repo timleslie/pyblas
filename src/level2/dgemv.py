@@ -238,26 +238,12 @@ def DGEMV(TRANS, M, N, ALPHA, A, LDA, X, INCX, BETA, Y, INCY):
     #     Start the operations. In this version the elements of A are
     #     accessed sequentially with one pass through A.
     #
-    #     First form  y := beta*y.
-    #
-    if BETA != 1:
-        if INCY == 1:
-            if BETA == 0:
-                for I in range(LENY):
-                    Y[I] = 0
-            else:
-                for I in range(LENY):
-                    Y[I] *= BETA
-        else:
-            IY = KY
-            if BETA == 0:
-                for I in range(LENY):
-                    Y[IY] = 0
-                    IY += INCY
-            else:
-                for I in range(LENY):
-                    Y[IY] *= BETA
-                    IY += INCY
+    # First form  y := beta*y.
+    if INCY > 0:
+        Y[: LENY * INCY : INCY] *= BETA
+    else:
+        Y[-(LENY - 1) * INCY :: INCY] *= BETA
+
     if ALPHA == 0:
         return
     if lsame(TRANS, "N"):
@@ -280,16 +266,11 @@ def DGEMV(TRANS, M, N, ALPHA, A, LDA, X, INCX, BETA, Y, INCY):
                     IY += INCY
                 JX += INCX
     else:
-        #
-        #        Form  y := alpha*A**T*x + y.
-        #
+        # Form  y := alpha*A**T*x + y.
         JY = KY
         if INCX == 1:
-            for J in range(M):
-                TEMP = 0
-                for I in range(M):
-                    TEMP += A[I, J] * X[I]
-                Y[JY] += ALPHA * TEMP
+            for J in range(N):
+                Y[JY] += ALPHA * (A[:M, J] * X[:M]).sum()
                 JY += INCY
         else:
             for J in range(N):

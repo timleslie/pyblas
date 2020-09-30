@@ -258,26 +258,12 @@ def DSBMV(UPLO, N, K, ALPHA, A, LDA, X, INCX, BETA, Y, INCY):
     #     Start the operations. In this version the elements of the array A
     #     are accessed sequentially with one pass through A.
     #
-    #     First form  y := beta*y.
-    #
-    if BETA != 1:
-        if INCY == 1:
-            if BETA == 0:
-                for I in range(N):
-                    Y[I] = 0
-            else:
-                for I in range(N):
-                    Y[I] *= BETA
-        else:
-            IY = KY
-            if BETA == 0:
-                for I in range(N):
-                    Y[IY] = 0
-                    IY += INCY
-            else:
-                for I in range(N):
-                    Y[IY] *= BETA
-                    IY += INCY
+    # First form  y := beta*y.
+    if INCY == 1:
+        Y[: N * INCY : INCY] *= BETA
+    else:
+        Y[-(N - 1) * INCY :: INCY] *= BETA
+
     if ALPHA == 0:
         return
     if lsame(UPLO, "U"):

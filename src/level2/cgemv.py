@@ -221,24 +221,10 @@ def cgemv(TRANS, M, N, ALPHA, A, LDA, X, INCX, BETA, Y, INCY):
     # Start the operations. In this version the elements of A are
     # accessed sequentially with one pass through A.
     # First form  y := beta*y.
-    if BETA != 1:
-        if INCY == 1:
-            if BETA == 0:
-                for I in range(LENY):
-                    Y[I] = 0
-            else:
-                for I in range(LENY):
-                    Y[I] *= BETA
-        else:
-            IY = KY
-            if BETA == 0:
-                for I in range(LENY):
-                    Y[IY] = 0
-                    IY += INCY
-            else:
-                for I in range(LENY):
-                    Y[IY] *= BETA
-                    IY += INCY
+    if INCY > 0:
+        Y[: LENY * INCY : INCY] *= BETA
+    else:
+        Y[-(LENY - 1) * INCY :: INCY] *= BETA
     if ALPHA == 0:
         return
     if lsame(TRANS, "N"):
@@ -265,8 +251,7 @@ def cgemv(TRANS, M, N, ALPHA, A, LDA, X, INCX, BETA, Y, INCY):
             for J in range(N):
                 TEMP = 0
                 if NOCONJ:
-                    for I in range(M):
-                        TEMP += A[I, J] * X[I]
+                    TEMP = (A[:M, J] * X[:M]).sum()
                 else:
                     for I in range(M):
                         TEMP += A[1, J].conjugate() * X[I]
