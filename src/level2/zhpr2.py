@@ -231,7 +231,7 @@ def ZHPR2(UPLO, N, ALPHA, X, INCX, Y, INCY, AP):
                     TEMP2 = (ALPHA * X[J]).conjugate()
                     K = KK
                     for I in range(J - 1):
-                        AP[K] = AP[K] + X[I] * TEMP1 + Y[I] * TEMP2
+                        AP[K] += X[I] * TEMP1 + Y[I] * TEMP2
                         K += 1
                     AP[KK + J - 1] = (
                         AP[KK + J - 1].real + (X[J] * TEMP1 + Y[J] * TEMP2).real
@@ -247,7 +247,7 @@ def ZHPR2(UPLO, N, ALPHA, X, INCX, Y, INCY, AP):
                     IX = KX
                     IY = KY
                     for K in range(KK - 1, KK + J - 2):
-                        AP[K] = AP[K] + X[IX] * TEMP1 + Y[IY] * TEMP2
+                        AP[K] += X[IX] * TEMP1 + Y[IY] * TEMP2
                         IX += INCX
                         IY += INCY
                     AP[KK + J - 1] = (
@@ -270,7 +270,7 @@ def ZHPR2(UPLO, N, ALPHA, X, INCX, Y, INCY, AP):
                     AP[KK] = (AP[KK]).real + (X[J] * TEMP1 + Y[J] * TEMP2).real
                     K = KK + 1
                     for I in range(J, N):
-                        AP[K] = AP[K] + X[I] * TEMP1 + Y[I] * TEMP2
+                        AP[K] += X[I] * TEMP1 + Y[I] * TEMP2
                         K += 1
                 else:
                     AP[KK] = (AP[KK]).real
@@ -286,7 +286,7 @@ def ZHPR2(UPLO, N, ALPHA, X, INCX, Y, INCY, AP):
                     for K in range(KK, KK + N - J):
                         IX += INCX
                         IY += INCY
-                        AP[K] = AP[K] + X[IX] * TEMP1 + Y[IY] * TEMP2
+                        AP[K] += X[IX] * TEMP1 + Y[IY] * TEMP2
                 else:
                     AP[KK] = (AP[KK]).real
                 JX += INCX

@@ -276,37 +276,23 @@ def CGEMM(TRANSA, TRANSB, M, N, K, ALPHA, A, LDA, B, LDB, BETA, C, LDC):
 
     # And when  alpha==zero.
     if ALPHA == 0:
-        if BETA == 0:
-            for J in range(N):
-                for I in range(M):
-                    C[I, J] = 0
-        else:
-            for J in range(N):
-                for I in range(M):
-                    C[I, J] *= BETA
+        C[:M, :N] *= BETA
         return
 
     # Start the operations.
     if NOTB:
         if NOTA:
-            #
-            #           Form  C := alpha*A*B + beta*C.
-            #
+            # Form  C := alpha*A*B + beta*C.
             for J in range(N):
                 if BETA == 0:
-                    for I in range(M):
-                        C[I, J] = 0
+                    C[:M, J] = 0
                 elif BETA != 1:
-                    for I in range(M):
-                        C[I, J] *= BETA
+                    C[:M, J] *= BETA
                 for L in range(K):
                     TEMP = ALPHA * B[L, J]
-                    for I in range(M):
-                        C[I, J] += TEMP * A[I, L]
+                    C[:M, J] += TEMP * A[:M, L]
         elif CONJA:
-            #
-            #           Form  C := alpha*A**H*B + beta*C.
-            #
+            # Form  C := alpha*A**H*B + beta*C.
             for J in range(N):
                 for I in range(M):
                     TEMP = 0
@@ -317,9 +303,7 @@ def CGEMM(TRANSA, TRANSB, M, N, K, ALPHA, A, LDA, B, LDB, BETA, C, LDC):
                     else:
                         C[I, J] = ALPHA * TEMP + BETA * C[I, J]
         else:
-            #
-            #           Form  C := alpha*A**T*B + beta*C
-            #
+            # Form  C := alpha*A**T*B + beta*C
             for J in range(N):
                 for I in range(M):
                     TEMP = 0
@@ -347,58 +331,37 @@ def CGEMM(TRANSA, TRANSB, M, N, K, ALPHA, A, LDA, B, LDB, BETA, C, LDC):
             # Form  C := alpha*A*B**T + beta*C
             for J in range(N):
                 if BETA == 0:
-                    for I in range(M):
-                        C[I, J] = 0
+                    C[:M, J] = 0
                 elif BETA != 1:
-                    for I in range(M):
-                        C[I, J] *= BETA
+                    C[:M, J] *= BETA
                 for L in range(K):
-                    TEMP = ALPHA * B[J, L]
-                    for I in range(M):
-                        C[I, J] += TEMP * A[I, L]
+                    C[:M, J] += ALPHA * B[J, L] * A[:M, L]
     elif CONJA:
         if CONJB:
             # Form  C := alpha*A**H*B**H + beta*C.
             for J in range(N):
                 for I in range(M):
-                    TEMP = 0
-                    for L in range(K):
-                        TEMP += A[L, I].conjugate() * B[J, L].conjugate()
-                    if BETA == 0:
-                        C[I, J] = ALPHA * TEMP
-                    else:
-                        C[I, J] = ALPHA * TEMP + BETA * C[I, J]
+                    C[I, J] = (
+                        ALPHA * (A[:K, I].conjugate() * B[J, :K].conjugate()).sum()
+                        + BETA * C[I, J]
+                    )
         else:
             # Form  C := alpha*A**H*B**T + beta*C
             for J in range(N):
                 for I in range(M):
-                    TEMP = 0
-                    for L in range(K):
-                        TEMP += A[L, I].conjugate() * B[J, L]
-                    if BETA == 0:
-                        C[I, J] = ALPHA * TEMP
-                    else:
-                        C[I, J] = ALPHA * TEMP + BETA * C[I, J]
+                    C[I, J] = (
+                        ALPHA * (A[:K, I].conjugate() * B[J, :K]).sum() + BETA * C[I, J]
+                    )
     else:
         if CONJB:
             # Form  C := alpha*A**T*B**H + beta*C
             for J in range(N):
                 for I in range(M):
-                    TEMP = 0
-                    for L in range(K):
-                        TEMP += A[L, I] * B[J, L].conjugate()
-                    if BETA == 0:
-                        C[I, J] = ALPHA * TEMP
-                    else:
-                        C[I, J] = ALPHA * TEMP + BETA * C[I, J]
+                    C[I, J] = (
+                        ALPHA * (A[:K, I] * B[J, :K].conjugate()).sum() + BETA * C[I, J]
+                    )
         else:
             # Form  C := alpha*A**T*B**T + beta*C
             for J in range(N):
                 for I in range(M):
-                    TEMP = 0
-                    for L in range(K):
-                        TEMP += A[L, I] * B[J, L]
-                    if BETA == 0:
-                        C[I, J] = ALPHA * TEMP
-                    else:
-                        C[I, J] = ALPHA * TEMP + BETA * C[I, J]
+                    C[I, J] = ALPHA * (A[:K, I] * B[J, :K]).sum() + BETA * C[I, J]

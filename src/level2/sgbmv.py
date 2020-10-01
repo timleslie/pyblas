@@ -262,9 +262,7 @@ def SGBMV(TRANS, M, N, KL, KU, ALPHA, A, LDA, X, INCX, BETA, Y, INCY):
         return
     KUP1 = KU + 1
     if lsame(TRANS, "N"):
-        #
-        #        Form  y := alpha*A*x + y.
-        #
+        # Form  y := alpha*A*x + y.
         JX = KX
         if INCY == 1:
             for J in range(N):
@@ -285,9 +283,7 @@ def SGBMV(TRANS, M, N, KL, KU, ALPHA, A, LDA, X, INCX, BETA, Y, INCY):
                 if J > KU:
                     KY += INCY
     else:
-        #
-        #        Form  y := alpha*A**T*x + y.
-        #
+        # Form  y := alpha*A**T*x + y.
         JY = KY
         if INCX == 1:
             for J in range(N):

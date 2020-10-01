@@ -226,7 +226,7 @@ def DSPR2(UPLO, N, ALPHA, X, INCX, Y, INCY, AP):
                     TEMP2 = ALPHA * X[J]
                     K = KK
                     for I in range(J):
-                        AP[K] = AP[K] + X[I] * TEMP1 + Y[I] * TEMP2
+                        AP[K] += X[I] * TEMP1 + Y[I] * TEMP2
                         K += 1
                 KK += J
         else:
@@ -237,7 +237,7 @@ def DSPR2(UPLO, N, ALPHA, X, INCX, Y, INCY, AP):
                     IX = KX
                     IY = KY
                     for K in range(KK - 1, KK + J - 1):
-                        AP[K] = AP[K] + X[IX] * TEMP1 + Y[IY] * TEMP2
+                        AP[K] += X[IX] * TEMP1 + Y[IY] * TEMP2
                         IX += INCX
                         IY += INCY
                 JX += INCX
@@ -254,7 +254,7 @@ def DSPR2(UPLO, N, ALPHA, X, INCX, Y, INCY, AP):
                     TEMP2 = ALPHA * X[J]
                     K = KK
                     for I in range(J - 1, N):
-                        AP[K] = AP[K] + X[I] * TEMP1 + Y[I] * TEMP2
+                        AP[K] += X[I] * TEMP1 + Y[I] * TEMP2
                         K += 1
                 KK += N - J + 1
         else:
@@ -265,7 +265,7 @@ def DSPR2(UPLO, N, ALPHA, X, INCX, Y, INCY, AP):
                     IX = JX
                     IY = JY
                     for K in range(KK - 1, KK + N - J):
-                        AP[K] = AP[K] + X[IX] * TEMP1 + Y[IY] * TEMP2
+                        AP[K] += X[IX] * TEMP1 + Y[IY] * TEMP2
                         IX += INCX
                         IY += INCY
                 JX += INCX

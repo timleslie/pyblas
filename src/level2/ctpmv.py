@@ -196,12 +196,10 @@ def CTPMV(UPLO, TRANS, DIAG, N, AP, X, INCX):
     #     accessed sequentially with one pass through AP.
     #
     if lsame(TRANS, "N"):
-        #
-        #        Form  x:= A*x.
-        #
+        # Form  x:= A*x.
         if lsame(UPLO, "U"):
-            KK = 1
             if INCX == 1:
+                KK = 1
                 for J in range(N):
                     if X[J] != 0:
                         TEMP = X[J]
@@ -213,6 +211,7 @@ def CTPMV(UPLO, TRANS, DIAG, N, AP, X, INCX):
                             X[J] = X[J] * AP[KK + J - 1]
                     KK += J
             else:
+                KK = 1
                 JX = KX
                 for J in range(N):
                     if X[JX] != 0:

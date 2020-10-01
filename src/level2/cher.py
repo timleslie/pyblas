@@ -204,9 +204,7 @@ def CHER(UPLO, N, ALPHA, X, INCX, A, LDA):
     #     of A.
     #
     if lsame(UPLO, "U"):
-        #
-        #        Form  A  when A is stored in upper triangle.
-        #
+        # Form  A  when A is stored in upper triangle.
         if INCX == 1:
             for J in range(N):
                 if X[J] != 0:

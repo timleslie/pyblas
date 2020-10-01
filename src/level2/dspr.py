@@ -183,7 +183,7 @@ def DSPR(UPLO, N, ALPHA, X, INCX, AP):
                     TEMP = ALPHA * X[J]
                     K = KK
                     for I in range(J):
-                        AP[K] = AP[K] + X[I] * TEMP
+                        AP[K] += X[I] * TEMP
                         K += 1
                 KK += J
         else:
@@ -193,7 +193,7 @@ def DSPR(UPLO, N, ALPHA, X, INCX, AP):
                     TEMP = ALPHA * X[JX]
                     IX = KX
                     for K in range(KK - 1, KK + J - 1):
-                        AP[K] = AP[K] + X[IX] * TEMP
+                        AP[K] += X[IX] * TEMP
                         IX += INCX
                 JX += INCX
                 KK += J
@@ -207,7 +207,7 @@ def DSPR(UPLO, N, ALPHA, X, INCX, AP):
                     TEMP = ALPHA * X[J]
                     K = KK
                     for I in range(J - 1, N):
-                        AP[K] = AP[K] + X[I] * TEMP
+                        AP[K] += X[I] * TEMP
                         K += 1
                 KK += N - J + 1
         else:
@@ -217,7 +217,7 @@ def DSPR(UPLO, N, ALPHA, X, INCX, AP):
                     TEMP = ALPHA * X[JX]
                     IX = JX
                     for K in range(KK - 1, KK + N - J):
-                        AP[K] = AP[K] + X[IX] * TEMP
+                        AP[K] += X[IX] * TEMP
                         IX += INCX
                 JX += INCX
                 KK += N - J + 1

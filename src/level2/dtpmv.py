@@ -195,9 +195,7 @@ def DTPMV(UPLO, TRANS, DIAG, N, AP, X, INCX):
     #     accessed sequentially with one pass through AP.
     #
     if lsame(TRANS, "N"):
-        #
-        #        Form  x:= A*x.
-        #
+        # Form  x:= A*x.
         if lsame(UPLO, "U"):
             KK = 1
             if INCX == 1:

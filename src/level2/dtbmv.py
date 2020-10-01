@@ -316,9 +316,7 @@ def DTBMV(UPLO, TRANS, DIAG, N, K, A, LDA, X, INCX):
                     if (N - J) >= K:
                         KX -= INCX
     else:
-        #
-        #        Form  x := A**T*x.
-        #
+        # Form  x := A**T*x.
         if lsame(UPLO, "U"):
             KPLUS1 = K + 1
             if INCX == 1:

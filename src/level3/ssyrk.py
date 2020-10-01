@@ -262,9 +262,7 @@ def SSYRK(UPLO, TRANS, N, K, ALPHA, A, LDA, BETA, C, LDC):
 
     # Start the operations.
     if lsame(TRANS, "N"):
-        #
-        #        Form  C := alpha*A*A**T + beta*C.
-        #
+        # Form  C := alpha*A*A**T + beta*C.
         if UPPER:
             for J in range(N):
                 if BETA == 0:
@@ -292,9 +290,7 @@ def SSYRK(UPLO, TRANS, N, K, ALPHA, A, LDA, BETA, C, LDC):
                         for I in range(J - 1, N):
                             C[I, J] += TEMP * A[I, L]
     else:
-        #
-        #        Form  C := alpha*A**T*A + beta*C.
-        #
+        # Form  C := alpha*A**T*A + beta*C.
         if UPPER:
             for J in range(N):
                 for I in range(J):
@@ -308,10 +304,4 @@ def SSYRK(UPLO, TRANS, N, K, ALPHA, A, LDA, BETA, C, LDC):
         else:
             for J in range(N):
                 for I in range(J - 1, N):
-                    TEMP = 0
-                    for L in range(K):
-                        TEMP += A[L, I] * A[L, J]
-                    if BETA == 0:
-                        C[I, J] = ALPHA * TEMP
-                    else:
-                        C[I, J] = ALPHA * TEMP + BETA * C[I, J]
+                    C[I, J] = ALPHA * (A[:K, I] * A[:K, J]).sum() + BETA * C[I, J]

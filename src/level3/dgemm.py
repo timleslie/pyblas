@@ -267,9 +267,8 @@ def DGEMM(TRANSA, TRANSB, M, N, K, ALPHA, A, LDA, B, LDB, BETA, C, LDC):
     # Quick return if possible.
     if (M == 0) or (N == 0) or (((ALPHA == 0) or (K == 0)) and (BETA == 1)):
         return
-    #
-    #     And if  alpha==zero.
-    #
+
+    # And if  alpha==zero.
     if ALPHA == 0:
         if BETA == 0:
             for J in range(N):
@@ -284,9 +283,7 @@ def DGEMM(TRANSA, TRANSB, M, N, K, ALPHA, A, LDA, B, LDB, BETA, C, LDC):
     # Start the operations.
     if NOTB:
         if NOTA:
-            #
-            #           Form  C := alpha*A*B + beta*C.
-            #
+            # Form  C := alpha*A*B + beta*C.
             for J in range(N):
                 if BETA == 0:
                     for I in range(M):
@@ -299,9 +296,7 @@ def DGEMM(TRANSA, TRANSB, M, N, K, ALPHA, A, LDA, B, LDB, BETA, C, LDC):
                     for I in range(M):
                         C[I, J] += TEMP * A[I, L]
         else:
-            #
-            #           Form  C := alpha*A**T*B + beta*C
-            #
+            # Form  C := alpha*A**T*B + beta*C
             for J in range(N):
                 for I in range(M):
                     TEMP = 0
@@ -313,30 +308,16 @@ def DGEMM(TRANSA, TRANSB, M, N, K, ALPHA, A, LDA, B, LDB, BETA, C, LDC):
                         C[I, J] = ALPHA * TEMP + BETA * C[I, J]
     else:
         if NOTA:
-            #
-            #           Form  C := alpha*A*B**T + beta*C
-            #
+            # Form  C := alpha*A*B**T + beta*C
             for J in range(N):
                 if BETA == 0:
-                    for I in range(M):
-                        C[I, J] = 0
+                    C[:M, J] = 0
                 elif BETA != 1:
-                    for I in range(M):
-                        C[I, J] *= BETA
+                    C[:M, J] *= BETA
                 for L in range(K):
-                    TEMP = ALPHA * B[J, L]
-                    for I in range(M):
-                        C[I, J] += TEMP * A[I, L]
+                    C[:M, J] += ALPHA * B[J, L] * A[:M, L]
         else:
-            #
-            #           Form  C := alpha*A**T*B**T + beta*C
-            #
+            # Form  C := alpha*A**T*B**T + beta*C
             for J in range(N):
                 for I in range(M):
-                    TEMP = 0
-                    for L in range(K):
-                        TEMP += A[L, I] * B[J, L]
-                    if BETA == 0:
-                        C[I, J] = ALPHA * TEMP
-                    else:
-                        C[I, J] = ALPHA * TEMP + BETA * C[I, J]
+                    C[I, J] = ALPHA * (A[:K, I] * B[J, :K]).sum() + BETA * C[I, J]

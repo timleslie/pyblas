@@ -266,9 +266,7 @@ def DTBSV(UPLO, TRANS, DIAG, N, K, A, LDA, X, INCX):
     #     accessed by sequentially with one pass through A.
     #
     if lsame(TRANS, "N"):
-        #
-        #        Form  x := inv( A )*x.
-        #
+        # Form  x := inv( A )*x.
         if lsame(UPLO, "U"):
             KPLUS1 = K + 1
             if INCX == 1:
@@ -320,9 +318,7 @@ def DTBSV(UPLO, TRANS, DIAG, N, K, A, LDA, X, INCX):
                             IX += INCX
                     JX += INCX
     else:
-        #
-        #        Form  x := inv( A**T)*x.
-        #
+        # Form  x := inv( A**T)*x.
         if lsame(UPLO, "U"):
             KPLUS1 = K + 1
             if INCX == 1:

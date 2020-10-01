@@ -169,9 +169,7 @@ def dsyr(UPLO, N, ALPHA, X, INCX, A, LDA):
     # Quick return if possible.
     if (N == 0) or (ALPHA == 0):
         return
-    #
-    #     Set the start point in X if the increment is not unity.
-    #
+    # Set the start point in X if the increment is not unity.
     if INCX <= 0:
         KX = 1 - (N - 1) * INCX
     elif INCX != 1:
@@ -182,15 +180,11 @@ def dsyr(UPLO, N, ALPHA, X, INCX, A, LDA):
     #     of A.
     #
     if lsame(UPLO, "U"):
-        #
-        #        Form  A  when A is stored in upper triangle.
-        #
+        # Form  A  when A is stored in upper triangle.
         if INCX == 1:
             for J in range(N):
                 if X[J] != 0:
-                    TEMP = ALPHA * X[J]
-                    for I in range(J):
-                        A[I, J] += X[I] * TEMP
+                    A[:J, J] += X[:J] * ALPHA * X[J]
         else:
             JX = KX
             for J in range(N):

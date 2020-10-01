@@ -247,15 +247,11 @@ def DGEMV(TRANS, M, N, ALPHA, A, LDA, X, INCX, BETA, Y, INCY):
     if ALPHA == 0:
         return
     if lsame(TRANS, "N"):
-        #
-        #        Form  y := alpha*A*x + y.
-        #
+        # Form  y := alpha*A*x + y.
         JX = KX
         if INCY == 1:
             for J in range(N):
-                TEMP = ALPHA * X[JX]
-                for I in range(M):
-                    Y[I] += TEMP * A[I, J]
+                Y[:M] += ALPHA * X[JX] * A[:M, J]
                 JX += INCX
         else:
             for J in range(N):

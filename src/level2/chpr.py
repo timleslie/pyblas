@@ -173,50 +173,53 @@ def chpr(UPLO, N, ALPHA, X, INCX, AP):
 
     # Start the operations. In this version the elements of the array AP
     # are accessed sequentially with one pass through AP.
-    KK = 1
     if lsame(UPLO, "U"):
         # Form  A  when upper triangle is stored in AP.
         if INCX == 1:
+            KK = 1
             for J in range(N):
+                JM1 = J - 1
                 if X[J] != 0:
                     TEMP = ALPHA * (X[J]).conjugate()
-                    K = KK
-                    for I in range(J - 1):
-                        AP[K] = AP[K] + X[I] * TEMP
-                        K += 1
-                    AP[KK + J - 1] = AP[KK + J - 1].real + (X[J] * TEMP).real
+                    AP[KK : KK + JM1] += X[:JM1] * TEMP
+                    # Diagonal term
+                    AP[KK + JM1] = AP[KK + JM1].real + (X[J] * TEMP).real
                 else:
-                    AP[KK + J - 1] = AP[KK + J - 1].real
+                    AP[KK + JM1] = AP[KK + JM1].real
                 KK += J
         else:
+            KK = 1
             JX = KX
             for J in range(N):
+                JM1 = J - 1
                 if X[JX] != 0:
                     TEMP = ALPHA * (X[JX]).conjugate()
                     IX = KX
-                    for K in range(KK - 1, KK + J - 2):
-                        AP[K] = AP[K] + X[IX] * TEMP
+                    for K in range(KK - 1, KK + JM1 - 1):
+                        AP[K] += X[IX] * TEMP
                         IX += INCX
-                    AP[KK + J - 1] = AP[KK + J - 1].real + (X[JX] * TEMP).real
+                    AP[KK + JM1] = AP[KK + JM11].real + (X[JX] * TEMP).real
                 else:
-                    AP[KK + J - 1] = AP[KK + J - 1].real
+                    AP[KK + JM1] = AP[KK + JM1].real
                 JX += INCX
                 KK += J
     else:
         # Form  A  when lower triangle is stored in AP.
         if INCX == 1:
+            KK = 1
             for J in range(N):
                 if X[J] != 0:
                     TEMP = ALPHA * (X[J]).conjugate()
                     AP[KK] = (AP[KK]).real + (TEMP * X[J]).real
                     K = KK + 1
                     for I in range(J, N):
-                        AP[K] = AP[K] + X[I] * TEMP
+                        AP[K] += X[I] * TEMP
                         K += 1
                 else:
                     AP[KK] = (AP[KK]).real
                 KK += N - J + 1
         else:
+            KK = 1
             JX = KX
             for J in range(N):
                 if X[JX] != 0:
@@ -225,7 +228,7 @@ def chpr(UPLO, N, ALPHA, X, INCX, AP):
                     IX = JX
                     for K in range(KK, KK + N - J):
                         IX += INCX
-                        AP[K] = AP[K] + X[IX] * TEMP
+                        AP[K] += X[IX] * TEMP
                 else:
                     AP[KK] = (AP[KK]).real
                 JX += INCX
