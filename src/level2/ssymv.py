@@ -234,9 +234,7 @@ def SSYMV(UPLO, N, ALPHA, A, LDA, X, INCX, BETA, Y, INCY):
     if ALPHA == 0:
         return
     if lsame(UPLO, "U"):
-        #
-        #        Form  y  when A is stored in upper triangle.
-        #
+        # Form  y  when A is stored in upper triangle.
         if (INCX == 1) and (INCY == 1):
             for J in range(N):
                 TEMP1 = ALPHA * X[J]
@@ -262,9 +260,7 @@ def SSYMV(UPLO, N, ALPHA, A, LDA, X, INCX, BETA, Y, INCY):
                 JX += INCX
                 JY += INCY
     else:
-        #
-        #        Form  y  when A is stored in lower triangle.
-        #
+        # Form  y  when A is stored in lower triangle.
         if (INCX == 1) and (INCY == 1):
             for J in range(N):
                 TEMP1 = ALPHA * X[J]

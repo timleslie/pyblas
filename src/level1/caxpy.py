@@ -108,12 +108,9 @@ def caxpy(N, CA, CX, INCX, CY, INCY):
 
     if N <= 0:
         return
-    if scabs1(CA) == 0.0e0:
-        return
     if INCX == 1 and INCY == 1:
         # code for both increments equal to 1
-        for I in range(N):
-            CY[I] += CA * CX[I]
+        CY[:N] += CA * CX[:N]
     else:
         # code for unequal increments or equal increments not equal to 1
         IX = 1

@@ -115,12 +115,9 @@ def SAXPY(N, SA, SX, INCX, SY, INCY):
     if SA == 0.0:
         return
     if INCX == 1 and INCY == 1:
-        #
-        #        code for both increments equal to 1
-        #
-        #
-        #        clean-up loop
-        #
+        # code for both increments equal to 1
+
+        # clean-up loop
         M = N % 4
         if M != 0:
             for I in range(M):
@@ -133,10 +130,7 @@ def SAXPY(N, SA, SX, INCX, SY, INCY):
             SY[I + 2] += SA * SX[I + 2]
             SY[I + 3] += SA * SX[I + 3]
     else:
-        #
-        #        code for unequal increments or equal increments
-        #          not equal to 1
-        #
+        # code for unequal increments or equal increments not equal to 1
         IX = 1
         IY = 1
         if INCX < 0:
@@ -144,6 +138,6 @@ def SAXPY(N, SA, SX, INCX, SY, INCY):
         if INCY < 0:
             IY = (-N + 1) * INCY + 1
         for I in range(N):
-            SY[IY] = SY[IY] + SA * SX[IX]
+            SY[IY] += SA * SX[IX]
             IX += INCX
             IY += INCY

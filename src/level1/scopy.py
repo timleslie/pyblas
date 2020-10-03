@@ -95,22 +95,13 @@ def SCOPY(N, SX, INCX, SY, INCY):
     #     ..
     #
     #  =====================================================================
-    #
-    #     .. Local Scalars ..
-    # INTEGER I,IX,IY,M,MP1
-    #     ..
-    #     .. Intrinsic Functions ..
-    # INTRINSIC MOD
-    #     ..
+
     if N <= 0:
         return
     if INCX == 1 and INCY == 1:
-        #
-        #        code for both increments equal to 1
-        #
-        #
-        #        clean-up loop
-        #
+        # code for both increments equal to 1
+
+        # clean-up loop
         M = N % 7
         if M != 0:
             for I in range(M):
@@ -126,10 +117,7 @@ def SCOPY(N, SX, INCX, SY, INCY):
             SY[I + 5] = SX[I + 5]
             SY[I + 6] = SX[I + 6]
     else:
-        #
-        #        code for unequal increments or equal increments
-        #          not equal to 1
-        #
+        # code for unequal increments or equal increments not equal to 1
         IX = 1
         IY = 1
         if INCX < 0:
