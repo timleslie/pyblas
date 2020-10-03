@@ -82,6 +82,7 @@
 #  =====================================================================
 from ..util import slice_
 
+
 def DCOPY(N, DX, INCX, DY, INCY):
     #
     #  -- Reference BLAS level1 routine (version 3.8.0) --
