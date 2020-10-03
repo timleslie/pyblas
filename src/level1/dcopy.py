@@ -80,6 +80,8 @@
 # > \endverbatim
 # >
 #  =====================================================================
+from ..util import slice_
+
 def DCOPY(N, DX, INCX, DY, INCY):
     #
     #  -- Reference BLAS level1 routine (version 3.8.0) --
@@ -98,33 +100,6 @@ def DCOPY(N, DX, INCX, DY, INCY):
 
     if N <= 0:
         return
-    if INCX == 1 and INCY == 1:
-        # code for both increments equal to 1
-
-        # clean-up loop
-        M = N % 7
-        if M != 0:
-            for I in range(M):
-                DY[I] = DX[I]
-            if N < 7:
-                return
-        for I in range(M, N, 7):
-            DY[I] = DX[I]
-            DY[I + 1] = DX[I + 1]
-            DY[I + 2] = DX[I + 2]
-            DY[I + 3] = DX[I + 3]
-            DY[I + 4] = DX[I + 4]
-            DY[I + 5] = DX[I + 5]
-            DY[I + 6] = DX[I + 6]
-    else:
-        # code for unequal increments or equal increments not equal to 1
-        IX = 1
-        IY = 1
-        if INCX < 0:
-            IX = (-N + 1) * INCX + 1
-        if INCY < 0:
-            IY = (-N + 1) * INCY + 1
-        for I in range(N):
-            DY[IY] = DX[IX]
-            IX += INCX
-            IY += INCY
+    if N <= 0:
+        return
+    SY[slice_(N, INCY)] = SX[slice_(N, INCX)]
