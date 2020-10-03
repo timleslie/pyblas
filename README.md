@@ -1,3 +1,6 @@
+![Python package](https://github.com/timleslie/pyblas/workflows/Python%20package/badge.svg)
+![test-black](https://github.com/timleslie/pyblas/workflows/test-black/badge.svg)
+
 # pyblas
 A python port of the netlib reference BLAS implementation
 
