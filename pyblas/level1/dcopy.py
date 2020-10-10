@@ -9,11 +9,11 @@ def dcopy(N, DX, INCX, DY, INCY):
     N : int
         Number of elements in input vectors
     DX : numpy.ndarray
-        A double precision real array, dimension (1 + (`N` - 1)*abs( `INCX` ))
+        A double precision real array, dimension (1 + (`N` - 1)*abs(`INCX`))
     INCX : int
         Storage spacing between elements of `DX`
     DY : numpy.ndarray
-        A double precision real array, dimension (1 + (`N` - 1)*abs( `INCY` ))
+        A double precision real array, dimension (1 + (`N` - 1)*abs(`INCY`))
     INCY : int
         Storage spacing between elements of `DY`
 

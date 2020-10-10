@@ -9,11 +9,11 @@ def ccopy(N, CX, INCX, CY, INCY):
     N : int
         Number of elements in input vectors
     CX : numpy.ndarray
-        A single precision complex array, dimension (1 + (`N` - 1)*abs( `INCX` ))
+        A single precision complex array, dimension (1 + (`N` - 1)*abs(`INCX`))
     INCX : int
         Storage spacing between elements of `CX`
     CY : numpy.ndarray
-        A single precision complex array, dimension (1 + (`N` - 1)*abs( `INCY` ))
+        A single precision complex array, dimension (1 + (`N` - 1)*abs(`INCY`))
     INCY : int
         Storage spacing between elements of `CY`
 

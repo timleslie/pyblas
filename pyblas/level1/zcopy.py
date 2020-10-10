@@ -9,11 +9,11 @@ def zcopy(N, ZX, INCX, ZY, INCY):
     N : int
         Number of elements in input vectors
     ZX : numpy.ndarray
-        A double precision complex array, dimension (1 + (`N` - 1)*abs( `INCX` ))
+        A double precision complex array, dimension (1 + (`N` - 1)*abs(`INCX`))
     INCX : int
         Storage spacing between elements of `ZX`
     ZY : numpy.ndarray
-        A single precision complex array, dimension (1 + (`N` - 1)*abs( `INCY` ))
+        A single precision complex array, dimension (1 + (`N` - 1)*abs(`INCY`))
     INCY : double
         Storage spacing between elements of `ZY`
 
@@ -38,8 +38,8 @@ def zcopy(N, ZX, INCX, ZY, INCY):
 
     Examples
     --------
-    >>> x = np.array([1+2j, 2+3j, 3+4j], dtype=np.complex64)
-    >>> y = np.array([6+7j, 7+8j, 8+9j], dtype=np.complex64)
+    >>> x = np.array([1+2j, 2+3j, 3+4j], dtype=np.complex128)
+    >>> y = np.array([6+7j, 7+8j, 8+9j], dtype=np.complex128)
     >>> N = len(x)
     >>> incx = 1
     >>> incy = 1
