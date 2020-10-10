@@ -7,15 +7,15 @@ def dcopy(N, DX, INCX, DY, INCY):
     Parameters
     ----------
     N : int
-        number of elements in input vectors
+        Number of elements in input vectors
     DX : numpy.ndarray
-        `DX` is DOUBLE PRECISION array, dimension ( 1 + ( `N` - 1 )*abs( `INCX` ) )
+        A DOUBLE PRECISION array, dimension (1 + (`N` - 1)*abs( `INCX` ))
     INCX : int
-        storage spacing between elements of `DX`
+        Storage spacing between elements of `DX`
     DY : numpy.ndarray
-        `DY` is DOUBLE PRECISION array, dimension ( 1 + ( `N` - 1 )*abs( `INCY` ) )
+        A DOUBLE PRECISION array, dimension (1 + (`N` - 1)*abs( `INCY` ))
     INCY : int
-        storage spacing between elements of `DY`
+        Storage spacing between elements of `DY`
 
     Returns
     -------
@@ -31,6 +31,10 @@ def dcopy(N, DX, INCX, DY, INCY):
     scopy : Single-precision real copy
     ccopy : Single-precision complex copy
     zcopy : Double-precision complex copy
+
+    Notes
+    -----
+    Reference BLAS documentation: https://github.com/Reference-LAPACK/lapack/blob/v3.9.0/BLAS/SRC/dcopy.f
 
     Examples
     --------
