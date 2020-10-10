@@ -14,8 +14,8 @@ pip install numpy pyblas
 import numpy as np
 from pyblas.level1 import dswap
 
-x = np.array([1.2, 2.3, 3.4])
-y = np.array([5.6, 7.8, 9.0])
+x = np.array([1.2, 2.3, 3.4], dtype=np.double) # A double-precision vector x
+y = np.array([5.6, 7.8, 9.0], dtype=np.double) # A double precision vector y
 N = len(x)  # The length of the vectors x and y
 incx = 1  # The index spacing of the vector x
 incy = 1  # The index spacing of the vector y
