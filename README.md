@@ -25,7 +25,7 @@ dswap(N, x, incx, y, incy)
 print(x, y)
 ```
 
-For more details on how to use the PyBLAS library, please consult our [docs](https://github.com/timleslie/pyblas/tree/main/docs)
+For more details on how to use the PyBLAS library, please consult our [docs](https://nbviewer.jupyter.org/github/timleslie/pyblas/tree/main/docs/)
 
 ## What is BLAS
 
