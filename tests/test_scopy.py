@@ -6,7 +6,7 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")
 import numpy as np
 import numpy.testing as npt
 
-from src.level1.scopy import scopy
+from pyblas.level1.scopy import scopy
 
 dtype = np.single  # float32
 
