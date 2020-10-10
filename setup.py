@@ -85,7 +85,6 @@ setup(
         "Intended Audience :: Education",
         "Intended Audience :: Science/Research",
         "Intended Audience :: Developers",
-        "Topic :: Software Development :: Build Tools",
         # Pick your license as you wish
         "License :: OSI Approved :: BSD License",
         # Specify the Python versions you support here. In particular, ensure
@@ -98,6 +97,7 @@ setup(
         "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3 :: Only",
     ],
+    license='BSD-3-Clause License',
     # This field adds keywords for your project which will appear on the
     # project page. What does your project relate to?
     #

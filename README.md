@@ -3,8 +3,53 @@
 
 # 🔢 PyBLAS
 
-A python port of the netlib reference BLAS implementation
+PyBLAS is a python port of the [netlib reference BLAS implementation](http://www.netlib.org/blas/).
 
+## Usage
+
+```shell
+pip install numpy pyblas
+```
+
+```python
+import numpy as np
+from pyblas.level1 import dswap
+
+x = np.array([1.2, 2.3, 3.4])
+y = np.array([5.6, 7.8, 9.0])
+N = len(x)  # The length of the vectors x and y
+incx = 1  # The index spacing of the vector x
+incy = 1  # The index spacing of the vector y
+
+# Swap the values of the vectors x and y
+dswap(N, x, incx, y, incy)
+print(x, y)
+```
+
+For more details on how to use the PyBLAS library, please consult our [docs](/docs/README.md)
+
+## What is BLAS
+
+The **Basic Linear Algebra Subprograms** (BLAS) are a collection of functions which form the basis of many modern numerical computing packages, including numpy, scipy, and matlab.
+They provide functions for performing basic calculations on vectors and matrices, which form the basis for more complex calculations such as solving systems of linear equations.
+
+## Who is this for?
+
+ * Maths and computer science students who are learning about linear algebra and want to see how to implement simple operations.
+ * Algorithm developers who want to prototype their calculations in a high level language with the same APIs they will use in C or Fortran
+
+## Performance
+
+Optimal performance is *not* a goal of the PyBLAS project.
+The project aim is to have a simple and readable implementation of the BLAS standards.
+As such, we often forego optimization opporunities in favour of simplicity.
+
+The project matches overall algorithmic complexity with the reference implementation for all functions.
+
+## Accuracy
+
+The project aims to match the numerical accuracy of the reference BLAS implementation.
+A future goal is to have benchmarks which can be run against the system BLAS libraries to verify the numerical accuract of the functions
 
 ### Level 1
 
