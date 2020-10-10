@@ -36,7 +36,9 @@ They provide functions for performing basic calculations on vectors and matrices
 ## Who is this for?
 
  * Maths and computer science students who are learning about linear algebra and want to see how to implement simple operations.
- * Algorithm developers who want to prototype their calculations in a high level language with the same APIs they will use in C or Fortran
+ * Algorithm developers who want to prototype their calculations in a high level language with the same APIs they will use in C or Fortran.
+ * Data scientists who want to better understand what is going on under the hood of the algorithms they use.
+ * Educators who want an easy to use BLAS implementation when teaching numerical computing courses.
 
 ## Performance
 
