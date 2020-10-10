@@ -84,6 +84,9 @@ from ..util import slice_
 
 
 def dcopy(N, DX, INCX, DY, INCY):
+    """
+    FIXME
+    """
     #
     #  -- Reference BLAS level1 routine (version 3.8.0) --
     #  -- Reference BLAS is a software package provided by Univ. of Tennessee,    --
