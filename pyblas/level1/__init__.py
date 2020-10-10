@@ -1,1 +1,1 @@
-__all__ = ['scopy', 'dcopy', 'ccopy', 'zcopy']
+__all__ = ["scopy", "dcopy", "ccopy", "zcopy"]
