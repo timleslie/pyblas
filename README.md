@@ -1,3 +1,4 @@
+[![PyPI version](https://badge.fury.io/py/pyblas.svg)](https://badge.fury.io/py/pyblas)
 ![Python package](https://github.com/timleslie/pyblas/workflows/Unit%20tests/badge.svg)
 ![test-black](https://github.com/timleslie/pyblas/workflows/Linting%20-%20Black/badge.svg)
 
@@ -26,7 +27,7 @@ dswap(N, x, incx, y, incy)
 print(x, y)
 ```
 
-For more details on how to use the PyBLAS library, please consult our [docs](/docs)
+For more details on how to use the PyBLAS library, please consult our [docs](https://github.com/timleslie/pyblas/tree/main/docs)
 
 ## What is BLAS
 
