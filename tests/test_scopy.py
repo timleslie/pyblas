@@ -10,6 +10,7 @@ from pyblas.level1.scopy import scopy
 
 dtype = np.single  # float32
 
+
 def test_scopy1():
     sx = np.array([1, 2, 3], dtype=dtype)
     N = 3
@@ -18,6 +19,7 @@ def test_scopy1():
     incy = 1
     scopy(N, sx, incx, sy, incy)
     npt.assert_equal(sy, [1, 2, 3])
+
 
 def test_scopy2():
     sx = np.array([3, -1, 2, -1, 1, -1], dtype=dtype)
@@ -28,6 +30,7 @@ def test_scopy2():
     scopy(N, sx, incx, sy, incy)
     npt.assert_equal(sy, [1, 2, 3])
 
+
 def test_scopy3():
     sx = np.array([1, 2, 3], dtype=dtype)
     N = 3
@@ -37,6 +40,7 @@ def test_scopy3():
     scopy(N, sx, incx, sy, incy)
     npt.assert_equal(sy, [3, 0, 2, 0, 1])
 
+
 def test_scopy4():
     sx = np.array([3, -1, 2, -1, 1, -1], dtype=dtype)
     N = 3
@@ -45,6 +49,7 @@ def test_scopy4():
     incy = -2
     scopy(N, sx, incx, sy, incy)
     npt.assert_equal(sy, [3, 0, 2, 0, 1])
+
 
 def test_scopy5():
     scopy(0, None, None, None, None)
