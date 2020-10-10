@@ -1,4 +1,4 @@
-name: test-black
+name: Linting - Black
 on: [push]
 jobs:
   check-formatting:
