@@ -38,8 +38,8 @@ def scopy(N, SX, INCX, SY, INCY):
 
     Examples
     --------
-    >>> x = np.array([1,2,3], dtype=np.single)
-    >>> y = np.array([6,7,8], dtype=np.single)
+    >>> x = np.array([1, 2, 3], dtype=np.single)
+    >>> y = np.array([6, 7, 8], dtype=np.single)
     >>> N = len(x)
     >>> incx = 1
     >>> incy = 1

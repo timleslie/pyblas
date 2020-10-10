@@ -34,16 +34,16 @@ def zcopy(N, ZX, INCX, ZY, INCY):
 
     Notes
     -----
-    Reference BLAS documentation: https://github.com/Reference-LAPACK/lapack/blob/v3.9.0/BLAS/SRC/ccopy.f
+    Reference BLAS documentation: https://github.com/Reference-LAPACK/lapack/blob/v3.9.0/BLAS/SRC/zcopy.f
 
     Examples
     --------
-    >>> x = np.array([1+2j,2+3j,3+4j], dtype=np.complex64)
-    >>> y = np.array([6+7j,7+8j,8+9j], dtype=np.complex64)
+    >>> x = np.array([1+2j, 2+3j, 3+4j], dtype=np.complex64)
+    >>> y = np.array([6+7j, 7+8j, 8+9j], dtype=np.complex64)
     >>> N = len(x)
     >>> incx = 1
     >>> incy = 1
-    >>> ccopy(N, x, incx, y, incy)
+    >>> zcopy(N, x, incx, y, incy)
     >>> print(y)
     [1.+2.j 2.+3.j 3.+4.j]
     """

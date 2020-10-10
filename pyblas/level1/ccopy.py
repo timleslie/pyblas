@@ -38,8 +38,8 @@ def ccopy(N, CX, INCX, CY, INCY):
 
     Examples
     --------
-    >>> x = np.array([1+2j,2+3j,3+4j], dtype=np.complex64)
-    >>> y = np.array([6+7j,7+8j,8+9j], dtype=np.complex64)
+    >>> x = np.array([1+2j, 2+3j, 3+4j], dtype=np.complex64)
+    >>> y = np.array([6+7j, 7+8j, 8+9j], dtype=np.complex64)
     >>> N = len(x)
     >>> incx = 1
     >>> incy = 1

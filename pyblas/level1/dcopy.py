@@ -38,8 +38,8 @@ def dcopy(N, DX, INCX, DY, INCY):
 
     Examples
     --------
-    >>> x = np.array([1,2,3], dtype=np.double)
-    >>> y = np.array([6,7,8], dtype=np.double)
+    >>> x = np.array([1, 2, 3], dtype=np.double)
+    >>> y = np.array([6, 7, 8], dtype=np.double)
     >>> N = len(x)
     >>> incx = 1
     >>> incy = 1
