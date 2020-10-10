@@ -2,18 +2,18 @@ from ..util import slice_
 
 
 def dcopy(N, DX, INCX, DY, INCY):
-    """Copies a vector, x, to a vector, y
+    """Copies a vector, x, to a vector, y.
 
     Parameters
     ----------
     N : int
         Number of elements in input vectors
     DX : numpy.ndarray
-        A DOUBLE PRECISION array, dimension (1 + (`N` - 1)*abs( `INCX` ))
+        A double precision real array, dimension (1 + (`N` - 1)*abs( `INCX` ))
     INCX : int
         Storage spacing between elements of `DX`
     DY : numpy.ndarray
-        A DOUBLE PRECISION array, dimension (1 + (`N` - 1)*abs( `INCY` ))
+        A double precision real array, dimension (1 + (`N` - 1)*abs( `INCY` ))
     INCY : int
         Storage spacing between elements of `DY`
 
