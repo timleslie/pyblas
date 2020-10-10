@@ -79,7 +79,9 @@
 # > \endverbatim
 # >
 #  =====================================================================
-def ZCOPY(N, ZX, INCX, ZY, INCY):
+from ..util import slice_
+
+def zcopy(N, ZX, INCX, ZY, INCY):
     #
     #  -- Reference BLAS level1 routine (version 3.8.0) --
     #  -- Reference BLAS is a software package provided by Univ. of Tennessee,    --
@@ -97,19 +99,4 @@ def ZCOPY(N, ZX, INCX, ZY, INCY):
 
     if N <= 0:
         return
-    if INCX == 1 and INCY == 1:
-        # code for both increments equal to 1
-        for I in range(N):
-            ZY[I] = ZX[I]
-    else:
-        # code for unequal increments or equal increments not equal to 1
-        IX = 1
-        IY = 1
-        if INCX < 0:
-            IX = (-N + 1) * INCX + 1
-        if INCY < 0:
-            IY = (-N + 1) * INCY + 1
-        for I in range(N):
-            ZY[IY] = ZX[IX]
-            IX += INCX
-            IY += INCY
+    ZY[slice_(N, INCY)] = ZX[slice_(N, INCX)]

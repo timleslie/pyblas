@@ -83,7 +83,7 @@
 from ..util import slice_
 
 
-def DCOPY(N, DX, INCX, DY, INCY):
+def dcopy(N, DX, INCX, DY, INCY):
     #
     #  -- Reference BLAS level1 routine (version 3.8.0) --
     #  -- Reference BLAS is a software package provided by Univ. of Tennessee,    --
@@ -101,6 +101,4 @@ def DCOPY(N, DX, INCX, DY, INCY):
 
     if N <= 0:
         return
-    if N <= 0:
-        return
-    SY[slice_(N, INCY)] = SX[slice_(N, INCX)]
+    DY[slice_(N, INCY)] = DX[slice_(N, INCX)]
