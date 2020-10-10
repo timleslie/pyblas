@@ -81,6 +81,7 @@
 #  =====================================================================
 from ..util import slice_
 
+
 def zcopy(N, ZX, INCX, ZY, INCY):
     #
     #  -- Reference BLAS level1 routine (version 3.8.0) --
