@@ -1,6 +1,4 @@
 [![PyPI version](https://badge.fury.io/py/pyblas.svg)](https://badge.fury.io/py/pyblas)
-[![Python package](https://github.com/timleslie/pyblas/workflows/Unit%20tests/badge.svg)](https://github.com/timleslie/pyblas)
-[![test-black](https://github.com/timleslie/pyblas/workflows/Linting%20-%20Black/badge.svg)](https://github.com/timleslie/pyblas)
 
 # 🔢 PyBLAS
 
