@@ -34,6 +34,7 @@ def scopy(N, SX, INCX, SY, INCY):
 
     Notes
     -----
+    Online PyBLAS documentation: https://nbviewer.jupyter.org/github/timleslie/pyblas/blob/main/docs/scopy.ipynb
     Reference BLAS documentation: https://github.com/Reference-LAPACK/lapack/blob/v3.9.0/BLAS/SRC/scopy.f
 
     Examples
