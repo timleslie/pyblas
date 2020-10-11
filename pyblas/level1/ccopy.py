@@ -21,11 +21,6 @@ def ccopy(N, CX, INCX, CY, INCY):
     -------
     None
 
-    Raises
-    ------
-    Exception
-        If N <= 0
-
     See Also
     --------
     scopy : Single-precision real copy
@@ -34,6 +29,7 @@ def ccopy(N, CX, INCX, CY, INCY):
 
     Notes
     -----
+    Online PyBLAS documentation: https://nbviewer.jupyter.org/github/timleslie/pyblas/blob/main/docs/ccopy.ipynb
     Reference BLAS documentation: https://github.com/Reference-LAPACK/lapack/blob/v3.9.0/BLAS/SRC/ccopy.f
 
     Examples

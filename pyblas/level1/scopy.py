@@ -21,11 +21,6 @@ def scopy(N, SX, INCX, SY, INCY):
     -------
     None
 
-    Raises
-    ------
-    Exception
-        If N <= 0
-
     See Also
     --------
     dcopy : Double-precision real copy
