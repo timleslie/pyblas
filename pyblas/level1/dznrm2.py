@@ -74,9 +74,10 @@
 # >
 #  =====================================================================
 from math import sqrt
+from ..util import slice_
 
 
-def DZNRM2(N, X, INCX):
+def dznrm2(N, X, INCX):
     #
     #  -- Reference BLAS level1 routine (version 3.8.0) --
     #  -- Reference BLAS is a software package provided by Univ. of Tennessee,    --
@@ -91,31 +92,6 @@ def DZNRM2(N, X, INCX):
     #     ..
     #
     #  =====================================================================
-
-    if N < 1 or INCX < 1:
-        NORM = 0
-    else:
-        SCALE = 0
-        SSQ = 1
-        #        The following loop is equivalent to this call to the LAPACK
-        #        auxiliary routine:
-        #        CALL ZLASSQ( N, X, INCX, SCALE, SSQ )
-        #
-        for IX in range(0, 1 + (N - 1) * INCX, INCX):
-            if (X[IX]).real != 0:
-                TEMP = abs((X[IX]).real)
-                if SCALE < TEMP:
-                    SSQ = 1 + SSQ * (SCALE / TEMP) ** 2
-                    SCALE = TEMP
-                else:
-                    SSQ = SSQ + (TEMP / SCALE) ** 2
-            if (X[IX]).imag != 0:
-                TEMP = abs((X[IX]).imag)
-                if SCALE < TEMP:
-                    SSQ = 1 + SSQ * (SCALE / TEMP) ** 2
-                    SCALE = TEMP
-                else:
-                    SSQ = SSQ + (TEMP / SCALE) ** 2
-        NORM = SCALE * sqrt(SSQ)
-
-    return NORM
+    if N <= 0:
+        return 0
+    return (X[slice_(N, INCX)].conj() * X[slice_(N, INCX)]).sum()

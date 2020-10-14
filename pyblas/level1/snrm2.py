@@ -73,9 +73,10 @@
 # >
 #  =====================================================================
 from math import sqrt
+from ..util import slice_
 
 
-def SNRM2(N, X, INCX):
+def snrm2(N, X, INCX):
     #
     #  -- Reference BLAS level1 routine (version 3.8.0) --
     #  -- Reference BLAS is a software package provided by Univ. of Tennessee,    --
@@ -90,25 +91,6 @@ def SNRM2(N, X, INCX):
     #     ..
     #
     #  =====================================================================
-
-    if N < 1 or INCX < 1:
-        NORM = 0
-    elif N == 1:
-        NORM = abs(X(1))
-    else:
-        SCALE = 0
-        SSQ = 1
-        #        The following loop is equivalent to this call to the LAPACK
-        #        auxiliary routine:
-        #        CALL SLASSQ( N, X, INCX, SCALE, SSQ )
-        #
-        for IX in range(0, 1 + (N - 1) * INCX, INCX):
-            if X[IX] != 0:
-                ABSXI = abs(X[IX])
-                if ABSXI > SCALE:
-                    SSQ = 1 + SSQ * (SCALE / ABSXI) ** 2
-                    SCALE = ABSXI
-                else:
-                    SSQ = SSQ + (ABSXI / SCALE) ** 2
-        NORM = SCALE * sqrt(SSQ)
-    return NORM
+    if N <= 0:
+        return 0
+    return sqrt((X[slice_(N, INCX)] ** 2).sum())
