@@ -79,6 +79,9 @@
 # > \endverbatim
 # >
 #  =====================================================================
+from ..util import slice_
+
+
 def zswap(N, ZX, INCX, ZY, INCY):
     #
     #  -- Reference BLAS level1 routine (version 3.8.0) --
@@ -96,23 +99,8 @@ def zswap(N, ZX, INCX, ZY, INCY):
     #  =====================================================================
     if N <= 0:
         return
-    if INCX == 1 and INCY == 1:
-        # code for both increments equal to 1
-        for I in range(N):
-            ZTEMP = ZX[I]
-            ZX[I] = ZY[I]
-            ZY[I] = ZTEMP
-    else:
-        # code for unequal increments or equal increments not equal to 1
-        IX = 1
-        IY = 1
-        if INCX < 0:
-            IX = (-N + 1) * INCX + 1
-        if INCY < 0:
-            IY = (-N + 1) * INCY + 1
-        for I in range(N):
-            ZTEMP = ZX[IX]
-            ZX[IX] = ZY[IY]
-            ZY[IY] = ZTEMP
-            IX += INCX
-            IY += INCY
+    x_slice = slice_(N, INCX)
+    y_slice = slice_(N, INCY)
+    X_TEMP = ZX[x_slice]
+    ZX[x_slice] = ZY[y_slice]
+    ZY[x_slice] = X_TEMP

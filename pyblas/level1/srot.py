@@ -90,7 +90,10 @@
 # > \endverbatim
 # >
 #  =====================================================================
-def SROT(N, SX, INCX, SY, INCY, C, S):
+from ..util import slice_
+
+
+def srot(N, SX, INCX, SY, INCY, C, S):
     #
     #  -- Reference BLAS level1 routine (version 3.8.0) --
     #  -- Reference BLAS is a software package provided by Univ. of Tennessee,    --
@@ -113,28 +116,8 @@ def SROT(N, SX, INCX, SY, INCY, C, S):
     #     ..
     if N <= 0:
         return
-    if INCX == 1 and INCY == 1:
-        #
-        #       code for both increments equal to 1
-        #
-        for I in range(N):
-            STEMP = C * SX[I] + S * SY[I]
-            SY[I] = C * SY[I] - S * SX[I]
-            SX[I] = STEMP
-    else:
-        #
-        #       code for unequal increments or equal increments not equal
-        #         to 1
-        #
-        IX = 1
-        IY = 1
-        if INCX < 0:
-            IX = (-N + 1) * INCX + 1
-        if INCY < 0:
-            IY = (-N + 1) * INCY + 1
-        for I in range(N):
-            STEMP = C * SX[IX] + S * SY[IY]
-            SY[IY] = C * SY[IY] - S * SX[IX]
-            SX[IX] = STEMP
-            IX += INCX
-            IY += INCY
+    x_slice = slice_(N, INCX)
+    y_slice = slice_(N, INCY)
+    X_TEMP = C * SX[x_slice] + S * SY[y_slice]
+    SY[y_slice] = -S * SX[x_slice] + C * SY[y_slice]
+    SX[x_slice] = X_TEMP

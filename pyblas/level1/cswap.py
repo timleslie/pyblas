@@ -79,6 +79,9 @@
 # > \endverbatim
 # >
 #  =====================================================================
+from ..util import slice_
+
+
 def cswap(N, CX, INCX, CY, INCY):
     #
     #  -- Reference BLAS level1 routine (version 3.8.0) --
@@ -96,23 +99,8 @@ def cswap(N, CX, INCX, CY, INCY):
     #  =====================================================================
     if N <= 0:
         return
-    if INCX == 1 and INCY == 1:
-        # code for both increments equal to 1
-        for I in range(N):
-            CTEMP = CX[I]
-            CX[I] = CY[I]
-            CY[I] = CTEMP
-    else:
-        # code for unequal increments or equal increments not equal to 1
-        IX = 1
-        IY = 1
-        if INCX < 0:
-            IX = (-N + 1) * INCX + 1
-        if INCY < 0:
-            IY = (-N + 1) * INCY + 1
-        for I in range(N):
-            CTEMP = CX[IX]
-            CX[IX] = CY[IY]
-            CY[IY] = CTEMP
-            IX += INCX
-            IY += INCY
+    x_slice = slice_(N, INCX)
+    y_slice = slice_(N, INCY)
+    X_TEMP = CX[x_slice]
+    CX[x_slice] = CY[y_slice]
+    CY[x_slice] = X_TEMP

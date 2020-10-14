@@ -81,7 +81,10 @@
 # > \endverbatim
 # >
 #  =====================================================================
-def ZDOTU(N, ZX, INCX, ZY, INCY):
+from ..util import slice_
+
+
+def zdotu(N, ZX, INCX, ZY, INCY):
     #
     #  -- Reference BLAS level1 routine (version 3.8.0) --
     #  -- Reference BLAS is a software package provided by Univ. of Tennessee,    --
@@ -96,24 +99,6 @@ def ZDOTU(N, ZX, INCX, ZY, INCY):
     #     ..
     #
     #  =====================================================================
-
     if N <= 0:
         return 0
-    ZTEMP = 0
-    if INCX == 1 and INCY == 1:
-        # code for both increments equal to 1
-        for I in range(N):
-            ZTEMP += ZX[I] * ZY[I]
-    else:
-        # code for unequal increments or equal increments not equal to 1
-        IX = 1
-        IY = 1
-        if INCX < 0:
-            IX = (-N + 1) * INCX + 1
-        if INCY < 0:
-            IY = (-N + 1) * INCY + 1
-        for I in range(N):
-            ZTEMP += ZX[IX] * ZY[IY]
-            IX += INCX
-            IY += INCY
-    return ZTEMP
+    return (ZX[slice_(N, INCX)] * ZY[slice_(N, INCY)]).sum()

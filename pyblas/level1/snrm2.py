@@ -105,7 +105,7 @@ def SNRM2(N, X, INCX):
         for IX in range(0, 1 + (N - 1) * INCX, INCX):
             if X[IX] != 0:
                 ABSXI = abs(X[IX])
-                if SCALE < ABSXI:
+                if ABSXI > SCALE:
                     SSQ = 1 + SSQ * (SCALE / ABSXI) ** 2
                     SCALE = ABSXI
                 else:

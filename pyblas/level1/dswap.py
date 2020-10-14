@@ -80,7 +80,10 @@
 # > \endverbatim
 # >
 #  =====================================================================
-def DSWAP(N, DX, INCX, DY, INCY):
+from ..util import slice_
+
+
+def dswap(N, DX, INCX, DY, INCY):
     #
     #  -- Reference BLAS level1 routine (version 3.8.0) --
     #  -- Reference BLAS is a software package provided by Univ. of Tennessee,    --
@@ -105,45 +108,8 @@ def DSWAP(N, DX, INCX, DY, INCY):
     #     ..
     if N <= 0:
         return
-    if INCX == 1 and INCY == 1:
-        #
-        #       code for both increments equal to 1
-        #
-        #
-        #       clean-up loop
-        #
-        M = N % 3
-        if M != 0:
-            for I in range(M):
-                DTEMP = DX[I]
-                DX[I] = DY[I]
-                DY[I] = DTEMP
-            if N < 3:
-                return
-        for I in range(M, N, 3):
-            DTEMP = DX[I]
-            DX[I] = DY[I]
-            DY[I] = DTEMP
-            DTEMP = DX[I + 1]
-            DX[I + 1] = DY[I + 1]
-            DY[I + 1] = DTEMP
-            DTEMP = DX[I + 2]
-            DX[I + 2] = DY[I + 2]
-            DY[I + 2] = DTEMP
-    else:
-        #
-        #       code for unequal increments or equal increments not equal
-        #         to 1
-        #
-        IX = 1
-        IY = 1
-        if INCX < 0:
-            IX = (-N + 1) * INCX + 1
-        if INCY < 0:
-            IY = (-N + 1) * INCY + 1
-        for I in range(N):
-            DTEMP = DX[IX]
-            DX[IX] = DY[IY]
-            DY[IY] = DTEMP
-            IX += INCX
-            IY += INCY
+    x_slice = slice_(N, INCX)
+    y_slice = slice_(N, INCY)
+    X_TEMP = DX[x_slice]
+    DX[x_slice] = DY[y_slice]
+    DY[x_slice] = X_TEMP

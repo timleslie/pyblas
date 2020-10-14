@@ -90,7 +90,10 @@
 # > \endverbatim
 # >
 #  =====================================================================
-def DROT(N, DX, INCX, DY, INCY, C, S):
+from ..util import slice_
+
+
+def drot(N, DX, INCX, DY, INCY, C, S):
     #
     #  -- Reference BLAS level1 routine (version 3.8.0) --
     #  -- Reference BLAS is a software package provided by Univ. of Tennessee,    --
@@ -113,29 +116,8 @@ def DROT(N, DX, INCX, DY, INCY, C, S):
     #     ..
     if N <= 0:
         return
-    if INCX == 1 and INCY == 1:
-        #
-        #       code for both increments equal to 1
-        #
-        for I in range(N):
-            DTEMP = C * DX[I] + S * DY[I]
-            DY[I] = C * DY[I] - S * DX[I]
-            DX[I] = DTEMP
-    else:
-        #
-        #       code for unequal increments or equal increments not equal
-        #         to 1
-        #
-        IX = 1
-        IY = 1
-        if INCX < 0:
-            IX = (-N + 1) * INCX + 1
-        if INCY < 0:
-            IY = (-N + 1) * INCY + 1
-        for I in range(N):
-            DTEMP = C * DX[IX] + S * DY[IY]
-            DY[IY] = C * DY[IY] - S * DX[IX]
-            DX[IX] = DTEMP
-            IX += INCX
-            IY += INCY
-    return
+    x_slice = slice_(N, INCX)
+    y_slice = slice_(N, INCY)
+    X_TEMP = C * DX[x_slice] + S * DY[y_slice]
+    DY[y_slice] = -S * DX[x_slice] + C * DY[y_slice]
+    DX[x_slice] = X_TEMP

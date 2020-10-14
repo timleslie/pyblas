@@ -80,7 +80,10 @@
 # > \endverbatim
 # >
 #  =====================================================================
-def SDOT(N, SX, INCX, SY, INCY):
+from ..util import slice_
+
+
+def sdot(N, SX, INCX, SY, INCY):
     #
     #  -- Reference BLAS level1 routine (version 3.8.0) --
     #  -- Reference BLAS is a software package provided by Univ. of Tennessee,    --
@@ -105,41 +108,4 @@ def SDOT(N, SX, INCX, SY, INCY):
     #     ..
     if N <= 0:
         return 0
-    STEMP = 0.0e0
-    if INCX == 1 and INCY == 1:
-        #
-        #        code for both increments equal to 1
-        #
-        #
-        #        clean-up loop
-        #
-        M = N % 5
-        if M != 0:
-            for I in range(M):
-                STEMP += SX[I] * SY(I)
-            if N < 5:
-                return STEMP
-        for I in range(M, N, 5):
-            STEMP += (
-                SX[I] * SY[I]
-                + SX[I + 1] * SY[I + 1]
-                + SX[I + 2] * SY[I + 2]
-                + SX[I + 3] * SY[I + 3]
-                + SX[I + 4] * SY[I + 4]
-            )
-    else:
-        #
-        #        code for unequal increments or equal increments
-        #          not equal to 1
-        #
-        IX = 1
-        IY = 1
-        if INCX < 0:
-            IX = (-N + 1) * INCX + 1
-        if INCY < 0:
-            IY = (-N + 1) * INCY + 1
-        for I in range(N):
-            STEMP += SX[IX] * SY[IY]
-            IX += INCX
-            IY += INCY
-    return STEMP
+    return (SX[slice_(N, INCX)] * SY[slice_(N, INCY)]).sum()

@@ -96,7 +96,10 @@
 # > \ingroup complex16_blas_level1
 #
 #  =====================================================================
-def ZDROT(N, CX, INCX, CY, INCY, C, S):
+from ..util import slice_
+
+
+def zdrot(N, ZX, INCX, ZY, INCY, C, S):
     #
     #  -- Reference BLAS level1 routine (version 3.7.0) --
     #  -- Reference BLAS is a software package provided by Univ. of Tennessee,    --
@@ -112,26 +115,10 @@ def ZDROT(N, CX, INCX, CY, INCY, C, S):
     #     ..
     #
     # =====================================================================
-
     if N <= 0:
         return
-    if INCX == 1 and INCY == 1:
-        # code for both increments equal to 1
-        for I in range(N):
-            CTEMP = C * CX[I] + S * CY[I]
-            CY[I] = C * CY[I] - S * CX[I]
-            CX[I] = CTEMP
-    else:
-        # code for unequal increments or equal increments not equal to 1
-        IX = 1
-        IY = 1
-        if INCX < 0:
-            IX = (-N + 1) * INCX + 1
-        if INCY < 0:
-            IY = (-N + 1) * INCY + 1
-        for I in range(N):
-            CTEMP = C * CX[IX] + S * CY[IY]
-            CY[IY] = C * CY[IY] - S * CX[IX]
-            CX[IX] = CTEMP
-            IX += INCX
-            IY += INCY
+    x_slice = slice_(N, INCX)
+    y_slice = slice_(N, INCY)
+    X_TEMP = C * ZX[x_slice] + S * ZY[y_slice]
+    ZY[y_slice] = -S * ZX[x_slice] + C * ZY[y_slice]
+    ZX[x_slice] = X_TEMP

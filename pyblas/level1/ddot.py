@@ -80,7 +80,10 @@
 # > \endverbatim
 # >
 #  =====================================================================
-def DDOT(N, DX, INCX, DY, INCY):
+from ..util import slice_
+
+
+def ddot(N, DX, INCX, DY, INCY):
     #
     #  -- Reference BLAS level1 routine (version 3.8.0) --
     #  -- Reference BLAS is a software package provided by Univ. of Tennessee,    --
@@ -105,41 +108,4 @@ def DDOT(N, DX, INCX, DY, INCY):
     #     ..
     if N <= 0:
         return 0
-    DTEMP = 0
-    if INCX == 1 and INCY == 1:
-        #
-        #        code for both increments equal to 1
-        #
-        #
-        #        clean-up loop
-        #
-        M = N % 5
-        if M != 0:
-            for I in range(M):
-                DTEMP += DX[I] * DY(I)
-            if N < 5:
-                return DTEMP
-        for I in range(M, N, 5):
-            DTEMP += (
-                DX[I] * DY[I]
-                + DX[I + 1] * DY[I + 1]
-                + DX[I + 2] * DY[I + 2]
-                + DX[I + 3] * DY[I + 3]
-                + DX[I + 4] * DY[I + 4]
-            )
-    else:
-        #
-        #        code for unequal increments or equal increments
-        #          not equal to 1
-        #
-        IX = 1
-        IY = 1
-        if INCX < 0:
-            IX = (-N + 1) * INCX + 1
-        if INCY < 0:
-            IY = (-N + 1) * INCY + 1
-        for I in range(N):
-            DTEMP += DX[IX] * DY[IY]
-            IX += INCX
-            IY += INCY
-    return DTEMP
+    return (DX[slice_(N, INCX)] * DY[slice_(N, INCY)]).sum()

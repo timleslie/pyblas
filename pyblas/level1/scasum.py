@@ -70,6 +70,10 @@
 # > \endverbatim
 # >
 #  =====================================================================
+import numpy as np
+from ..util import slice_
+
+
 def scasum(N, CX, INCX):
     #
     #  -- Reference BLAS level1 routine (version 3.8.0) --
@@ -93,19 +97,7 @@ def scasum(N, CX, INCX):
     #     .. Intrinsic Functions ..
     # INTRINSIC ABS,AIMAG,REAL
     #     ..
-    STEMP = 0.0e0
-    if N <= 0 or INCX <= 0:
-        return
-    if INCX == 1:
-        #
-        #        code for increment equal to 1
-        #
-        for I in range(N):
-            STEMP += abs(CX[I].real) + abs(CX[I].imag)
-    else:
-        #
-        #        code for increment not equal to 1
-        #
-        for I in range(0, N * INCX, INCX):
-            STEMP += abs(CX[I].real) + abs(CX[I].imag)
-    return STEMP
+    if N <= 0:
+        return 0
+    s = slice_(N, INCX)
+    return (np.abs(CX[s].real) + np.abs(CX[s].imag)).sum()

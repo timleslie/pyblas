@@ -70,10 +70,11 @@
 # > \endverbatim
 # >
 #  =====================================================================
-from dcabs1 import dcabs1
+import numpy as np
+from ..util import slice_
 
 
-def DZASUM(N, ZX, INCX):
+def dzasum(N, ZX, INCX):
     #
     #  -- Reference BLAS level1 routine (version 3.8.0) --
     #  -- Reference BLAS is a software package provided by Univ. of Tennessee,    --
@@ -88,15 +89,7 @@ def DZASUM(N, ZX, INCX):
     #     ..
     #
     #  =====================================================================
-    if N <= 0 or INCX <= 0:
+    if N <= 0:
         return 0
-    STEMP = 0
-    if INCX == 1:
-        # code for increment equal to 1
-        for I in range(N):
-            STEMP += dcabs1(ZX[I])
-    else:
-        # code for increment not equal to 1
-        for I in range(0, N * INCX, INCX):
-            STEMP += dcabs1(ZX[I])
-    return STEMP
+    s = slice_(N, INCX)
+    return (np.abs(ZX[s].real) + np.abs(ZX[s].imag)).sum()

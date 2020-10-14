@@ -81,6 +81,9 @@
 # > \endverbatim
 # >
 #  =====================================================================
+from ..util import slice_
+
+
 def cdotu(N, CX, INCX, CY, INCY):
     #
     #  -- Reference BLAS level1 routine (version 3.8.0) --
@@ -96,23 +99,6 @@ def cdotu(N, CX, INCX, CY, INCY):
     #     ..
     #
     #  =====================================================================
-    CTEMP = 0
     if N <= 0:
         return 0
-    if INCX == 1 and INCY == 1:
-        # code for both increments equal to 1
-        for I in range(N):
-            CTEMP += CX[I] * CY[I]
-    else:
-        # code for unequal increments or equal increments not equal to 1
-        IX = 1
-        IY = 1
-        if INCX < 0:
-            IX = (-N + 1) * INCX + 1
-        if INCY < 0:
-            IY = (-N + 1) * INCY + 1
-        for I in range(N):
-            CTEMP += CX[IX] * CY[IY]
-            IX += INCX
-            IY += INCY
-    return CTEMP
+    return (CX[slice_(N, INCX)] * CY[slice_(N, INCY)]).sum()
