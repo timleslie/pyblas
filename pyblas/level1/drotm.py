@@ -94,7 +94,10 @@
 # > \ingroup double_blas_level1
 #
 #  =====================================================================
-def DROTM(N, DX, INCX, DY, INCY, DPARAM):
+from ..util import slice_
+
+
+def drotm(N, DX, INCX, DY, INCY, DPARAM):
     #
     #  -- Reference BLAS level1 routine (version 3.8.0) --
     #  -- Reference BLAS is a software package provided by Univ. of Tennessee,    --
@@ -118,75 +121,23 @@ def DROTM(N, DX, INCX, DY, INCY, DPARAM):
     # DATA ZERO,TWO/0.D0,2.D0/
     #     ..
     #
-    DFLAG = DPARAM[1]
-    if N <= 0 or (DFLAG + 2 == 0):
+    [DFLAG, DH11, DH21, DH12, DH22] = DPARAM
+    if N <= 0:
         return
-    if INCX == INCY and INCX > 0:
-        #
-        NSTEPS = N * INCX
-        if DFLAG < 0:
-            DH11 = DPARAM[2]
-            DH12 = DPARAM[4]
-            DH21 = DPARAM[3]
-            DH22 = DPARAM[5]
-            for I in range(0, NSTEPS, INCX):
-                W = DX[I]
-                Z = DY[I]
-                DX[I] = W * DH11 + Z * DH12
-                DY[I] = W * DH21 + Z * DH22
-        elif DFLAG == 0:
-            DH12 = DPARAM[4]
-            DH21 = DPARAM[3]
-            for I in range(0, NSTEPS, INCX):
-                W = DX[I]
-                Z = DY[I]
-                DX[I] = W + Z * DH12
-                DY[I] = W * DH21 + Z
-        else:
-            DH11 = DPARAM[2]
-            DH22 = DPARAM[5]
-            for I in range(NSTEPS, INCX):
-                W = DX[I]
-                Z = DY[I]
-                DX[I] = W * DH11 + Z
-                DY[I] = -W + DH22 * Z
-    else:
-        KX = 1
-        KY = 1
-        if INCX < 0:
-            KX = 1 + (1 - N) * INCX
-        if INCY < 0:
-            KY = 1 + (1 - N) * INCY
+    if DFLAG == -2:  # Identity matrix
+        return
 
-        if DFLAG < 0:
-            DH11 = DPARAM[2]
-            DH12 = DPARAM[4]
-            DH21 = DPARAM[3]
-            DH22 = DPARAM[5]
-            for I in range(N):
-                W = DX[KX]
-                Z = DY[KY]
-                DX[KX] = W * DH11 + Z * DH12
-                DY[KY] = W * DH21 + Z * DH22
-                KX += INCX
-                KY += INCY
-        elif DFLAG == 0:
-            DH12 = DPARAM[4]
-            DH21 = DPARAM[3]
-            for I in range(N):
-                W = DX[KX]
-                Z = DY[KY]
-                DX[KX] = W + Z * DH12
-                DY[KY] = W * DH21 + Z
-                KX += INCX
-                KY += INCY
-        else:
-            DH11 = DPARAM[2]
-            DH22 = DPARAM[5]
-            for I in range(N):
-                W = DX[KX]
-                Z = DY[KY]
-                DX[KX] = W * DH11 + Z
-                DY[KY] = -W + DH22 * Z
-                KX += INCX
-                KY += INCY
+    sx = slice_(N, INCX)
+    sy = slice_(N, INCY)
+    if DFLAG == -1:  # Full matrix
+        TMP_X = DH11 * DX[sx] + DH12 * DY[sy]
+        DY[sy] = DH21 * DX[sx] + DH22 * DY[sy]
+        DX[sx] = TMP_X
+    elif DFLAG == 0:  # Off-diagonal
+        TMP_X = DX[sx] + DH12 * DY[sy]
+        DY[sy] = DH21 * DX[sx] + DY[sy]
+        DX[sx] = TMP_X
+    elif DFLAG == 1:
+        TMP_X = DH11 * DX[sx] + DY[sy]
+        DY[sy] = -DX[sx] + DH22 * DY[sy]
+        DX[sx] = TMP_X

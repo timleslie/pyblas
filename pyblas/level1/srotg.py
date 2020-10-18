@@ -68,10 +68,10 @@
 # >
 #  =====================================================================
 from math import sqrt
-from util import sign
+import numpy as np
 
 
-def SROTG(SA, SB, C, S):
+def srotg(SA, SB):
     #
     #  -- Reference BLAS level1 routine (version 3.8.0) --
     #  -- Reference BLAS is a software package provided by Univ. of Tennessee,    --
@@ -90,24 +90,18 @@ def SROTG(SA, SB, C, S):
     #     .. Intrinsic Functions ..
     # INTRINSIC ABS,SIGN,SQRT
     #     ..
-    ROE = SB
-    if abs(SA) > abs(SB):
-        ROE = SA
     SCALE = abs(SA) + abs(SB)
     if SCALE == 0.0:
-        C = 1.0
-        S = 0.0
-        R = 0.0
-        Z = 0.0
+        C, S, R, Z = 1.0, 0.0, 0.0, 0.0
     else:
-        R = SCALE * sqrt((SA / SCALE) ** 2 + (SB / SCALE) ** 2)
-        R = sign(ROE) * R
+        ROE = SA if abs(SA) > abs(SB) else SB
+        R = np.sign(ROE) * SCALE * sqrt((SA / SCALE) ** 2 + (SB / SCALE) ** 2)
         C = SA / R
         S = SB / R
-        Z = 1.0
         if abs(SA) > abs(SB):
             Z = S
-        if abs(SB) >= abs(SA) and C != 0.0:
+        elif abs(SB) >= abs(SA) and C != 0.0:
             Z = 1.0 / C
-    SA = R
-    SB = Z
+        else:
+            Z = 1.0
+    return C, S, R, Z

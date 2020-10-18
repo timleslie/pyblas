@@ -83,20 +83,48 @@ from ..util import slice_
 
 
 def zswap(N, ZX, INCX, ZY, INCY):
-    #
-    #  -- Reference BLAS level1 routine (version 3.8.0) --
-    #  -- Reference BLAS is a software package provided by Univ. of Tennessee,    --
-    #  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-    #     November 2017
-    #
-    #     .. Scalar Arguments ..
-    # INTEGER INCX,INCY,N
-    #     ..
-    #     .. Array Arguments ..
-    # COMPLEX*16 ZX(*),ZY(*)
-    #     ..
-    #
-    #  =====================================================================
+    """Swaps the contents of a vector x with a vector y
+
+    Parameters
+    ----------
+    N : int
+        Number of elements in input vector
+    ZX : numpy.ndarray
+        A double precision complex array, dimension (1 + (`N` - 1)*abs(`INCX`))
+    INCX : int
+        Storage spacing between elements of `ZX`
+    ZY : numpy.ndarray
+        A double precision complex array, dimension (1 + (`N` - 1)*abs(`INCY`))
+    INCY : int
+        Storage spacing between elements of `ZY`
+
+    Returns
+    -------
+    None
+
+    See Also
+    --------
+    sswap : Single-precision real swap two vectors
+    dswap : Double-precision real swap two vectors
+    cswap : Single-precision complex swap two vectors
+
+    Notes
+    -----
+    Online PyBLAS documentation: https://nbviewer.jupyter.org/github/timleslie/pyblas/blob/main/docs/zswap.ipynb
+    Reference BLAS documentation: https://github.com/Reference-LAPACK/lapack/blob/v3.9.0/BLAS/SRC/zswap.f
+
+    Examples
+    --------
+    >>> x = np.array([1+2j, 2+3j, 3+4j], dtype=np.complex128)
+    >>> y = np.array([6+7j, 7+8j, 8+9j], dtype=np.complex128)
+    >>> N = len(x)
+    >>> incx = 1
+    >>> zswap(N, x, incx, y, incy)
+    >>> print(x)
+    [6+7j, 7+8j, 8+9j]
+    >>> print(y)
+    [1+2j, 2+3j, 3+4j]
+    """
     if N <= 0:
         return
     x_slice = slice_(N, INCX)

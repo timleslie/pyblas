@@ -63,7 +63,7 @@
 from math import sqrt
 
 
-def ZROTG(CA, CB, C, S):
+def zrotg(CA, CB):
     #
     #  -- Reference BLAS level1 routine (version 3.8.0) --
     #  -- Reference BLAS is a software package provided by Univ. of Tennessee,    --
@@ -85,13 +85,14 @@ def ZROTG(CA, CB, C, S):
     # INTRINSIC CDABS,DCMPLX,DCONJG,DSQRT
     #     ..
     if abs(CA) == 0:
-        C = 0
-        S = 0
-        CA = CB
+        C = 0.0
+        S = 1 + 0j
+        R = CB
     else:
         SCALE = abs(CA) + abs(CB)
         NORM = SCALE * sqrt((abs(CA / SCALE)) ** 2 + (abs(CB / SCALE)) ** 2)
         ALPHA = CA / abs(CA)
         C = abs(CA) / NORM
-        S = ALPHA * (CB).conjugate() / NORM
-        CA = ALPHA * NORM
+        S = ALPHA * CB.conj() / NORM
+        R = ALPHA * NORM
+    return C, S, R

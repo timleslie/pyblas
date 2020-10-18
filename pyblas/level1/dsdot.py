@@ -117,54 +117,57 @@
 # > \endverbatim
 # >
 #  =====================================================================
-def DSDOT(N, SX, INCX, SY, INCY):
-    #
-    #  -- Reference BLAS level1 routine (version 3.7.0) --
-    #  -- Reference BLAS is a software package provided by Univ. of Tennessee,    --
-    #  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-    #     December 2016
-    #
-    #     .. Scalar Arguments ..
-    # INTEGER INCX,INCY,N
-    #     ..
-    #     .. Array Arguments ..
-    # REAL SX(*),SY(*)
-    #     ..
-    #
-    #  Authors:
-    #  ========
-    #  Lawson, C. L., (JPL), Hanson, R. J., (SNLA),
-    #  Kincaid, D. R., (U. of Texas), Krogh, F. T., (JPL)
-    #
-    #  =====================================================================
-    #
-    #     .. Local Scalars ..
-    # INTEGER I,KX,KY,NS
-    #     ..
-    #     .. Intrinsic Functions ..
-    # INTRINSIC DBLE
-    #     ..
+import numpy as np
+from ..util import slice_
+
+
+def dsdot(N, SX, INCX, SY, INCY):
+    """Computes the dot-product of a vector x and a vector y.
+
+    Parameters
+    ----------
+    N : int
+        Number of elements in input vectors
+    SX : numpy.ndarray
+        A single precision real array, dimension (1 + (`N` - 1)*abs(`INCX`))
+    INCX : int
+        Storage spacing between elements of `SX`
+    SY : numpy.ndarray
+        A single precision real array, dimension (1 + (`N` - 1)*abs(`INCY`))
+    INCY : int
+        Storage spacing between elements of `SY`
+
+    Returns
+    -------
+    numpy.double
+
+    See Also
+    --------
+    sdot : Single-precision real dot product
+    sdsdot : Single-precision real dot product (computed in double precision, returned as single precision)
+    ddot : Double-precision real dot product
+    cdotu : Single-precision complex dot product
+    cdotc : Single-precision complex conjugate dot product
+    zdotu : Double-precision complex dot product
+    zdotc : Double-precision complex conjugate dot product
+
+    Notes
+    -----
+    Online PyBLAS documentation: https://nbviewer.jupyter.org/github/timleslie/pyblas/blob/main/docs/dsdot.ipynb
+    Reference BLAS documentation: https://github.com/Reference-LAPACK/lapack/blob/v3.9.0/BLAS/SRC/dsdot.f
+
+    Examples
+    --------
+    >>> x = np.array([1, 2, 3], dtype=np.single)
+    >>> y = np.array([6, 7, 8], dtype=np.single)
+    >>> N = len(x)
+    >>> incx = 1
+    >>> incy = 1
+    >>> dsdot(N, x, incx, y, incy)
+    44.0
+    """
     if N <= 0:
         return 0
-    DSDOT = 0
-    if INCX == INCY and INCX > 0:
-        #
-        #     Code for equal, positive, non-unit increments.
-        #
-        for I in range(0, N * INCX, INCX):
-            DSDOT += (SX[I]).real * (SY(I)).real
-    else:
-        #
-        #     Code for unequal or nonpositive increments.
-        #
-        KX = 1
-        KY = 1
-        if INCX < 0:
-            KX = 1 + (1 - N) * INCX
-        if INCY < 0:
-            KY = 1 + (1 - N) * INCY
-        for I in range(N):
-            DSDOT += (SX[KX]).real * (SY[KY]).real
-            KX += INCX
-            KY += INCY
-    return DSDOT
+    return (
+        SX[slice_(N, INCX)].astype(np.double) * SY[slice_(N, INCY)].astype(np.double)
+    ).sum()

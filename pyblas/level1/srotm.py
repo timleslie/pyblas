@@ -95,7 +95,10 @@
 # > \ingroup single_blas_level1
 #
 #  =====================================================================
-def SROTM(N, SX, INCX, SY, INCY, SPARAM):
+from ..util import slice_
+
+
+def srotm(N, SX, INCX, SY, INCY, SPARAM):
     #
     #  -- Reference BLAS level1 routine (version 3.8.0) --
     #  -- Reference BLAS is a software package provided by Univ. of Tennessee,    --
@@ -119,75 +122,23 @@ def SROTM(N, SX, INCX, SY, INCY, SPARAM):
     # DATA ZERO,TWO/0.E0,2.E0/
     #     ..
     #
-    SFLAG = SPARAM(1)
-    if N <= 0 or (SFLAG + 2 == 0):
+    [SFLAG, SH11, SH21, SH12, SH22] = SPARAM
+    if N <= 0:
         return
-    if INCX == INCY and INCX > 0:
-        #
-        NSTEPS = N * INCX
-        if SFLAG < 0:
-            SH11 = SPARAM[2]
-            SH12 = SPARAM[4]
-            SH21 = SPARAM[3]
-            SH22 = SPARAM[5]
-            for I in range(0, NSTEPS, INCX):
-                W = SX[I]
-                Z = SY(I)
-                SX[I] = W * SH11 + Z * SH12
-                SY[I] = W * SH21 + Z * SH22
-        elif SFLAG == 0:
-            SH12 = SPARAM(4)
-            SH21 = SPARAM(3)
-            for I in range(0, NSTEPS, INCX):
-                W = SX[I]
-                Z = SY[I]
-                SX[I] = W + Z * SH12
-                SY[I] = W * SH21 + Z
-        else:
-            SH11 = SPARAM(2)
-            SH22 = SPARAM(5)
-            for I in range(0, NSTEPS, INCX):
-                W = SX[I]
-                Z = SY[I]
-                SX[I] = W * SH11 + Z
-                SY[I] = -W + SH22 * Z
-    else:
-        KX = 1
-        KY = 1
-        if INCX < 0:
-            KX = 1 + (1 - N) * INCX
-        if INCY < 0:
-            KY = 1 + (1 - N) * INCY
-        #
-        if SFLAG < 0:
-            SH11 = SPARAM(2)
-            SH12 = SPARAM(4)
-            SH21 = SPARAM(3)
-            SH22 = SPARAM(5)
-            for I in range(N):
-                W = SX[KX]
-                Z = SY[KY]
-                SX[KX] = W * SH11 + Z * SH12
-                SY[KY] = W * SH21 + Z * SH22
-                KX += INCX
-                KY += INCY
-        elif SFLAG == 0:
-            SH12 = SPARAM(4)
-            SH21 = SPARAM(3)
-            for I in range(N):
-                W = SX[KX]
-                Z = SY[KY]
-                SX[KX] = W + Z * SH12
-                SY[KY] = W * SH21 + Z
-                KX += INCX
-                KY += INCY
-        else:
-            SH11 = SPARAM(2)
-            SH22 = SPARAM(5)
-            for I in range(N):
-                W = SX[KX]
-                Z = SY[KY]
-                SX[KX] = W * SH11 + Z
-                SY[KY] = -W + SH22 * Z
-                KX += INCX
-                KY += INCY
+    if SFLAG == -2:  # Identity matrix
+        return
+
+    sx = slice_(N, INCX)
+    sy = slice_(N, INCY)
+    if SFLAG == -1:  # Full matrix
+        TMP_X = SH11 * SX[sx] + SH12 * SY[sy]
+        SY[sy] = SH21 * SX[sx] + SH22 * SY[sy]
+        SX[sx] = TMP_X
+    elif SFLAG == 0:  # Off-diagonal
+        TMP_X = SX[sx] + SH12 * SY[sy]
+        SY[sy] = SH21 * SX[sx] + SY[sy]
+        SX[sx] = TMP_X
+    elif SFLAG == 1:
+        TMP_X = SH11 * SX[sx] + SY[sy]
+        SY[sy] = -SX[sx] + SH22 * SY[sy]
+        SX[sx] = TMP_X

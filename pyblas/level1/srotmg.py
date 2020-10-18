@@ -24,7 +24,7 @@
 # > \verbatim
 # >
 # >    CONSTRUCT THE MODIFIED GIVENS TRANSFORMATION MATRIX H WHICH ZEROS
-# >    THE SECOND COMPONENT OF THE 2-VECTOR  (SQRT(SD1)*SX1,SQRT(SD2)*>    SY2)**T.
+# >    THE SECOND COMPONENT OF THE 2-VECTOR  (SQRT(SD1)*SX1,SQRT(SD2)*SY2)**T.
 # >    WITH SPARAM(1)=SFLAG, H HAS ONE OF THE FOLLOWING FORMS..
 # >
 # >    SFLAG=-1.E0     SFLAG=0.E0        SFLAG=1.E0     SFLAG=-2.E0
@@ -116,113 +116,112 @@ def SROTMG(SD1, SD2, SX1, SY1, SPARAM):
     # DATA ZERO,ONE,TWO/0.E0,1.E0,2.E0/
     # DATA GAM,GAMSQ,RGAMSQ/4096.E0,1.67772E7,5.96046E-8/
     #     ..
+
+    IDENTITY_MATRIX = -2
+    FULL_MATRIX = -1
+    IDENT_DIAG = 0
+    DIAG_VALUES = 1
+
+    if SD1 < 0:
+        SD1 = 0  # H, D?
+        SD2 = 0
+        SX1 = 0
+        SPARAM[:] = [FULL_MATRIX, 0, 0, 0, 0]
+        return
+
+    if (
+        SD2 * SY1 == 0
+    ):  # The vector is already zero, so we can just use the identity matrix!
+        SPARAM[:] = [IDENTITY_MATRIX, 0, 0, 0, 0]
+        return
+
+    # REGULAR-CASE..
+    SQ2 = SD2 * SY1 * SY1
+    SQ1 = SD1 * SX1 * SX1
+    #
+    if abs(SQ1) > abs(SQ2):
+        SH21 = -SY1 / SX1
+        SH12 = (SD2 * SY1) / (SD1 * SX1)
+        SU = 1 - SH12 * SH21
+        if SU > 0:
+            SFLAG = IDENT_DIAG
+            SD1 = SD1 / SU
+            SD2 = SD2 / SU
+            SX1 = SX1 * SU
+        else:
+            SPARAM[:] = FULL_MATRIX, 0, 0, 0, 0
+            SD1 = 0
+            SD2 = 0
+            SX1 = 0
+            return
+    else:
+        if SD2 >= 0:
+            SFLAG = DIAG_VALUES
+            SH11 = (SD1 * SX1) / (SD2 * SY1)
+            SH22 = SX1 / SY1
+            SU = 1 + SH11 * SH22
+            STEMP = SD2 / SU
+            SD2 = SD1 / SU
+            SD1 = STEMP
+            SX1 = SY1 * SU
+        else:
+            SPARAM[:] = FULL_MATRIX, 0, 0, 0, 0
+            SD1 = 0
+            SD2 = 0
+            SX1 = 0
+            return
+    #     PROCESURE..SCALE-CHECK
     GAM = 4096
     GAMSQ = 1.67772e7
     RGAMSQ = 5.96046e-8
-    if SD1 < 0:
-        #        GO ZERO-H-D-AND-SX1..
-        SFLAG = -1
-        SH11 = 0
-        SH12 = 0
-        SH21 = 0
-        SH22 = 0
-        #
-        SD1 = 0
-        SD2 = 0
-        SX1 = 0
-    else:
-        #        CASE-SD1-NONNEGATIVE
-        SP2 = SD2 * SY1
-        if SP2 == 0:
-            SFLAG = -2
-            SPARAM[1] = SFLAG
-            return
-        #        REGULAR-CASE..
-        SP1 = SD1 * SX1
-        SQ2 = SP2 * SY1
-        SQ1 = SP1 * SX1
-        #
-        if abs(SQ1) > abs(SQ2):
-            SH21 = -SY1 / SX1
-            SH12 = SP2 / SP1
-            #
-            SU = 1 - SH12 * SH21
-            #
-            if SU > 0:
-                SFLAG = 0
-                SD1 = SD1 / SU
-                SD2 = SD2 / SU
-                SX1 = SX1 * SU
-        else:
-
-            if SQ2 < 0:
-                #              GO ZERO-H-D-AND-SX1..
-                SFLAG = -1
-                SH11 = 0
-                SH12 = 0
-                SH21 = 0
-                SH22 = 0
-                #
-                SD1 = 0
-                SD2 = 0
-                SX1 = 0
+    if SD1 != 0:
+        while (SD1 <= RGAMSQ) or (SD1 >= GAMSQ):
+            # First time round we convert to a FULL_MATRIX to allow scaling
+            if SFLAG == IDENT_DIAG:
+                SH11 = 1
+                SH22 = 1
             else:
-                SFLAG = 1
-                SH11 = SP1 / SP2
-                SH22 = SX1 / SY1
-                SU = 1 + SH11 * SH22
-                STEMP = SD2 / SU
-                SD2 = SD1 / SU
-                SD1 = STEMP
-                SX1 = SY1 * SU
+                SH21 = -1
+                SH12 = 1
+            SFLAG = FULL_MATRIX
 
-        #     PROCESURE..SCALE-CHECK
-        if SD1 != 0:
-            while (SD1 <= RGAMSQ) or (SD1 >= GAMSQ):
-                if SFLAG == 0:
-                    SH11 = 1
-                    SH22 = 1
-                    SFLAG = -1
-                else:
-                    SH21 = -1
-                    SH12 = 1
-                    SFLAG = -1
-                if SD1 <= RGAMSQ:
-                    SD1 = SD1 * GAM ** 2
-                    SX1 = SX1 / GAM
-                    SH11 = SH11 / GAM
-                    SH12 = SH12 / GAM
-                else:
-                    SD1 = SD1 / GAM ** 2
-                    SX1 = SX1 * GAM
-                    SH11 = SH11 * GAM
-                    SH12 = SH12 * GAM
+            if SD1 <= RGAMSQ:
+                SD1 = SD1 * GAM ** 2
+                SX1 = SX1 / GAM
+                SH11 = SH11 / GAM
+                SH12 = SH12 / GAM
+            else:
+                SD1 = SD1 / GAM ** 2
+                SX1 = SX1 * GAM
+                SH11 = SH11 * GAM
+                SH12 = SH12 * GAM
 
-        if SD2 != 0:
-            while (abs(SD2) <= RGAMSQ) or (abs(SD2) >= GAMSQ):
-                if SFLAG == 0:
-                    SH11 = 1
-                    SH22 = 1
-                    SFLAG = -1
-                else:
-                    SH21 = -1
-                    SH12 = 1
-                    SFLAG = -1
-                if abs(SD2) <= RGAMSQ:
-                    SD2 = SD2 * GAM ** 2
-                    SH21 = SH21 / GAM
-                    SH22 = SH22 / GAM
-                else:
-                    SD2 = SD2 / GAM ** 2
-                    SH21 = SH21 * GAM
-                    SH22 = SH22 * GAM
+    if SD2 != 0:
+        while (abs(SD2) <= RGAMSQ) or (abs(SD2) >= GAMSQ):
+            # First time round we convert to a FULL_MATRIX to allow scaling
+            if SFLAG == IDENT_DIAG:
+                SH11 = 1
+                SH22 = 1
+            else:
+                SH21 = -1
+                SH12 = 1
+            SFLAG = FULL_MATRIX
+
+            if abs(SD2) <= RGAMSQ:
+                SD2 = SD2 * GAM ** 2
+                SH21 = SH21 / GAM
+                SH22 = SH22 / GAM
+            else:
+                SD2 = SD2 / GAM ** 2
+                SH21 = SH21 * GAM
+                SH22 = SH22 * GAM
 
     if SFLAG < 0:
         SPARAM[2] = SH11
         SPARAM[3] = SH21
         SPARAM[4] = SH12
         SPARAM[5] = SH22
-    elif SFLAG == 0:
+    elif SFLAG == IDENT_DIAG:
         SPARAM[3] = SH21
         SPARAM[4] = SH12
     else:

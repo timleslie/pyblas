@@ -63,7 +63,7 @@
 from math import sqrt
 
 
-def CROTG(CA, CB, C, S):
+def crotg(CA, CB):
     #
     #  -- Reference BLAS level1 routine (version 3.8.0) --
     #  -- Reference BLAS is a software package provided by Univ. of Tennessee,    --
@@ -87,11 +87,12 @@ def CROTG(CA, CB, C, S):
     if abs(CA) == 0.0:
         C = 0.0
         S = 1 + 0j
-        CA = CB
+        R = CB
     else:
         SCALE = abs(CA) + abs(CB)
         NORM = SCALE * sqrt((abs(CA / SCALE)) ** 2 + (abs(CB / SCALE)) ** 2)
         ALPHA = CA / abs(CA)
         C = abs(CA) / NORM
-        S = ALPHA * (CB).conjugate() / NORM
-        CA = ALPHA * NORM
+        S = ALPHA * CB.conj() / NORM
+        R = ALPHA * NORM
+    return C, S, R

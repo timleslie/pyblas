@@ -68,10 +68,10 @@
 # >
 #  =====================================================================
 from math import sqrt
-from util import sign
+import numpy as np
 
 
-def DROTG(DA, DB, C, S):
+def drotg(DA, DB):
     #
     #  -- Reference BLAS level1 routine (version 3.8.0) --
     #  -- Reference BLAS is a software package provided by Univ. of Tennessee,    --
@@ -90,24 +90,18 @@ def DROTG(DA, DB, C, S):
     #     .. Intrinsic Functions ..
     # INTRINSIC DABS,DSIGN,DSQRT
     #     ..
-    ROE = DB
-    if abs(DA) > abs(DB):
-        ROE = DA
     SCALE = abs(DA) + abs(DB)
     if SCALE == 0:
-        C = 1
-        S = 0
-        R = 0
-        Z = 0
+        C, S, R, Z = 1.0, 0.0, 0.0, 0.0
     else:
-        R = SCALE * sqrt((DA / SCALE) ** 2 + (DB / SCALE) ** 2)
-        R = sign(ROE) * R
+        ROE = DA if abs(DA) > abs(DB) else DB
+        R = np.sign(ROE) * SCALE * sqrt((DA / SCALE) ** 2 + (DB / SCALE) ** 2)
         C = DA / R
         S = DB / R
-        Z = 1
         if abs(DA) > abs(DB):
             Z = S
-        if abs(DB) >= abs(DA) and C != 0:
-            Z = 1 / C
-    DA = R
-    DB = Z
+        elif abs(DB) >= abs(DA) and C != 0.0:
+            Z = 1.0 / C
+        else:
+            Z = 1.0
+    return C, S, R, Z
