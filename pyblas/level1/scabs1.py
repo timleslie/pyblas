@@ -1,63 +1,31 @@
-# > \brief \b SCABS1
-#
-#  =========== DOCUMENTATION ===========
-#
-# Online html documentation available at
-#            http://www.netlib.org/lapack/explore-html/
-#
-#  Definition:
-#  ===========
-#
-#       def scabs1(Z)
-#
-#       .. Scalar Arguments ..
-#       COMPLEX Z
-#       ..
-#
-#
-# > \par Purpose:
-#  =============
-# >
-# > \verbatim
-# >
-# > SCABS1 computes |Re(.)| + |Im(.)| of a complex number
-# > \endverbatim
-#
-#  Arguments:
-#  ==========
-#
-# > \param[in] Z
-# > \verbatim
-# >          Z is COMPLEX
-# > \endverbatim
-#
-#  Authors:
-#  ========
-#
-# > \author Univ. of Tennessee
-# > \author Univ. of California Berkeley
-# > \author Univ. of Colorado Denver
-# > \author NAG Ltd.
-#
-# > \date November 2017
-#
-# > \ingroup single_blas_level1
-#
-#  =====================================================================
+import numpy as np
+
+
 def scabs1(z):
-    #
-    #  -- Reference BLAS level1 routine (version 3.8.0) --
-    #  -- Reference BLAS is a software package provided by Univ. of Tennessee,    --
-    #  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-    #     November 2017
-    #
-    #     .. Scalar Arguments ..
-    #   COMPLEX Z
-    #     ..
-    #
-    #  =====================================================================
-    #
-    #     .. Intrinsic Functions ..
-    #   INTRINSIC ABS,AIMAG,REAL
-    #     ..
-    return abs(z.real) + abs(z.imag)
+    """Computes the sum of the absolute value of real and imaginary components of z
+
+    Parameters
+    ----------
+    Z : numpy.complex64
+        The single-precision complex number z
+
+    Returns
+    -------
+    numpy.single
+
+    See Also
+    --------
+    dcabs1 : Double-precision absolute sum of components
+
+    Notes
+    -----
+    Online PyBLAS documentation: https://nbviewer.jupyter.org/github/timleslie/pyblas/blob/main/docs/scabs1.ipynb
+    Reference BLAS documentation: https://github.com/Reference-LAPACK/lapack/blob/v3.9.0/BLAS/SRC/scabs1.f
+
+    Examples
+    --------
+    >>> z = np.complex64(1 + 2j)
+    >>> print(scabs1(Z)
+    3.0
+    """
+    return np.abs(z.real) + np.abs(z.imag)

@@ -1,64 +1,31 @@
-# > \brief \b DCABS1
-#
-#  =========== DOCUMENTATION ===========
-#
-# Online html documentation available at
-#            http://www.netlib.org/lapack/explore-html/
-#
-#  Definition:
-#  ===========
-#
-#       def DCABS1(Z)
-#
-#       .. Scalar Arguments ..
-#       COMPLEX*16 Z
-#       ..
-#       ..
-#
-#
-# > \par Purpose:
-#  =============
-# >
-# > \verbatim
-# >
-# > DCABS1 computes |Re(.)| + |Im(.)| of a double complex number
-# > \endverbatim
-#
-#  Arguments:
-#  ==========
-#
-# > \param[in] Z
-# > \verbatim
-# >          Z is COMPLEX*16
-# > \endverbatim
-#
-#  Authors:
-#  ========
-#
-# > \author Univ. of Tennessee
-# > \author Univ. of California Berkeley
-# > \author Univ. of Colorado Denver
-# > \author NAG Ltd.
-#
-# > \date November 2017
-#
-# > \ingroup double_blas_level1
-#
-#  =====================================================================
+import numpy as np
+
+
 def dcabs1(Z):
-    #
-    #  -- Reference BLAS level1 routine (version 3.8.0) --
-    #  -- Reference BLAS is a software package provided by Univ. of Tennessee,    --
-    #  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-    #     November 2017
-    #
-    #     .. Scalar Arguments ..
-    # COMPLEX*16 Z
-    #     ..
-    #     ..
-    #  =====================================================================
-    #
-    #     .. Intrinsic Functions ..
-    # INTRINSIC ABS,DBLE,DIMAG
-    #
-    return abs(Z.real) + abs(Z.imag)
+    """Computes the sum of the absolute value of real and imaginary components of z
+
+    Parameters
+    ----------
+    Z : numpy.complex128
+        The double-precision complex number z
+
+    Returns
+    -------
+    numpy.double
+
+    See Also
+    --------
+    scabs1 : Single-precision absolute sum of components
+
+    Notes
+    -----
+    Online PyBLAS documentation: https://nbviewer.jupyter.org/github/timleslie/pyblas/blob/main/docs/dcabs1.ipynb
+    Reference BLAS documentation: https://github.com/Reference-LAPACK/lapack/blob/v3.9.0/BLAS/SRC/dcabs1.f
+
+    Examples
+    --------
+    >>> z = np.complex128(1 + 2j)
+    >>> print(dcabs1(Z)
+    3.0
+    """
+    return np.abs(Z.real) + np.abs(Z.imag)
