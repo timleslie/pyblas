@@ -129,6 +129,7 @@
 # >
 #  =====================================================================
 from xerbla import xerbla
+from ..util import range_, slice_
 
 
 def DGER(M, N, ALPHA, X, INCX, Y, INCY, A, LDA):
@@ -162,34 +163,6 @@ def DGER(M, N, ALPHA, X, INCX, Y, INCY, A, LDA):
         INFO = 9
     if INFO != 0:
         xerbla("DGER  ", INFO)
-    #
-    #     Quick return if possible.
-    #
-    if (M == 0) or (N == 0) or (ALPHA == 0):
-        return
-    #
-    #     Start the operations. In this version the elements of A are
-    #     accessed sequentially with one pass through A.
-    #
-    if INCY > 0:
-        JY = 1
-    else:
-        JY = 1 - (N - 1) * INCY
-    if INCX == 1:
-        for J in range(N):
-            if Y[JY] != 0:
-                A[:M, J] += X[:M] * ALPHA * Y[JY]
-            JY += INCY
-    else:
-        if INCX > 0:
-            KX = 1
-        else:
-            KX = 1 - (M - 1) * INCX
-        for J in range(N):
-            if Y[JY] != 0:
-                TEMP = ALPHA * Y[JY]
-                IX = KX
-                for I in range(M):
-                    A[I, J] += X[IX] * TEMP
-                    IX += INCX
-            JY += INCY
+
+    for J, JY in enumerate(range_(N, INCY)):
+        A[:M, J] += ALPHA * X[slice_(M, INCX)] * Y[JY]

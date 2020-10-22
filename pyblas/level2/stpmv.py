@@ -212,9 +212,7 @@ def STPMV(UPLO, TRANS, DIAG, N, AP, X, INCX):
     #     accessed sequentially with one pass through AP.
     #
     if lsame(TRANS, "N"):
-        #
-        #        Form  x:= A*x.
-        #
+        # Form  x:= A*x.
         if lsame(UPLO, "U"):
             KK = 1
             if INCX == 1:
@@ -226,7 +224,7 @@ def STPMV(UPLO, TRANS, DIAG, N, AP, X, INCX):
                             X[I] += TEMP * AP[K]
                             K += 1
                         if NOUNIT:
-                            X[J] = X[J] * AP[KK + J - 1]
+                            X[J] *= AP[KK + J - 1]
                     KK += J
             else:
                 JX = KX
@@ -235,10 +233,10 @@ def STPMV(UPLO, TRANS, DIAG, N, AP, X, INCX):
                         TEMP = X[JX]
                         IX = KX
                         for K in range(KK - 1, KK + J - 2):
-                            X[IX] = X[IX] + TEMP * AP[K]
+                            X[IX] += TEMP * AP[K]
                             IX += INCX
                         if NOUNIT:
-                            X[JX] = X[JX] * AP[KK + J - 1]
+                            X[JX] *= AP[KK + J - 1]
                     JX += INCX
                     KK += J
         else:
@@ -252,7 +250,7 @@ def STPMV(UPLO, TRANS, DIAG, N, AP, X, INCX):
                             X[I] += TEMP * AP[K]
                             K -= 1
                         if NOUNIT:
-                            X[J] = X[J] * AP[KK - N + J]
+                            X[J] *= AP[KK - N + J]
                     KK -= N - J + 1
             else:
                 KX += (N - 1) * INCX
@@ -262,10 +260,10 @@ def STPMV(UPLO, TRANS, DIAG, N, AP, X, INCX):
                         TEMP = X[JX]
                         IX = KX
                         for K in range(KK - 1, KK - (N - (J + 1)) - 2, -1):
-                            X[IX] = X[IX] + TEMP * AP[K]
+                            X[IX] += TEMP * AP[K]
                             IX -= INCX
                         if NOUNIT:
-                            X[JX] = X[JX] * AP[KK - N + J]
+                            X[JX] *= AP[KK - N + J]
                     JX -= INCX
                     KK -= N - J + 1
     else:

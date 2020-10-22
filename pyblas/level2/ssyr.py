@@ -201,15 +201,11 @@ def SSYR(UPLO, N, ALPHA, X, INCX, A, LDA):
     #     of A.
     #
     if lsame(UPLO, "U"):
-        #
-        #        Form  A  when A is stored in upper triangle.
-        #
+        # Form  A  when A is stored in upper triangle.
         if INCX == 1:
             for J in range(N):
                 if X[J] != 0:
-                    TEMP = ALPHA * X[J]
-                    for I in range(J):
-                        A[I, J] += X[I] * TEMP
+                    A[:J, J] += X[:J] * ALPHA * X[J]
         else:
             JX = KX
             for J in range(N):

@@ -211,11 +211,10 @@ def SSYR2(UPLO, N, ALPHA, X, INCX, Y, INCY, A, LDA):
         #
         if (INCX == 1) and (INCY == 1):
             for J in range(N):
-                if (X[J] != 0) or (Y[J] != 0):
-                    TEMP1 = ALPHA * Y[J]
-                    TEMP2 = ALPHA * X[J]
-                    for I in range(J):
-                        A[I, J] += X[I] * TEMP1 + Y[I] * TEMP2
+                TEMP1 = ALPHA * Y[J]
+                TEMP2 = ALPHA * X[J]
+                for I in range(J):
+                    A[I, J] += X[I] * TEMP1 + Y[I] * TEMP2
         else:
             for J in range(N):
                 if (X[JX] != 0) or (Y[JY] != 0):

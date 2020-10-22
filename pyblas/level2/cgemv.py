@@ -158,6 +158,7 @@
 #  =====================================================================
 from util import lsame
 from xerbla import xerbla
+from ..util import slice_
 
 
 def cgemv(TRANS, M, N, ALPHA, A, LDA, X, INCX, BETA, Y, INCY):
@@ -221,10 +222,7 @@ def cgemv(TRANS, M, N, ALPHA, A, LDA, X, INCX, BETA, Y, INCY):
     # Start the operations. In this version the elements of A are
     # accessed sequentially with one pass through A.
     # First form  y := beta*y.
-    if INCY > 0:
-        Y[: LENY * INCY : INCY] *= BETA
-    else:
-        Y[-(LENY - 1) * INCY :: INCY] *= BETA
+    Y[slice_(LENY, INCY)] *= BETA
     if ALPHA == 0:
         return
     if lsame(TRANS, "N"):

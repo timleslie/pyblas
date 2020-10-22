@@ -298,7 +298,7 @@ def STBMV(UPLO, TRANS, DIAG, N, K, A, LDA, X, INCX):
                         for I in range(min(N, J + K) - 1, J - 1, -1):
                             X[I] += TEMP * A[L + I, J]
                         if NOUNIT:
-                            X[J] = X[J] * A[1, J]
+                            X[J] *= A[1, J]
             else:
                 KX += (N - 1) * INCX
                 JX = KX
@@ -308,17 +308,15 @@ def STBMV(UPLO, TRANS, DIAG, N, K, A, LDA, X, INCX):
                         IX = KX
                         L = 1 - J
                         for I in range(min(N, J + K) - 1, J - 1, -1):
-                            X[IX] = X[IX] + TEMP * A[L + I, J]
+                            X[IX] += TEMP * A[L + I, J]
                             IX -= INCX
                         if NOUNIT:
-                            X[JX] = X[JX] * A[1, J]
+                            X[JX] *= A[1, J]
                     JX -= INCX
                     if (N - J) >= K:
                         KX -= INCX
     else:
-        #
-        #        Form  x := A**T*x.
-        #
+        # Form  x := A**T*x.
         if lsame(UPLO, "U"):
             KPLUS1 = K + 1
             if INCX == 1:

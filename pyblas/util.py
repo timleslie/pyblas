@@ -11,3 +11,10 @@ def slice_(N, inc):
         return slice(None, N * inc, inc)
     else:
         return slice(-(N - 1) * inc, None, inc)
+
+
+def range_(N, inc):
+    if inc > 0:
+        return range(0, N * inc, inc)
+    else:
+        return range(-(N - 1) * inc, inc, inc)

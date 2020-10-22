@@ -208,17 +208,12 @@ def DSYMV(UPLO, N, ALPHA, A, LDA, X, INCX, BETA, Y, INCY):
     #     of A.
     #
     # First form  y := beta*y.
-    if INCY > 0:
-        Y[: N * INCY : INCY] *= BETA
-    else:
-        Y[-(N - 1) * INCY :: INCY] *= BETA
+    Y[slice_(N, INCY)] *= BETA
 
     if ALPHA == 0:
         return
     if lsame(UPLO, "U"):
-        #
-        #        Form  y  when A is stored in upper triangle.
-        #
+        # Form  y  when A is stored in upper triangle.
         if (INCX == 1) and (INCY == 1):
             for J in range(N):
                 TEMP1 = ALPHA * X[J]

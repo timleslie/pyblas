@@ -264,9 +264,7 @@ def DTRSV(UPLO, TRANS, DIAG, N, A, LDA, X, INCX):
                             X[IX] -= TEMP * A[I, J]
                     JX += INCX
     else:
-        #
-        #        Form  x := inv( A**T )*x.
-        #
+        # Form  x := inv( A**T )*x.
         if lsame(UPLO, "U"):
             if INCX == 1:
                 for J in range(N):

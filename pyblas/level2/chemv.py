@@ -231,10 +231,7 @@ def CHEMV(UPLO, N, ALPHA, A, LDA, X, INCX, BETA, Y, INCY):
     #     of A.
     #
     # First form  y := beta*y.
-    if INCY > 0:
-        Y[: N * INCY : INCY] *= BETA
-    else:
-        Y[-(N - 1) * INCY :: INCY] *= BETA
+    Y[slice_(N, INCY)] *= BETA
 
     if ALPHA == 0:
         return

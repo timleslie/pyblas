@@ -187,6 +187,7 @@
 #  =====================================================================
 from util import lsame
 from xerbla import xerbla
+from ..util import slice_
 
 
 def CGBMV(TRANS, M, N, KL, KU, ALPHA, A, LDA, X, INCX, BETA, Y, INCY):
@@ -256,10 +257,7 @@ def CGBMV(TRANS, M, N, KL, KU, ALPHA, A, LDA, X, INCX, BETA, Y, INCY):
     #     accessed sequentially with one pass through the band part of A.
     #
     # First form  y := beta*y.
-    if INCY > 0:
-        Y[: LENY * INCY : INCY] *= BETA
-    else:
-        Y[-(LENY - 1) * INCY :: INCY] *= BETA
+    Y[slice_(LENY, INCY)] *= BETA
 
     if ALPHA == 0:
         return

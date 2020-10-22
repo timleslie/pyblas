@@ -215,10 +215,7 @@ def SSPMV(UPLO, N, ALPHA, AP, X, INCX, BETA, Y, INCY):
     #     are accessed sequentially with one pass through AP.
     #
     # First form  y := beta*y.
-    if INCY > 0:
-        Y[: N * INCY : INCY] *= BETA
-    else:
-        Y[-(N - 1) * INCY :: INCY] *= BETA
+    Y[slice_(N, INCY)] *= BETA
 
     if ALPHA == 0:
         return
