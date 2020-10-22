@@ -129,6 +129,6 @@ def zswap(N, ZX, INCX, ZY, INCY):
         return
     x_slice = slice_(N, INCX)
     y_slice = slice_(N, INCY)
-    X_TEMP = ZX[x_slice]
+    X_TEMP = ZX[x_slice].copy()
     ZX[x_slice] = ZY[y_slice]
     ZY[x_slice] = X_TEMP

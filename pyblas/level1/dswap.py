@@ -48,6 +48,6 @@ def dswap(N, DX, INCX, DY, INCY):
         return
     x_slice = slice_(N, INCX)
     y_slice = slice_(N, INCY)
-    X_TEMP = DX[x_slice]
+    X_TEMP = DX[x_slice].copy()
     DX[x_slice] = DY[y_slice]
     DY[x_slice] = X_TEMP

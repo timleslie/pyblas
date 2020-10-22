@@ -48,6 +48,6 @@ def sswap(N, SX, INCX, SY, INCY):
         return
     x_slice = slice_(N, INCX)
     y_slice = slice_(N, INCY)
-    X_TEMP = SX[x_slice]
+    X_TEMP = SX[x_slice].copy()
     SX[x_slice] = SY[y_slice]
     SY[x_slice] = X_TEMP

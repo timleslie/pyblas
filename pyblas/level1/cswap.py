@@ -48,6 +48,6 @@ def cswap(N, CX, INCX, CY, INCY):
         return
     x_slice = slice_(N, INCX)
     y_slice = slice_(N, INCY)
-    X_TEMP = CX[x_slice]
+    X_TEMP = CX[x_slice].copy()
     CX[x_slice] = CY[y_slice]
     CY[x_slice] = X_TEMP
