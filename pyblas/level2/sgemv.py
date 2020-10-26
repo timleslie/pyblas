@@ -156,6 +156,7 @@
 #  =====================================================================
 from util import lsame
 from xerbla import xerbla
+from ..util import slice_, range_
 
 
 def SGEMV(TRANS, M, N, ALPHA, A, LDA, X, INCX, BETA, Y, INCY):
@@ -226,21 +227,8 @@ def SGEMV(TRANS, M, N, ALPHA, A, LDA, X, INCX, BETA, Y, INCY):
         return
     if lsame(TRANS, "N"):
         # Form  y := alpha*A*x + y.
-        JX = KX
-        if INCY == 1:
-            for J in range(N):
-                TEMP = ALPHA * X[JX]
-                for I in range(M):
-                    Y[I] += TEMP * A[I, J]
-                JX += INCX
-        else:
-            for J in range(N):
-                TEMP = ALPHA * X[JX]
-                IY = KY
-                for I in range(M):
-                    Y[IY] += TEMP * A[I, J]
-                    IY += INCY
-                JX += INCX
+        for J, JX in enumerate(range(N, INCX)):
+            Y[slice_(M, INCY)] += ALPHA * X[JX] * A[slice_(M, INCY), J]
     else:
         # Form  y := alpha*A**T*x + y.
         JY = KY

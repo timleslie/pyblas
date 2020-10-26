@@ -185,6 +185,7 @@
 #  =====================================================================
 from util import lsame
 from xerbla import xerbla
+from ..util import slice_
 
 
 def SGBMV(TRANS, M, N, KL, KU, ALPHA, A, LDA, X, INCX, BETA, Y, INCY):
