@@ -39,7 +39,7 @@ def zscal(N, ZA, ZX, INCX):
     >>> alpha = 5j
     >>> incx = 1
     >>> zscal(N, alpha, x, incx)
-    >>> print(y)
+    >>> print(x)
     [-10.+5.j -15.+10.j -20.+15.j]
     """
     if N <= 0:

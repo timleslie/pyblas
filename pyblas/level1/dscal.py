@@ -39,7 +39,7 @@ def dscal(N, DA, DX, INCX):
     >>> alpha = 5
     >>> incx = 1
     >>> dscal(N, alpha, x, incx)
-    >>> print(y)
+    >>> print(x)
     [5. 10. 15.]
     """
     if N <= 0:

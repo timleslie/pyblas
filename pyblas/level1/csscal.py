@@ -36,11 +36,11 @@ def csscal(N, SA, CX, INCX):
     --------
     >>> x = np.array([1+2j, 2+3j, 3+4j], dtype=np.complex64)
     >>> N = len(x)
-    >>> alpha = 5j
+    >>> alpha = 5
     >>> incx = 1
     >>> csscal(N, alpha, x, incx)
-    >>> print(y)
-    [-10.+5.j -15.+10.j -20.+15.j]
+    >>> print(x)
+    [ 5.+10.j 10.+15.j 15.+20.j]
     """
     if N <= 0:
         return

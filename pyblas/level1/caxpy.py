@@ -36,14 +36,14 @@ def caxpy(N, CA, CX, INCX, CY, INCY):
 
     Examples
     --------
-    >>> x = np.array([1, 2, 3], dtype=np.complex64)
-    >>> y = np.array([6, 7, 8], dtype=np.complex64)
+    >>> x = np.array([1+2j, 2+3j, 3+4j], dtype=np.complex64)
+    >>> y = np.array([6+7j, 7+8j, 8+9j], dtype=np.complex64)
     >>> N = len(x)
     >>> alpha = 5j
     >>> incx = 1
     >>> caxpy(N, alpha, x, incx, y, incy)
     >>> print(y)
-    [6.+5.j 7.+10.j 8.+15.j]
+    [ -4.+12.j  -8.+18.j -12.+24.j]
     """
     if N <= 0:
         return

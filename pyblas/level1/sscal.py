@@ -39,7 +39,7 @@ def sscal(N, SA, SX, INCX):
     >>> alpha = 5
     >>> incx = 1
     >>> sscal(N, alpha, x, incx)
-    >>> print(y)
+    >>> print(x)
     [5. 10. 15.]
     """
     if N <= 0:
