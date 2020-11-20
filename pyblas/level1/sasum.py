@@ -36,4 +36,4 @@ def sasum(N, SX, INCX):
     """
     if N <= 0:
         return 0
-    return SX[slice_(N, INCX)]
+    return SX[slice_(N, INCX)].sum()

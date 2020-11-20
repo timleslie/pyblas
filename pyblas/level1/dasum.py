@@ -15,7 +15,7 @@ def dasum(N, DX, INCX):
 
     Returns
     -------
-    numpy.single
+    numpy.double
 
     See Also
     --------
@@ -36,4 +36,4 @@ def dasum(N, DX, INCX):
     """
     if N <= 0:
         return 0
-    return DX[slice_(N, INCX)]
+    return DX[slice_(N, INCX)].sum()

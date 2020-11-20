@@ -1,7 +1,7 @@
 import numpy as np
 
 
-def scabs1(z):
+def scabs1(Z):
     """Computes the sum of the absolute value of real and imaginary components of z
 
     Parameters
@@ -24,8 +24,8 @@ def scabs1(z):
 
     Examples
     --------
-    >>> z = np.complex64(1 + 2j)
+    >>> z = np.complex64(-1 + 2j)
     >>> print(scabs1(Z)
     3.0
     """
-    return np.abs(z.real) + np.abs(z.imag)
+    return np.abs(Z.real) + np.abs(Z.imag)
